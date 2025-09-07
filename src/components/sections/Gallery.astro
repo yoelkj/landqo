@@ -1,0 +1,66 @@
+---
+/**
+ * Gallery.astro — Galería de imágenes
+ *
+ * Props:
+ * - id?: string
+ * - title?: string
+ * - subtitle?: string
+ * - images?: { src: string; alt?: string }[]
+ * - variant?: "default"|"alt"|"inverted"
+ * - className?: string
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+interface GalleryItem {
+  src: string;
+  alt?: string;
+}
+
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  images?: GalleryItem[];
+}
+
+const {
+  id = "gallery",
+  title = "Galería",
+  subtitle,
+  images = [
+    { src: "/assets/sample1.jpg", alt: "Ejemplo 1" },
+    { src: "/assets/sample2.jpg", alt: "Ejemplo 2" },
+    { src: "/assets/sample3.jpg", alt: "Ejemplo 3" },
+    { src: "/assets/sample4.jpg", alt: "Ejemplo 4" },
+  ],
+  variant = "default" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+>
+  <div class="container">
+    <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {
+        images.map((img) => (
+          <figure class="relative overflow-hidden rounded-[var(--radius-md)] border border-[color:var(--color-border)]">
+            <img
+              src={img.src}
+              alt={img.alt || "Imagen de galería"}
+              class="h-40 w-full object-cover transition-transform duration-300 hover:scale-105"
+              loading="lazy"
+            />
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</Section>

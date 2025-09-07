@@ -1,0 +1,102 @@
+---
+/**
+ * CTAButton.astro — Botón de acción principal
+ *
+ * Props:
+ * - href?: string               → Si se pasa, renderiza <a>; si no, <button>
+ * - label?: string              → Texto del botón (puede omitirse si se usa <slot>)
+ * - variant?: "primary" | "secondary" | "outline" | "ghost"
+ * - size?: "sm" | "md" | "lg"
+ * - rounded?: "sm" | "md" | "lg" | "full"
+ * - iconOnly?: boolean          → True = ignora label y solo renderiza icon
+ * - className?: string          → Extra CSS
+ *
+ * Slots:
+ * - default → contenido libre (si no usas label)
+ * - icon    → icono a la izquierda
+ * - iconRight → icono a la derecha
+ */
+
+interface Props {
+  href?: string;
+  label?: string;
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  rounded?: "sm" | "md" | "lg" | "full";
+  iconOnly?: boolean;
+  className?: string;
+}
+
+const {
+  href,
+  label = "Call to Action",
+  variant = "primary",
+  size = "md",
+  rounded = "md",
+  iconOnly = false,
+  className = "",
+} = Astro.props as Props;
+
+const isLink = typeof href === "string" && href.length > 0;
+
+// estilos por variante
+const variantCls = {
+  primary:
+    "bg-[color:var(--color-primary)] text-[color:var(--color-on-primary)] hover:bg-[color:var(--color-primary-600)] active:bg-[color:var(--color-primary-700)]",
+  secondary:
+    "bg-[color:var(--color-secondary)] text-[color:var(--color-on-secondary)] hover:bg-[color:var(--color-secondary-600)] active:bg-[color:var(--color-secondary-700)]",
+  outline:
+    "border border-[color:var(--color-border)] bg-transparent hover:bg-[color:var(--color-bg-elev)]",
+  ghost:
+    "bg-transparent hover:bg-[color:var(--color-bg-elev)] text-[color:var(--color-fg)]",
+}[variant];
+
+// tamaños
+const sizeCls = {
+  sm: "h-8 px-3 text-sm",
+  md: "h-10 px-4 text-base",
+  lg: "h-12 px-6 text-lg",
+}[size];
+
+// radios
+const roundedCls = {
+  sm: "rounded-[var(--radius-sm)]",
+  md: "rounded-[var(--radius-md)]",
+  lg: "rounded-[var(--radius-lg)]",
+  full: "rounded-full",
+}[rounded];
+
+// comp base
+const baseCls = `inline-flex items-center justify-center gap-2 font-medium
+  transition-all duration-150 ease-out
+  focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-ring)]
+  ${sizeCls} ${roundedCls} ${variantCls}
+  ${iconOnly ? "aspect-square px-0" : ""}`
+  .replace(/\s+/g, " ")
+  .trim();
+
+const Tag = (isLink ? "a" : "button") as any;
+---
+
+<Tag
+  {...isLink ? { href } : { type: "button" }}
+  class={`${baseCls} ${className}`}
+>
+  {
+    Astro.slots.has("icon") && (
+      <span class="flex items-center justify-center">
+        {<slot name="icon" />}
+      </span>
+    )
+  }
+
+  {!iconOnly && (Astro.slots.has("default") ? <slot /> : label)}
+
+  {
+    Astro.slots.has("iconRight") && (
+      <span class="flex items-center justify-center">
+        {<slot name="iconRight" />}
+      </span>
+    )
+  }
+</Tag>

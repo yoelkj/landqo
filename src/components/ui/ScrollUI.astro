@@ -1,0 +1,293 @@
+---
+/**
+ * ScrollUi configurable (respetando props aunque vengan como string).
+ * Props:
+ *  - showBar?: boolean        (default: true)
+ *  - showGoTop?: boolean      (default: false)
+ *  - spy?: boolean            (default: true)
+ *  - showAfter?: { bar: number; top: number }  // umbrales px
+ *  - offsetExtra?: number     // colchón extra al alto del header
+ */
+type ShowAfter = { bar: number; top: number }
+interface Props {
+  showBar?: boolean | string
+  showGoTop?: boolean | string
+  spy?: boolean | string
+  showAfter?: ShowAfter | { bar: number | string; top: number | string } | string
+  offsetExtra?: number | string
+}
+
+const raw = Astro.props as Props
+
+// Helpers de normalización
+const toBool = (v: unknown, dflt: boolean) => {
+  if (v === undefined || v === null) return dflt
+  if (typeof v === 'boolean') return v
+  if (typeof v === 'string') {
+    const s = v.trim().toLowerCase()
+    if (s === '' ) return true
+    if (s === 'true') return true
+    if (s === 'false') return false
+  }
+  return dflt
+}
+const toNum = (v: unknown, dflt: number) => {
+  if (v === undefined || v === null) return dflt
+  if (typeof v === 'number' && Number.isFinite(v)) return v
+  const n = Number(v as any)
+  return Number.isFinite(n) ? n : dflt
+}
+
+// Normaliza props
+const showBar     = toBool(raw.showBar, true)
+const showGoTop   = toBool(raw.showGoTop, false)
+const spy         = toBool(raw.spy, true)
+
+let barAfter = 8, topAfter = 300
+if (typeof raw.showAfter === 'object' && raw.showAfter !== null && !Array.isArray(raw.showAfter)) {
+  barAfter = toNum((raw.showAfter as any).bar, 8)
+  topAfter = toNum((raw.showAfter as any).top, 300)
+} else if (typeof raw.showAfter === 'string') {
+  barAfter = 8
+  topAfter = 300
+}
+const offsetExtra = toNum(raw.offsetExtra, 12)
+---
+
+<!-- Config embebida en data-* (el script del cliente lee aquí) -->
+<div
+  id="scrollUiCfg"
+  hidden
+  data-show-bar={String(showBar)}
+  data-show-go-top={String(showGoTop)}
+  data-spy={String(spy)}
+  data-bar-after={String(barAfter)}
+  data-top-after={String(topAfter)}
+  data-offset-extra={String(offsetExtra)}
+></div>
+
+{showBar && (
+  <!-- Barra de progreso (full width) -->
+  <div
+    id="progressWrap"
+    class="hidden fixed left-0 right-0 pointer-events-none z-[1100]"
+    style="top: calc(var(--header-h, 64px));"
+  >
+    <div
+      class="h-[3px] overflow-hidden"
+      style="background-color: var(--color-border, #e5e7eb); opacity:.6;"
+    >
+      <div
+        id="progressBar"
+        class="h-full"
+        style="width:0%; background-color: var(--color-primary, #6366f1);"
+      ></div>
+    </div>
+  </div>
+)}
+
+{showGoTop && (
+  <!-- Go to top (solo render si showGoTop=true) -->
+  <button
+    id="goTop"
+    aria-label="Volver arriba"
+    class="hidden fixed bottom-6 right-6 z-[1100]
+           h-12 w-12 rounded-full
+           bg-[var(--color-surface)] text-[var(--color-fg)]
+           ring-1 ring-[var(--color-border)] shadow-[var(--shadow-md)]
+           hover:text-[var(--color-primary)]
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]"
+  >
+    <svg viewBox="0 0 24 24" class="mx-auto h-6 w-6" aria-hidden="true">
+      <path fill="currentColor" d="M12 5l-7 7h4v7h6v-7h4z"></path>
+    </svg>
+  </button>
+)}
+
+<style is:inline>
+  /* Hover + activo en nav */
+  #siteHeader nav a {
+    transition: color .18s ease, background-color .18s ease;
+    text-decoration: none !important;
+  }
+  #siteHeader nav a:hover,
+  #mobileNav a:hover { color: var(--color-primary) !important; }
+  #siteHeader nav a.nav-active,
+  #mobileNav a.nav-active { color: var(--color-primary) !important; font-weight: 600; }
+
+  /* Si menu móvil abierto, ocultar goTop (si existe) */
+  body.menu-open #goTop { display: none; }
+
+  /* Suavizado de la barra (respeta reduced motion) */
+  #progressBar { transition: width 80ms linear; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+    #progressBar { transition: none !important; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Lee configuración normalizada (desde data-*)
+    var cfgEl = document.getElementById('scrollUiCfg');
+    if (!cfgEl) return;
+    var ds = cfgEl.dataset;
+    var SHOW_BAR   = ds.showBar === 'true';
+    var SHOW_TOP   = ds.showGoTop === 'true';
+    var SPY_ON     = ds.spy === 'true';
+    var BAR_AFTER  = Number(ds.barAfter || 8);
+    var TOP_AFTER  = Number(ds.topAfter || 300);
+    var OFFSET_X   = Number(ds.offsetExtra || 12);
+
+    var wrap = document.getElementById("progressWrap");
+    var bar  = document.getElementById("progressBar");
+    var btn  = document.getElementById("goTop");
+
+    // Portal al <body> (solo si existen)
+    if (SHOW_BAR && wrap && wrap.parentElement !== document.body) document.body.appendChild(wrap);
+    if (SHOW_TOP && btn  && btn.parentElement  !== document.body) document.body.appendChild(btn);
+
+    function getScrollTop () {
+      var d = document.documentElement, b = document.body;
+      return window.pageYOffset || d.scrollTop || b.scrollTop || 0;
+    }
+    function getMaxScroll () {
+      var d = document.documentElement, b = document.body;
+      var scrollH = Math.max(
+        b.scrollHeight, d.scrollHeight,
+        b.offsetHeight, d.offsetHeight,
+        b.clientHeight, d.clientHeight
+      );
+      return Math.max(1, scrollH - d.clientHeight);
+    }
+
+    function updateUI () {
+      if (SHOW_BAR && wrap && bar) {
+        var scrolled = getScrollTop();
+        var pct = Math.min(100, Math.max(0, (scrolled / getMaxScroll()) * 100));
+        bar.style.width = pct + "%";
+        if (scrolled > BAR_AFTER) wrap.classList.remove("hidden");
+        else { wrap.classList.add("hidden"); bar.style.width = "0%"; }
+      }
+      if (SHOW_TOP && btn) {
+        if (getScrollTop() > TOP_AFTER) btn.classList.remove("hidden");
+        else btn.classList.add("hidden");
+      }
+    }
+
+    var ticking = false;
+    addEventListener("scroll", function () {
+      if (!ticking) {
+        requestAnimationFrame(function () { updateUI(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+    addEventListener("resize", updateUI, { passive: true });
+    updateUI();
+
+    if (SHOW_TOP && btn) {
+      btn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    // ===== Scroll-Spy =====
+    if (!SPY_ON) return;
+
+    var headerEl = document.getElementById("siteHeader");
+    function headerH () {
+      var h = headerEl && headerEl.offsetHeight;
+      if (h) return h;
+      var cssVar = getComputedStyle(document.documentElement).getPropertyValue("--header-h");
+      var parsed = parseFloat(cssVar);
+      return isFinite(parsed) ? parsed : 64;
+    }
+    function getHashId (href) {
+      if (!href) return "";
+      var i = href.indexOf("#");
+      return i >= 0 ? href.slice(i + 1) : "";
+    }
+
+    var linkNodes = Array.prototype.slice.call(document.querySelectorAll(
+      'a[data-spy="true"][href*="#"], ' +
+      '#siteHeader nav a[href^="#"], #siteHeader nav a[href^="/#"], ' +
+      '#mobileNav  a[href^="#"],     #mobileNav  a[href^="/#"]'
+    ));
+
+    var spyMap = (function () {
+      var map = new Map();
+      linkNodes.forEach(function (a) {
+        var id = getHashId(a.getAttribute("href") || "");
+        if (!id) return;
+        if (!map.has(id)) map.set(id, { anchors: [], section: null });
+        map.get(id).anchors.push(a);
+      });
+      Array.from(map.keys()).forEach(function (id) {
+        var v = map.get(id);
+        v.section = document.getElementById(id);
+        if (!v.section) map.delete(id);
+      });
+      return map;
+    })();
+
+    if (spyMap.size) {
+      var ids = Array.from(spyMap.keys());
+      var sections = ids.map(function (id) { return spyMap.get(id).section; });
+
+      function setActive (id) {
+        ids.forEach(function (key) {
+          var on = key === id;
+          var rec = spyMap.get(key);
+          if (!rec) return;
+          rec.anchors.forEach(function (a) {
+            a.classList.toggle("nav-active", on);
+            a.setAttribute("aria-current", on ? "page" : "false");
+          });
+        });
+      }
+
+      var io;
+      function buildIO () {
+        if (io) io.disconnect();
+        var topMargin = headerH() + OFFSET_X + 12;
+        io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (ent) { if (ent.isIntersecting) setActive(ent.target.id); });
+        }, { rootMargin: "-" + topMargin + "px 0px -55% 0px", threshold: 0.01 });
+        sections.forEach(function (s) { if (s) io.observe(s); });
+      }
+      buildIO();
+      addEventListener("resize", buildIO, { passive: true });
+
+      function spyFallback () {
+        if (!sections.length) return;
+        var y = window.scrollY + headerH() + OFFSET_X;
+        var currentId = sections[0].id;
+        for (var i = 0; i < sections.length; i++) {
+          var s = sections[i]; if (!s) continue;
+          var top = s.getBoundingClientRect().top + window.scrollY;
+          if (top - 1 <= y) currentId = s.id; else break;
+        }
+        var atBottom = Math.abs(innerHeight + window.scrollY - document.documentElement.scrollHeight) < 2;
+        if (atBottom) currentId = sections[sections.length - 1].id;
+        setActive(currentId);
+      }
+      addEventListener("scroll", spyFallback, { passive: true });
+
+      if (location.hash && spyMap.has(location.hash.slice(1))) setActive(location.hash.slice(1));
+      else spyFallback();
+
+      document.addEventListener("click", function (e) {
+        var t = e.target;
+        if (!(t instanceof Element)) return;
+        var a = t.closest('a[href^="#"], a[href^="/#"]');
+        if (!a) return;
+        var id = getHashId(a.getAttribute("href") || "");
+        if (id && spyMap.has(id)) setActive(id);
+      });
+      addEventListener("hashchange", function () {
+        var id = location.hash.slice(1);
+        if (id && spyMap.has(id)) setActive(id);
+      });
+    }
+  })();
+</script>

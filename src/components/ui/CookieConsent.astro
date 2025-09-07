@@ -1,0 +1,159 @@
+---
+/**
+ * CookieConsent.astro — Banner de consentimiento (SIN animaciones) — TOAST CENTRADO
+ *
+ * Resumen
+ * - Muestra un “toast” centrado (abajo o arriba) para aceptar/rechazar cookies no esenciales.
+ * - Persiste en localStorage ("cookie:consent") y emite el evento global
+ *   "cookie:consent-changed" con { value: "all" | "essentials" }.
+ * - Sin transiciones/animaciones (anti-flicker) y respetando tus tokens.
+ *
+ * Props
+ * - message?: string                   (default: "Usamos cookies para mejorar tu experiencia.")
+ * - policyHref?: string                (default: "/legales/cookies/"; si vacío, oculta el enlace)
+ * - acceptLabel?: string               (default: "Aceptar")
+ * - rejectLabel?: string               (default: "Rechazar")
+ * - position?: "bottom" | "top"        (default: "bottom")
+ * - compact?: boolean                  (default: false)  → alinea en fila en pantallas medianas
+ *
+ * Accesibilidad
+ * - role="dialog", aria-live="polite", aria-label.
+ * - No modal (no bloquea foco). Si necesitas modal/focus-trap, hazlo aparte.
+ *
+ * Depuración
+ * - Para forzar su visualización: localStorage.removeItem("cookie:consent"); location.reload();
+ */
+interface Props {
+  message?: string;
+  policyHref?: string;
+  acceptLabel?: string;
+  rejectLabel?: string;
+  position?: "bottom" | "top";
+  compact?: boolean;
+}
+
+const {
+  message = "Usamos cookies para mejorar tu experiencia.",
+  policyHref = "/legales/cookies/",
+  acceptLabel = "Aceptar",
+  rejectLabel = "Rechazar",
+  position = "bottom",
+  compact = false,
+} = Astro.props as Props;
+
+const posStyle =
+  position === "top"
+    ? "top: 1rem;"
+    : "bottom: calc(env(safe-area-inset-bottom) + 1rem);";
+---
+
+<div
+  id="cookieConsent"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Aviso de cookies"
+  hidden
+  class="fixed left-1/2 -translate-x-1/2 z-[var(--z-overlay)]
+         w-[min(92vw,840px)]
+         bg-[color:var(--color-surface)] text-[color:var(--color-fg)]
+         border border-[color:var(--color-border)]
+         rounded-[var(--radius-lg)]
+         shadow-[var(--shadow-md)]
+         transition-none will-change-auto"
+  style={posStyle}
+>
+  <div class="p-4 md:p-5">
+    <div
+      class={compact
+        ? "flex flex-col gap-3 md:flex-row md:items-center md:gap-4"
+        : "flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"}
+    >
+      <p class="text-sm text-[color:var(--color-fg-muted)]">
+        {message}
+        {
+          policyHref && (
+            <>
+              {" "}
+              <a href={policyHref} class="underline">
+                Más info
+              </a>
+              .
+            </>
+          )
+        }
+      </p>
+
+      <div class={`${compact ? "md:ml-auto" : "sm:ml-auto"} flex gap-3`}>
+        <!-- Rechazar (sin animaciones) -->
+        <button
+          id="cookieReject"
+          class="h-10 px-4 rounded-[var(--radius-lg)]
+                 border border-[color:var(--color-border)]
+                 bg-[color:var(--color-bg-elev)] text-[color:var(--color-fg)]
+                 transform-none transition-none"
+        >
+          {rejectLabel}
+        </button>
+
+        <!-- Aceptar (sin animaciones) -->
+        <button
+          id="cookieAccept"
+          class="btn btn-primary h-10 px-4 rounded-[var(--radius-lg)]
+                 transform-none transition-none"
+        >
+          {acceptLabel}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Kill-switch: desactiva cualquier animación o transición heredada -->
+<style is:inline>
+  #cookieConsent,
+  #cookieConsent * {
+    transition: none !important;
+    animation: none !important;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = "cookie:consent";
+    var $wrap = document.getElementById("cookieConsent");
+    if (!$wrap) return;
+
+    // Mostrar solo si no hay consentimiento guardado
+    var saved = "";
+    try {
+      saved = localStorage.getItem(KEY) || "";
+    } catch (_) {}
+    if (!saved) $wrap.hidden = false;
+
+    function setConsent(value) {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch (_) {}
+      window.dispatchEvent(
+        new CustomEvent("cookie:consent-changed", { detail: { value: value } })
+      );
+    }
+    function close() {
+      $wrap.hidden = true;
+    }
+
+    var $accept = document.getElementById("cookieAccept");
+    var $reject = document.getElementById("cookieReject");
+
+    if ($accept)
+      $accept.addEventListener("click", function () {
+        setConsent("all");
+        close();
+      });
+    if ($reject)
+      $reject.addEventListener("click", function () {
+        setConsent("essentials");
+        close();
+      });
+  })();
+</script>

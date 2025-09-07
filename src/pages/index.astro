@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import pageSections from "@/content/pages/index";
+import { sectionsRegistry } from "@/utils/section-map";
+
+// SEO de la Home (lo inyecta BaseLayout vía utils/seo.ts)
+const seo = {
+  title: "Landing Starter — Astro + Tailwind",
+  description:
+    "Boilerplate de producción con multi-tenant, SEO y formularios reales.",
+  image: "/assets/og-hero.png",
+  type: "website",
+  lang: "es",
+  schema: {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Landing Boilerplate",
+    url: Astro.site
+      ? new URL(Astro.url.pathname, Astro.site).toString()
+      : undefined,
+  },
+};
+
+// Resolvemos todos los componentes antes de renderizar
+const resolved = await Promise.all(
+  pageSections.map(async ({ key, props }) => {
+    const mod = await sectionsRegistry[key].component();
+    return { Comp: mod.default, key, props };
+  })
+);
+---
+
+<BaseLayout seo={seo}>
+  {
+    resolved.map(({ Comp, key, props }) => (
+      // @ts-ignore - Astro permite componentes dinámicos
+      <Comp {...(props || {})} data-key={key} />
+    ))
+  }
+</BaseLayout>

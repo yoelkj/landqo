@@ -1,0 +1,243 @@
+---
+/**
+ * Hero.astro — Cabecera principal de la landing
+ *
+ * ✅ Características
+ * - Variantes de layout: `align="center" | "split"`
+ * - Variantes visuales (wrapper Section): `variant="default|alt|inverted"`
+ * - Eyebrow opcional (pequeño texto encima del título)
+ * - CTA primario y secundario (botón outline)
+ * - Media opcional: imagen o video (con poster, loop, muted, autoplay)
+ * - Slot de formulario opcional (<slot name="form" />)
+ * - Fila opcional de “confianza” (logos o badges)
+ * - Accesible: heading h1, aria-describedby si hay subtítulo
+ *
+ * Props:
+ * - id?: string
+ * - variant?: 'default' | 'alt' | 'inverted'       (default: 'default')
+ * - className?: string
+ * - align?: 'center' | 'split'                     (default: 'split')
+ * - eyebrow?: string                               (opcional)
+ * - title?: string                                 (default: "Construye landings ultra-rápidas")
+ * - subtitle?: string                              (opcional)
+ * - ctaPrimary?: { label: string; href: string }   (default: {label:"Empezar", href:"#pricing"})
+ * - ctaSecondary?: { label: string; href: string } (opcional)
+ * - media?: { type: 'image'|'video'; src: string; alt?: string; poster?: string; loop?: boolean|string; autoplay?: boolean|string; muted?: boolean|string; }
+ * - trust?: Array<{ src: string; alt?: string; width?: number; height?: number }>
+ *
+ * Slots:
+ * - default: contenido bajo el bloque principal (raro)
+ * - form:   slot a la derecha (o bajo) para la variante con formulario
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { Variant } from "@/utils/section-types";
+
+type CTA = { label: string; href: string };
+type Media = {
+  type: "image" | "video";
+  src: string;
+  alt?: string;
+  poster?: string;
+  loop?: boolean | string;
+  autoplay?: boolean | string;
+  muted?: boolean | string;
+};
+type TrustLogo = { src: string; alt?: string; width?: number; height?: number };
+
+interface Props {
+  id?: string;
+  variant?: Variant;
+  className?: string;
+  align?: "center" | "split";
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  ctaPrimary?: CTA;
+  ctaSecondary?: CTA;
+  media?: Media | null;
+  trust?: TrustLogo[] | null;
+}
+
+// normalizador boolean (acepta boolean o "true"/"false"/"")
+const toBool = (v: unknown, dflt: boolean) => {
+  if (v === undefined || v === null) return dflt;
+  if (typeof v === "boolean") return v;
+  if (typeof v === "string") {
+    const s = v.trim().toLowerCase();
+    if (s === "") return true;
+    if (s === "true") return true;
+    if (s === "false") return false;
+  }
+  return dflt;
+};
+
+const {
+  id = "hero",
+  variant = "default" as Variant,
+  className = "",
+  align = "split",
+
+  eyebrow,
+  title = "Construye landings ultra-rápidas",
+  subtitle = "Boilerplate profesional con Astro + Tailwind",
+
+  ctaPrimary = { label: "Empezar", href: "#pricing" } as CTA,
+  ctaSecondary,
+
+  media = {
+    type: "image",
+    src: "/assets/og-hero.png",
+    alt: "Vista previa del sitio",
+  } as Media,
+
+  trust = [
+    { src: "/assets/logos/logo1.svg", alt: "Cliente 1", width: 96, height: 24 },
+    { src: "/assets/logos/logo2.svg", alt: "Cliente 2", width: 96, height: 24 },
+    { src: "/assets/logos/logo3.svg", alt: "Cliente 3", width: 96, height: 24 },
+  ] as TrustLogo[] | null,
+} = Astro.props as Props;
+
+// layout classes
+const isCenter = align === "center";
+const gridWrap = isCenter
+  ? "grid gap-10 place-items-center text-center"
+  : "grid gap-10 md:grid-cols-2 md:items-center";
+
+// id de subtítulo para aria-describedby
+const subId = subtitle ? `${id}-subtitle` : undefined;
+---
+
+<Section
+  id={id}
+  variant={variant}
+  className={`relative overflow-hidden ${className}`}
+>
+  <!-- Decoración de fondo sutil (no interfiere con tenants) -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-[1] [mask-image:radial-gradient(60%_40%_at_50%_0%,black,transparent)]"
+    style="
+      background:
+        radial-gradient(1200px 480px at 0% -10%, hsl(var(--neutral-100)) 0%, transparent 60%),
+        radial-gradient(1000px 360px at 100% -20%, hsl(var(--neutral-100)) 0%, transparent 60%);
+    "
+  >
+  </div>
+
+  <div class="container">
+    <div class={gridWrap}>
+      <!-- Columna texto -->
+      <div class={isCenter ? "max-w-3xl" : "max-w-2xl"}>
+        {
+          eyebrow && (
+            <span
+              class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium
+                       ring-1 ring-[color:var(--color-border)]
+                       bg-[color:var(--color-bg-elev)]/70"
+            >
+              {eyebrow}
+            </span>
+          )
+        }
+        <h1 class="h1 mt-3">{title}</h1>
+        {
+          subtitle && (
+            <p id={subId} class="lead mt-4">
+              {subtitle}
+            </p>
+          )
+        }
+
+        <!-- CTAs -->
+        <div
+          class={`mt-8 flex ${isCenter ? "justify-center" : ""} gap-3 flex-wrap`}
+        >
+          {
+            ctaPrimary && (
+              <a href={ctaPrimary.href} class="btn btn-primary">
+                {ctaPrimary.label}
+              </a>
+            )
+          }
+          {
+            ctaSecondary && (
+              <a href={ctaSecondary.href} class="btn btn-outline">
+                {ctaSecondary.label}
+              </a>
+            )
+          }
+        </div>
+
+        <!-- Logos de confianza -->
+        {
+          trust && trust.length > 0 && (
+            <div
+              class={`mt-8 ${isCenter ? "justify-center" : ""} flex flex-wrap items-center gap-6 opacity-80`}
+            >
+              {trust.map((logo) => (
+                <img
+                  src={logo.src}
+                  alt={logo.alt || "Logo"}
+                  width={logo.width || 96}
+                  height={logo.height || 24}
+                  loading="lazy"
+                  class="h-6 w-auto object-contain opacity-80"
+                />
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Columna media / formulario -->
+      <div class={isCenter ? "w-full max-w-3xl" : "w-full md:justify-self-end"}>
+        <!-- slot de formulario (tiene prioridad si está presente) -->
+        <slot name="form" />
+
+        {
+          Astro.slots.has("form") ? null : (
+            <>
+              {media && media.type === "image" && media.src && (
+                <figure
+                  class="w-[min(560px,92vw)] mx-auto aspect-[4/3] rounded-[var(--radius-2xl)]
+                       bg-[color:var(--color-bg-elev)]
+                       border border-[color:var(--color-border)] shadow-[var(--shadow-md)] overflow-hidden"
+                >
+                  <img
+                    src={media.src}
+                    alt={media.alt || ""}
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                  />
+                </figure>
+              )}
+
+              {media && media.type === "video" && media.src && (
+                <figure
+                  class="w-[min(560px,92vw)] mx-auto aspect-[16/9] rounded-[var(--radius-2xl)]
+                       bg-[color:var(--color-bg-elev)]
+                       border border-[color:var(--color-border)] shadow-[var(--shadow-md)] overflow-hidden"
+                >
+                  <video
+                    src={media.src}
+                    poster={media.poster}
+                    playsinline
+                    muted={toBool(media.muted, true)}
+                    autoplay={toBool(media.autoplay, true)}
+                    loop={toBool(media.loop, true)}
+                    class="h-full w-full object-cover"
+                    aria-label={media.alt || "Video de demostración"}
+                  />
+                </figure>
+              )}
+            </>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Slot por si quieres contenido extra bajo el hero -->
+    <slot />
+  </div>
+</Section>

@@ -1,0 +1,81 @@
+---
+/**
+ * Integrations.astro — Muestra integraciones o partners clave
+ *
+ * Props:
+ * - id?: string
+ * - title?: string
+ * - subtitle?: string
+ * - items?: { name: string; logo?: string; href?: string }[]
+ * - variant?: "default" | "alt" | "inverted"
+ * - className?: string
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+interface IntegrationItem {
+  name: string;
+  logo?: string;
+  href?: string;
+}
+
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  items?: IntegrationItem[];
+}
+
+const {
+  id = "integrations",
+  title = "Integraciones",
+  subtitle = "Conecta tu landing con las herramientas que ya usas.",
+  items = [
+    { name: "Zapier", logo: "/assets/logos/zapier.svg" },
+    { name: "HubSpot", logo: "/assets/logos/hubspot.svg" },
+    { name: "Make", logo: "/assets/logos/make.svg" },
+    { name: "GA4", logo: "/assets/logos/ga4.svg" },
+  ],
+  variant = "default" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+>
+  <div class="container">
+    <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        items.map((it) => (
+          <li class="card p-6 text-center transition hover:shadow-[var(--shadow-md)]">
+            {it.logo ? (
+              <img
+                src={it.logo}
+                alt={it.name}
+                loading="lazy"
+                class="mx-auto h-12 w-auto object-contain mb-3"
+              />
+            ) : null}
+            {it.href ? (
+              <a
+                href={it.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-medium text-[color:var(--color-fg)] hover:text-[color:var(--color-primary)]"
+              >
+                {it.name}
+              </a>
+            ) : (
+              <span class="font-medium">{it.name}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>

@@ -1,0 +1,81 @@
+---
+/**
+ * UseCases.astro — Casos de uso
+ *
+ * Props:
+ * - id?: string
+ * - title?: string
+ * - subtitle?: string
+ * - cases?: { title: string; desc: string; icon?: string }[]
+ * - variant?: "default"|"alt"|"inverted"
+ * - className?: string
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+type UseCase = { title: string; desc: string; icon?: string };
+
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  cases?: UseCase[];
+  variant?: Variant;
+}
+
+const {
+  id = "use-cases",
+  title = "Casos de uso",
+  subtitle = "Plantillas y bloques listos para múltiples escenarios",
+  cases = [
+    {
+      title: "SaaS",
+      desc: "Lanza tu producto con social proof y pricing.",
+      icon: "⚙️",
+    },
+    {
+      title: "Servicio local",
+      desc: "Capta leads con formulario de contacto y mapa.",
+      icon: "📍",
+    },
+    {
+      title: "Evento",
+      desc: "Agenda, speakers y registro en minutos.",
+      icon: "🎤",
+    },
+  ],
+  variant = "default" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+>
+  <div class="container">
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      {
+        cases.map((c) => (
+          <article class="card p-6 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] focus-within:ring-2 focus-within:ring-[color:var(--color-ring)] rounded-lg">
+            {c.icon && (
+              <div
+                class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg
+                     bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]"
+              >
+                <span class="text-xl">{c.icon}</span>
+              </div>
+            )}
+            <h3 class="font-semibold text-lg">{c.title}</h3>
+            <p class="mt-2 text-sm text-[color:var(--color-fg-muted)]">
+              {c.desc}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Section>

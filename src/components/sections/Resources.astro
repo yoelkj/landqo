@@ -1,0 +1,73 @@
+---
+/**
+ * Resources.astro — Recursos descargables o de apoyo
+ *
+ * Props:
+ * - id?: string
+ * - title?: string
+ * - subtitle?: string
+ * - resources?: { title: string; href: string; tag: string }[]
+ * - variant?: "default"|"alt"|"inverted"
+ * - className?: string
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+interface Resource {
+  title: string;
+  href: string;
+  tag: string;
+}
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  resources?: Resource[];
+  variant?: Variant;
+}
+
+const {
+  id = "resources",
+  title = "Recursos",
+  subtitle = "Guías, plantillas y materiales que te ayudarán a lanzar más rápido",
+  resources = [
+    { title: "Guía SEO", href: "#", tag: "Ebook" },
+    { title: "Checklist Landing", href: "#", tag: "Checklist" },
+  ],
+  variant = "default" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+>
+  <div class="container">
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      {
+        resources.map((r) => (
+          <a
+            href={r.href}
+            aria-label={`Recurso: ${r.title}`}
+            class="card group p-6 flex flex-col justify-between transition-shadow hover:shadow-[var(--shadow-md)]"
+          >
+            <span
+              class="self-start text-xs font-medium px-2 py-1 rounded-[var(--radius-sm)]
+                   bg-[color:var(--color-bg-elev)] border border-[color:var(--color-border)]
+                   text-[color:var(--color-fg-muted)]"
+            >
+              {r.tag}
+            </span>
+            <h3 class="mt-4 text-lg font-semibold group-hover:text-[color:var(--color-primary)] transition-colors">
+              {r.title}
+            </h3>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Section>

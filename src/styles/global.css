@@ -1,0 +1,296 @@
+/* ── IMPORTS: deben ir ANTES de cualquier otra regla ───────────────────── */
+@import "./tokens.css";
+@import "./themes/default.css";
+/* Opcional: overrides por tenant/instalación */
+/* @import "./themes/example-tenant.css"; */
+
+/* Tailwind (después de los imports) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset / normalización ligera ───────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, hsl(var(--neutral-100)) 0%, transparent 60%),
+    radial-gradient(1000px 360px at 110% -20%, hsl(var(--neutral-100)) 0%, transparent 60%),
+    var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Layout base (container con gutters por breakpoint) ─────────────────── */
+:root {
+  --_gutter-sm: var(--container-pad-sm, var(--container-pad, 16px));
+  --_gutter-md: var(--container-pad-md, var(--container-pad, 24px));
+  --_gutter-lg: var(--container-pad-lg, var(--container-pad, 32px));
+
+  /* Botones */
+  --btn-h: 2.75rem;          /* 44px accesible */
+  --btn-pad-x: 1.125rem;     /* 18px */
+  --btn-radius: var(--radius-lg);
+  --btn-shadow: var(--shadow-sm);
+  --btn-shadow-hover: var(--shadow-md);
+
+  /* Navbar (nuevos) */
+  --nav-font-size:  clamp(1.00rem, 0.98rem + 0.15vw, 1.125rem); /* ~16→18px */
+  --nav-brand-size: clamp(1.06rem, 1.00rem + 0.22vw, 1.25rem);
+}
+.container {
+  inline-size: min(100% - (var(--_gutter-sm) * 2), var(--container-max, 1200px)) !important;
+  margin-inline: auto;
+  padding-inline: 0 !important;
+}
+@media (min-width: 768px) {
+  .container { inline-size: min(100% - (var(--_gutter-md) * 2), var(--container-max, 1200px)) !important; }
+}
+@media (min-width: 1280px) {
+  .container { inline-size: min(100% - (var(--_gutter-lg) * 2), var(--container-max, 1200px)) !important; }
+}
+
+/* Medios fluidos */
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
+/* Links (NO afectar .btn ni .nav-link) */
+:where(a):not(.btn):not(.nav-link) {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+:where(a):not(.btn):not(.nav-link):hover { color: var(--link-hover); }
+
+/* Headings */
+h1 { font-size: var(--text-4xl); line-height: 1.1; letter-spacing: -0.02em; }
+h2 { font-size: var(--text-3xl); line-height: 1.15; letter-spacing: -0.02em; }
+h3 { font-size: var(--text-2xl); line-height: 1.2; }
+h4 { font-size: var(--text-xl);  line-height: 1.25; }
+h1, h2, h3, h4 { font-weight: 700; }
+
+/* Utils tipográficas */
+.h1 { font-size: var(--text-4xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+.h2 { font-size: var(--text-3xl); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.lead { font-size: var(--text-lg); color: var(--color-fg-muted); }
+
+/* Secciones con ritmo consistente */
+.section { padding-block: var(--section-y, 4rem); }
+@media (min-width: 768px) { .section { padding-block: var(--section-y-lg, 6rem); } }
+
+/* Separador suave entre secciones */
+.section + .section {
+  border-top: var(--border, 1px) solid var(--color-border);
+  background: linear-gradient(180deg, transparent, hsl(var(--neutral-50))) no-repeat;
+  background-size: 100% 80px;
+  background-position: top;
+}
+
+/* Regla horizontal */
+.hr {
+  height: 1px;
+  background: var(--color-border);
+  border: 0;
+  margin: var(--space-6) 0;
+}
+
+/* ===== Botones =========================================================== */
+/* Base (neutro; borde sutil para no perderse en fondos claros) */
+.btn {
+  /* tokens internos por variante */
+  --_bg: var(--color-surface);
+  --_fg: var(--color-fg);
+  --_bd: var(--color-border);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  min-height: var(--btn-h);
+  padding-inline: var(--btn-pad-x);
+  padding-block: .625rem;
+
+  background: var(--_bg);
+  color: var(--_fg);
+  border: 1px solid var(--_bd);
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition-fast),
+    box-shadow var(--transition);
+}
+.btn:hover  { transform: translateY(-1px); box-shadow: var(--btn-shadow-hover); }
+.btn:active { transform: translateY(0); }
+
+/* ¡BLINDAJE! — anclas con clase .btn nunca cambian su color por hover/visited del navegador */
+a.btn,
+a.btn:hover,
+a.btn:active,
+a.btn:focus,
+a.btn:focus-visible,
+a.btn:visited {
+  color: var(--_fg) !important;
+  -webkit-text-fill-color: var(--_fg) !important; /* Safari/iOS */
+  text-decoration: none !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+/* Asegura que hijos (span/svg) hereden el color correcto */
+.btn :where(span, strong, em, svg, i) {
+  color: inherit !important;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* Primaria (CTA) */
+.btn-primary {
+  --_bg: var(--color-primary);
+  --_fg: var(--color-on-primary);
+  --_bd: transparent;
+}
+.btn-primary:hover  { --_bg: var(--color-primary-600); }
+.btn-primary:active { --_bg: var(--color-primary-700); }
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus-visible {
+  color: var(--_fg) !important;
+  -webkit-text-fill-color: var(--_fg) !important;
+}
+
+/* Variante suave (útil para heros muy claros como “secundario”) */
+.btn-soft {
+  --_bg: color-mix(in oklch, var(--color-primary) 14%, white);
+  --_fg: var(--color-primary);
+  --_bd: transparent;
+}
+.btn-soft:hover  { --_bg: color-mix(in oklch, var(--color-primary) 20%, white); }
+.btn-soft:active { --_bg: color-mix(in oklch, var(--color-primary) 26%, white); }
+/* Asegura color correcto también en <a> */
+a.btn-soft,
+a.btn-soft:hover,
+a.btn-soft:active,
+a.btn-soft:focus-visible {
+  color: var(--_fg) !important;
+  -webkit-text-fill-color: var(--_fg) !important;
+}
+
+/* Outline */
+.btn-outline {
+  --_bg: var(--color-surface);
+  --_fg: var(--color-fg);
+  --_bd: var(--color-border);
+}
+.btn-outline:hover {
+  --_bd: var(--color-primary);
+  --_fg: var(--color-primary);
+}
+
+/* Tarjetas */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+/* Navbar links */
+#siteHeader nav a { font-size: var(--nav-font-size); } /* cobertura extra */
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: .75rem;
+  border-radius: .5rem;
+  color: var(--color-fg);
+  opacity: .8;
+  transition: color .18s ease, opacity .18s ease, background-color .18s ease;
+  font-size: var(--nav-font-size);   /* ← nuevo tamaño */
+  letter-spacing: -0.01em;           /* ← mejor legibilidad */
+}
+.nav-link:hover { color: var(--color-primary); opacity: 1; }
+
+/* (Opcional) texto de marca si es texto y no SVG */
+#siteHeader [data-brand],
+#siteHeader .brand,
+#siteHeader .logo,
+#siteHeader .site-title {
+  font-size: var(--nav-brand-size);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Activo (scroll-spy) — SOLO para nav-link */
+#siteHeader nav a.nav-link.nav-active,
+#mobileNav     a.nav-link.nav-active {
+  color: var(--color-primary) !important;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* Focus visible */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Motion reduce */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar */
+* { scrollbar-width: thin; scrollbar-color: hsl(var(--neutral-300)) transparent; }
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb { background: hsl(var(--neutral-300)); border-radius: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+
+/* ── Reveal animations ─────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity .6s ease,
+      transform .6s cubic-bezier(.22,.61,.36,1),
+      filter .6s ease;
+    will-change: opacity, transform, filter;
+    filter: blur(0);
+  }
+  .reveal-in { opacity: 1; transform: none; filter: blur(0); }
+
+  .reveal-up    { transform: translateY(16px); }
+  .reveal-down  { transform: translateY(-16px); }
+  .reveal-left  { transform: translateX(16px); }
+  .reveal-right { transform: translateX(-16px); }
+  .reveal-scale { transform: scale(.96); }
+  .reveal-blur  { filter: blur(6px); }
+}

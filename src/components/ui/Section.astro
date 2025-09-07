@@ -1,0 +1,56 @@
+---
+/**
+ * Section wrapper unificado
+ *
+ * Props (de BaseSectionProps + mejoras):
+ * - id?: string
+ * - title?: string
+ * - subtitle?: string
+ * - variant?: 'default' | 'alt' | 'inverted'
+ * - className?: string
+ * - as?: string (tag HTML a usar, por defecto <section>)
+ *
+ * Reglas:
+ * - Aplica .section (padding vertical desde tokens.css)
+ * - Aplica clases por variante desde section-variants.ts
+ * - Si recibe title/subtitle, los renderiza dentro de .container
+ * - El contenido adicional se pasa vía <slot>
+ */
+
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+import { sectionVariantClasses } from "@/utils/section-variants";
+
+interface Props extends BaseSectionProps {
+  as?: keyof HTMLElementTagNameMap;
+}
+
+const {
+  id,
+  title,
+  subtitle,
+  variant = "default" as Variant,
+  className = "",
+  as = "section",
+} = Astro.props as Props;
+
+const Tag = as as any;
+const classes = sectionVariantClasses(variant);
+---
+
+<Tag
+  id={id}
+  class={`section ${classes} ${className}`.trim()}
+  aria-labelledby={title ? `${id || "section"}-title` : undefined}
+>
+  {
+    title && (
+      <div class="container mb-6">
+        <h2 id={`${id || "section"}-title`} class="h2">
+          {title}
+        </h2>
+        {subtitle && <p class="lead mt-2">{subtitle}</p>}
+      </div>
+    )
+  }
+  <slot />
+</Tag>

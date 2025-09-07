@@ -1,0 +1,59 @@
+/* TEMA POR DEFECTO (HSL) */
+@layer base {
+  html {
+    /* Marca HSL por defecto (ajusta el tono global aquí si quieres) */
+    --brand-hue: 230;
+    --brand-sat: 90%;
+    --brand-lit: 55%;
+
+    /* Acento derivado (si no hay brand-accent en HEX) */
+    --accent-hue: calc(var(--brand-hue) + 20);
+    --accent-sat: 95%;
+    --accent-lit: 55%;
+
+    /* ================== PALETA LIGHT POR DEFECTO =================== */
+    /* Superficies y texto */
+    --color-bg:       hsl(var(--neutral-0));
+    --color-bg-elev:  hsl(var(--neutral-50));   /* antes neutral-0; ahora con sutil elevación */
+    --color-surface:  hsl(var(--neutral-0));
+    --color-border:   hsl(var(--neutral-200));
+    --color-fg:       hsl(var(--neutral-900));
+    --color-fg-muted: hsl(var(--neutral-500));
+
+    /* Foco coherente con marca/tenant */
+    --color-ring:     var(--color-primary);
+
+    /* Primario (derivado de la marca HSL) */
+    --color-primary:     hsl(var(--brand-hue) var(--brand-sat) var(--brand-lit));
+    --color-primary-600: hsl(var(--brand-hue) var(--brand-sat) calc(var(--brand-lit) - 6%));
+    --color-primary-700: hsl(var(--brand-hue) var(--brand-sat) calc(var(--brand-lit) - 12%));
+    --color-on-primary:  hsl(var(--neutral-0));
+
+    /* Links desacoplados de botones, pero alineados al primario */
+    --link:       var(--color-primary);
+    --link-hover: var(--color-primary-700);
+  }
+
+  /* ================== AUTO → DARK ===================
+     Solo aplica cuando usas <html data-theme="auto">.
+     Si prefieres "auto" sin atributo, mueve estas reglas a :root:not([data-theme]).
+  --------------------------------------------------- */
+  @media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] {
+      /* Neutros en dark */
+      --color-bg:       hsl(var(--neutral-900));
+      --color-bg-elev:  hsl(var(--neutral-800));
+      --color-surface:  hsl(var(--neutral-800));
+      --color-border:   hsl(var(--neutral-700));
+      --color-fg:       hsl(var(--neutral-50));
+      --color-fg-muted: hsl(var(--neutral-400));
+
+      /* Un poco más de “punch” al primario en dark (se refleja en 600/700) */
+      --brand-lit: calc(var(--brand-lit) + 5%);
+
+      /* Links en dark, también en torno al primario */
+      --link:       var(--color-primary);
+      --link-hover: var(--color-primary-600);
+    }
+  }
+}

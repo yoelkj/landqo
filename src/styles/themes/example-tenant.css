@@ -1,0 +1,22 @@
+/**
+ * EJEMPLO DE TEMA POR TENANT
+ * - Importa este archivo además del default y actívalo con: <html data-theme="example-tenant">
+ * - Sólo override de primitivos (marca/accent) o, si quieres, semánticos directos.
+ */
+
+html[data-theme="example-tenant"] {
+  /* Marca “verde” */
+  --brand-hue: 155;
+  --brand-sat: 75%;
+  --brand-lit: 45%;
+
+  --accent-hue: calc(var(--brand-hue) - 30);
+  --accent-sat: 85%;
+  --accent-lit: 55%;
+}
+
+/* Puedes hacer overrides específicos si un tenant lo necesita: */
+html[data-theme="example-tenant"] {
+  --radius-lg: 1.25rem;
+  --shadow-md: 0 10px 26px hsl(220 8% 10% / .14);
+}

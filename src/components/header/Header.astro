@@ -1,0 +1,11 @@
+---
+// no cambies el import del NavBar
+import NavBar from "./NavBar.astro";
+---
+
+<!-- Wrapper sin landmark para no duplicar <header> -->
+<div class="relative">
+  <NavBar />
+  <!-- Spacer para que el contenido no quede debajo del header fixed -->
+  <div aria-hidden="true" style="height: var(--header-h, 64px)"></div>
+</div>

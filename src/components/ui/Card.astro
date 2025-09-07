@@ -1,0 +1,140 @@
+---
+/**
+ * Card.astro — contenedor versátil con variantes y estados interactivos
+ *
+ * Props:
+ * - as?: "section" | "article" | "div" | "li"      (default: "section")
+ * - href?: string                                  (si existe => card interactiva como <a>)
+ * - target?: string                                (p/ href)
+ * - rel?: string                                   (p/ href; auto añade noopener si target=_blank)
+ * - variant?: "surface" | "elevated" | "subtle"    (default: "surface")
+ * - tone?: "default" | "primary" | "accent"        (borde/sombra sutil de color) (default: "default")
+ * - padding?: "none" | "sm" | "md" | "lg"          (default: "md")
+ * - rounded?: "md" | "lg" | "xl" | "2xl"           (default: "lg")
+ * - hover?: boolean                                 (default: true; solo en modo interactivo)
+ * - className?: string
+ *
+ * Slots:
+ * - default   → contenido libre
+ * - header    → cabecera (título, acciones)
+ * - media     → imagen/video superior
+ * - footer    → acciones o metadatos al final
+ */
+
+interface Props {
+  as?: "section" | "article" | "div" | "li";
+  href?: string;
+  target?: string;
+  rel?: string;
+  variant?: "surface" | "elevated" | "subtle";
+  tone?: "default" | "primary" | "accent";
+  padding?: "none" | "sm" | "md" | "lg";
+  rounded?: "md" | "lg" | "xl" | "2xl";
+  hover?: boolean;
+  className?: string;
+}
+
+const {
+  as = "section",
+  href,
+  target,
+  rel: relProp,
+  variant = "surface",
+  tone = "default",
+  padding = "md",
+  rounded = "lg",
+  hover = true,
+  className = "",
+} = Astro.props as Props;
+
+const isLink = typeof href === "string" && href.length > 0;
+
+// rel seguro si abre en nueva pestaña
+const rel =
+  isLink && target === "_blank"
+    ? relProp
+      ? relProp
+      : "noopener noreferrer"
+    : relProp;
+
+// clases por tamaño de padding
+const pad =
+  padding === "none"
+    ? ""
+    : padding === "sm"
+      ? "p-4"
+      : padding === "lg"
+        ? "p-8"
+        : "p-6"; // md
+
+// radios
+const radius =
+  rounded === "md"
+    ? "rounded-[var(--radius-md)]"
+    : rounded === "xl"
+      ? "rounded-[var(--radius-xl)]"
+      : rounded === "2xl"
+        ? "rounded-[var(--radius-2xl)]"
+        : "rounded-[var(--radius-lg)]";
+
+// variante visual
+const variantCls = {
+  surface:
+    "bg-[color:var(--color-surface)] border border-[color:var(--color-border)] shadow-[var(--shadow-sm)]",
+  elevated:
+    "bg-[color:var(--color-bg-elev)] border border-[color:var(--color-border)] shadow-[var(--shadow-md)]",
+  subtle: "bg-transparent border border-[color:var(--color-border)]/70",
+}[variant];
+
+// tono (subrayado cromático muy leve; respeta tenants)
+const toneCls = {
+  default: "",
+  primary: "ring-1 ring-[color:var(--color-primary)]/10",
+  accent: "ring-1 ring-[color:var(--color-accent)]/10",
+}[tone];
+
+// interacción/hover si es link
+const interactive = isLink
+  ? `transition-transform transition-shadow duration-200 will-change-transform
+       ${hover ? "hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]" : ""}
+       focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-ring)]`
+  : "";
+
+// wrapper tag
+const Tag = (isLink ? "a" : as) as any;
+---
+
+<Tag
+  {...isLink ? { href, target, rel } : {}}
+  class={`card ${variantCls} ${toneCls} ${radius} ${pad} ${interactive} ${className}`
+    .replace(/\s+/g, " ")
+    .trim()}
+>
+  {
+    Astro.slots.has("media") && (
+      <div class={`mb-4 overflow-hidden ${radius}`}>
+        <slot name="media" />
+      </div>
+    )
+  }
+
+  {
+    Astro.slots.has("header") && (
+      <header class="mb-3 flex items-center justify-between gap-3">
+        <slot name="header" />
+      </header>
+    )
+  }
+
+  <div class="contents">
+    <slot />
+  </div>
+
+  {
+    Astro.slots.has("footer") && (
+      <footer class="mt-4">
+        <slot name="footer" />
+      </footer>
+    )
+  }
+</Tag>

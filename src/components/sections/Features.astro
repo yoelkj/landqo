@@ -1,0 +1,88 @@
+---
+/**
+ * Features.astro — Sección de características
+ *
+ * Props:
+ * - id?: string
+ * - title?: string          — título de la sección (default: "Características")
+ * - subtitle?: string       — subtítulo opcional
+ * - features?: FeatureItem[]
+ * - variant?: "default"|"alt"|"inverted"
+ * - className?: string
+ *
+ * FeatureItem:
+ * - title: string
+ * - desc?: string
+ * - icon?: string (emoji, SVG path o nombre de ícono futuro)
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+export interface FeatureItem {
+  title: string;
+  desc?: string;
+  icon?: string;
+}
+
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  features?: FeatureItem[];
+}
+
+const {
+  id = "features",
+  title = "Características",
+  subtitle,
+  features = [
+    {
+      title: "Editor modular",
+      desc: "Construye secciones arrastrando y soltando.",
+    },
+    {
+      title: "Secciones reusables",
+      desc: "Crea componentes que puedes usar en múltiples páginas.",
+    },
+    {
+      title: "Temas por tenant",
+      desc: "Personaliza colores y estilos por cliente.",
+    },
+  ],
+  variant = "default" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+>
+  <div class="container">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        features.map((f) => (
+          <article class="card p-6 transition hover:shadow-md focus-within:ring-2 focus-within:ring-[color:var(--color-ring)] rounded-lg">
+            {f.icon && (
+              <div
+                class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg
+                       bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]"
+              >
+                <span class="text-xl">{f.icon}</span>
+              </div>
+            )}
+            <h3 class="font-semibold text-lg">{f.title}</h3>
+            {f.desc && (
+              <p class="mt-2 text-sm text-[color:var(--color-fg-muted)]">
+                {f.desc}
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Section>

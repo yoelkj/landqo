@@ -1,0 +1,200 @@
+---
+/**
+ * ContactForm.astro — Formulario de contacto (helpers de utils/forms.ts)
+ */
+interface Props {
+  endpoint?: string;
+  redirectOnSuccess?: string;
+  compact?: boolean;
+}
+const {
+  endpoint = "/api/lead",
+  redirectOnSuccess = "",
+  compact = false,
+} = Astro.props as Props;
+
+const uid = Math.random().toString(36).slice(2, 9);
+const nameId = `name-${uid}`;
+const emailId = `email-${uid}`;
+const messageId = `message-${uid}`;
+---
+
+<form
+  data-js="contact-form"
+  data-endpoint={endpoint}
+  data-redirect={redirectOnSuccess}
+  novalidate
+  class={`card border border-[color:var(--color-border)] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)] ${compact ? "p-4" : "p-6"}`}
+>
+  <input
+    type="text"
+    name="hp"
+    tabindex="-1"
+    autocomplete="off"
+    class="hidden"
+    aria-hidden="true"
+  />
+
+  <div class="grid gap-4">
+    <div>
+      <label for={nameId} class="block text-sm font-medium">Nombre</label>
+      <input
+        id={nameId}
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        class="mt-1 w-full h-10 rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-bg-elev)] px-3"
+      />
+      <p data-err="name" class="mt-1 text-xs text-red-600 hidden">
+        Ingresa tu nombre.
+      </p>
+    </div>
+
+    <div>
+      <label for={emailId} class="block text-sm font-medium">Email</label>
+      <input
+        id={emailId}
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        spellcheck="false"
+        class="mt-1 w-full h-10 rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-bg-elev)] px-3"
+      />
+      <p data-err="email" class="mt-1 text-xs text-red-600 hidden">
+        Ingresa un email válido.
+      </p>
+    </div>
+
+    <div>
+      <label for={messageId} class="block text-sm font-medium">Mensaje</label>
+      <textarea
+        id={messageId}
+        name="message"
+        rows="4"
+        required
+        class="mt-1 w-full rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-bg-elev)] px-3 py-2"
+      ></textarea>
+      <p data-err="message" class="mt-1 text-xs text-red-600 hidden">
+        Cuéntanos brevemente tu necesidad.
+      </p>
+    </div>
+
+    <label class="inline-flex items-start gap-2 text-sm">
+      <input name="consent" type="checkbox" value="true" class="mt-1" />
+      <span
+        >Estoy de acuerdo con la <a
+          href="/legales/privacidad/"
+          class="underline">política de privacidad</a
+        >.</span
+      >
+    </label>
+
+    <div class="flex items-center gap-3">
+      <button
+        type="submit"
+        data-label="Enviar"
+        class="btn btn-primary h-10 px-5 rounded-[var(--radius-lg)] transition-none"
+      >
+        Enviar
+      </button>
+      <div data-status class="text-sm" aria-live="polite"></div>
+    </div>
+  </div>
+</form>
+
+<script type="module">
+  import {
+    formDataToObject,
+    isValidEmail,
+    isHoneypot,
+    postForm,
+  } from "@/utils/forms";
+
+  const forms = document.querySelectorAll(
+    'form[data-js="contact-form"]:not([data-bound])'
+  );
+  forms.forEach((form) => {
+    form.setAttribute("data-bound", "1");
+
+    const $status = form.querySelector("[data-status]");
+    const $btn = form.querySelector('button[type="submit"]');
+
+    const showErr = (key, on) => {
+      const el = form.querySelector(`[data-err="${key}"]`);
+      if (el) el.classList.toggle("hidden", !on);
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      showErr("name", false);
+      showErr("email", false);
+      showErr("message", false);
+      if ($status) $status.textContent = "";
+
+      const fd = new FormData(form);
+      const values = formDataToObject(fd);
+
+      if (isHoneypot(values, "hp")) {
+        form.reset();
+        if ($status) $status.textContent = "Gracias.";
+        return;
+      }
+
+      const name = String(values.name || "").trim();
+      const email = String(values.email || "").trim();
+      const message = String(values.message || "").trim();
+
+      let ok = true;
+      if (!name) {
+        showErr("name", true);
+        ok = false;
+      }
+      if (!isValidEmail(email)) {
+        showErr("email", true);
+        ok = false;
+      }
+      if (!message) {
+        showErr("message", true);
+        ok = false;
+      }
+      if (!ok) return;
+
+      values.consent = String(values.consent || "") === "true";
+
+      const defaultLabel =
+        ($btn && $btn.getAttribute("data-label")) || "Enviar";
+      if ($btn) {
+        $btn.setAttribute("disabled", "true");
+        $btn.textContent = "Enviando…";
+      }
+
+      const endpoint = form.getAttribute("data-endpoint") || "/api/lead";
+      const res = await postForm(endpoint, values, {
+        withMeta: true,
+        timeoutMs: 10000,
+      });
+
+      if (res.ok && res.json && typeof res.json === "object" && res.json.ok) {
+        const redirect = form.getAttribute("data-redirect") || "";
+        if (redirect) {
+          window.location.href = redirect;
+        } else {
+          form.reset();
+          if ($status)
+            $status.textContent = "¡Gracias! Te contactaremos pronto.";
+        }
+      } else {
+        if ($status)
+          $status.textContent =
+            "No pudimos enviar tu mensaje. Intenta nuevamente.";
+      }
+
+      if ($btn) {
+        $btn.removeAttribute("disabled");
+        $btn.textContent = defaultLabel;
+      }
+    });
+  });
+</script>

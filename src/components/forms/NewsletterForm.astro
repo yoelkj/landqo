@@ -1,0 +1,146 @@
+---
+/**
+ * NewsletterForm.astro — Formulario simple de suscripción (email-only)
+ */
+interface Props {
+  endpoint?: string;
+  redirectOnSuccess?: string;
+  placeholder?: string;
+  submitLabel?: string;
+  compact?: boolean;
+}
+const {
+  endpoint = "/api/lead",
+  redirectOnSuccess = "",
+  placeholder = "Tu email",
+  submitLabel = "Suscribirme",
+  compact = true,
+} = Astro.props as Props;
+---
+
+<form
+  data-js="newsletter-form"
+  data-endpoint={endpoint}
+  data-redirect={redirectOnSuccess}
+  novalidate
+  class={`card border border-[color:var(--color-border)] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)] ${compact ? "p-3" : "p-5"}`}
+>
+  <input
+    type="text"
+    name="hp"
+    tabindex="-1"
+    autocomplete="off"
+    class="hidden"
+    aria-hidden="true"
+  />
+
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div class="flex-1">
+      <label for="nl-email" class="sr-only">Email</label>
+      <input
+        id="nl-email"
+        name="email"
+        type="email"
+        required
+        placeholder={placeholder}
+        autocomplete="email"
+        spellcheck="false"
+        class="w-full h-10 rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-bg-elev)] px-3"
+      />
+      <p data-err="email" class="mt-1 text-xs text-red-600 hidden">
+        Ingresa un email válido.
+      </p>
+    </div>
+
+    <button
+      type="submit"
+      data-label={submitLabel}
+      class="btn btn-primary h-10 px-5 rounded-[var(--radius-lg)] transition-none"
+    >
+      {submitLabel}
+    </button>
+  </div>
+
+  <div data-status class="mt-2 text-sm" aria-live="polite"></div>
+</form>
+
+<script type="module">
+  import {
+    formDataToObject,
+    isValidEmail,
+    isHoneypot,
+    postForm,
+  } from "@/utils/forms";
+
+  const forms = document.querySelectorAll(
+    'form[data-js="newsletter-form"]:not([data-bound])'
+  );
+  forms.forEach((form) => {
+    form.setAttribute("data-bound", "1");
+
+    const $errEmail = form.querySelector('[data-err="email"]');
+    const $btn = form.querySelector('button[type="submit"]');
+    const $status = form.querySelector("[data-status]");
+
+    const setErr = (on) => {
+      if ($errEmail) $errEmail.classList.toggle("hidden", !on);
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setErr(false);
+      if ($status) $status.textContent = "";
+
+      const fd = new FormData(form);
+      const values = formDataToObject(fd);
+
+      if (isHoneypot(values, "hp")) {
+        form.reset();
+        if ($status) $status.textContent = "Gracias.";
+        return;
+      }
+
+      const email = String(values.email || "").trim();
+      if (!isValidEmail(email)) {
+        setErr(true);
+        return;
+      }
+
+      // Cumplir validación del endpoint /api/lead por defecto
+      if (!values.name) values.name = "(newsletter)";
+      if (!values.message) values.message = "Quiero suscribirme";
+
+      const defaultLabel =
+        ($btn && $btn.getAttribute("data-label")) || "Suscribirme";
+      if ($btn) {
+        $btn.setAttribute("disabled", "true");
+        $btn.textContent = "Enviando…";
+      }
+
+      const endpoint = form.getAttribute("data-endpoint") || "/api/lead";
+      const res = await postForm(endpoint, values, {
+        withMeta: true,
+        timeoutMs: 10000,
+      });
+
+      if (res.ok && res.json && typeof res.json === "object" && res.json.ok) {
+        const redirect = form.getAttribute("data-redirect") || "";
+        if (redirect) {
+          window.location.href = redirect;
+        } else {
+          form.reset();
+          if ($status) $status.textContent = "¡Te suscribiste correctamente!";
+        }
+      } else {
+        if ($status)
+          $status.textContent =
+            "No pudimos procesar tu suscripción. Intenta nuevamente.";
+      }
+
+      if ($btn) {
+        $btn.removeAttribute("disabled");
+        $btn.textContent = defaultLabel;
+      }
+    });
+  });
+</script>

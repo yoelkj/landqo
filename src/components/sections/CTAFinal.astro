@@ -1,0 +1,57 @@
+---
+/**
+ * CTAFinal.astro — Banda final de Call To Action
+ *
+ * ✅ Características:
+ * - Fondo configurable por `variant` (default|alt|inverted).
+ * - Tipado de props (reutiliza BaseSectionProps).
+ * - Texto + subtítulo opcional + botón CTA centrado.
+ * - Botón con variante primaria, accesible y responsivo.
+ *
+ * Props:
+ * - id?: string
+ * - title?: string              — título principal (default: "¿Listo para lanzar tu landing?")
+ * - subtitle?: string           — subtítulo debajo del título
+ * - ctaLabel?: string           — texto del botón (default: "Hablar ahora")
+ * - ctaHref?: string            — destino del botón (default: "#contact")
+ * - variant?: "default"|"alt"|"inverted" — fondo/contraste (default: "inverted")
+ * - className?: string
+ */
+
+import Section from "@/components/ui/Section.astro";
+import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+interface Props extends BaseSectionProps {
+  title?: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  id = "cta",
+  title = "¿Listo para lanzar tu landing?",
+  subtitle = "Activa solo las secciones que necesites y publica en días.",
+  ctaLabel = "Hablar ahora",
+  ctaHref = "#contact",
+  variant = "inverted" as Variant,
+  className = "",
+} = Astro.props as Props;
+---
+
+<Section id={id} variant={variant} className={`text-center ${className}`}>
+  <div class="container max-w-2xl">
+    <h2 class="h2">{title}</h2>
+    {
+      subtitle && (
+        <p class="mt-3 text-lg text-[color:var(--color-fg-muted)]">
+          {subtitle}
+        </p>
+      )
+    }
+
+    <div class="mt-6 flex justify-center">
+      <a href={ctaHref} class="btn btn-primary">{ctaLabel}</a>
+    </div>
+  </div>
+</Section>

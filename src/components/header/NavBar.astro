@@ -1,0 +1,364 @@
+---
+/**
+ * Header tipo Hostinger (sin scroll-spy aquí):
+ * - Top: sin línea/border (se enmascara con ::after).
+ * - Scroll o menú abierto: SOLO sombra.
+ * - CTA visible (desktop y móvil) usando .btn .btn-primary (tokens).
+ * - Enlaces rediseñados: .nav-link (desktop y móvil), hover consistente.
+ * - Anchors con offset (#id y /#id).
+ * - A11y: focus trap + inert. Fixed blindado con portal al <body>.
+ */
+
+const isHome =
+  Astro.url.pathname === "/" ||
+  Astro.url.pathname === "/index" ||
+  Astro.url.pathname === "/index.html";
+
+const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
+---
+
+<header
+  id="siteHeader"
+  role="banner"
+  class="fixed top-0 inset-x-0 z-[1000] isolate"
+>
+  <div class="container flex items-center justify-between h-16">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2">
+      <span class="h-8 w-8 rounded-lg bg-[var(--color-primary)] block"></span>
+      <span class="font-semibold tracking-tight">Boilerplate</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav
+      class="hidden md:flex items-center gap-1 text-sm"
+      aria-label="Navegación principal"
+    >
+      <a
+        href={homeHash("features")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]"
+        >Características</a
+      >
+      <a
+        href={homeHash("pricing")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a
+      >
+      <a
+        href={homeHash("faq")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">FAQ</a
+      >
+
+      <!-- CTA DESKTOP -->
+      <a href="#cta" class="btn btn-primary h-10 px-4 ml-2">Empezar</a>
+    </nav>
+
+    <!-- Mobile: CTA + Hamburguesa -->
+    <div class="md:hidden flex items-center gap-2">
+      <a href="#cta" class="btn btn-primary h-10 px-4">Empezar</a>
+
+      <button
+        id="menuBtn"
+        class="inline-flex items-center justify-center rounded-lg h-10 w-10 border border-[color:var(--color-border)] hover:bg-[color:var(--color-bg-elev)]"
+        aria-controls="mobileNav"
+        aria-expanded="false"
+        aria-label="Abrir menú"
+      >
+        <svg
+          id="iconOpen"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-width="2"
+            d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        <svg
+          id="iconClose"
+          class="h-5 w-5 hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-width="2"
+            d="M6 6l12 12M18 6l-12 12"></path>
+        </svg>
+        <span class="sr-only">Menú</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Overlay -->
+<div
+  id="mobileOverlay"
+  class="md:hidden hidden fixed inset-x-0 bottom-0 bg-black/60"
+  style="top: var(--header-h, 64px); z-index: 998;"
+  role="presentation"
+>
+</div>
+
+<!-- Panel móvil -->
+<nav
+  id="mobileNav"
+  class="md:hidden hidden fixed inset-x-0 bg-[color:var(--color-surface)] shadow-2xl overflow-y-auto"
+  style="top: var(--header-h, 64px); height: calc(100dvh - var(--header-h, 64px)); z-index: 999;"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menú principal"
+>
+  <div class="container py-4">
+    <ul class="flex flex-col gap-1 text-base">
+      <li>
+        <a
+          href={homeHash("features")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >Características</a
+        >
+      </li>
+      <li>
+        <a
+          href={homeHash("pricing")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >Precios</a
+        >
+      </li>
+      <li>
+        <a
+          href={homeHash("faq")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >FAQ</a
+        >
+      </li>
+    </ul>
+
+    <div class="mt-4 pt-4 [box-shadow:inset_0_1px_0_var(--color-border)]">
+      <a href="#cta" class="btn btn-primary w-full h-12 rounded-xl">Empezar</a>
+    </div>
+  </div>
+</nav>
+
+<style is:inline>
+  :root {
+    --header-h: 64px;
+  }
+
+  /* Estado top: SIN línea visible; sombra sólo en scroll */
+  #siteHeader {
+    background: var(--color-surface, #fff);
+    padding-top: env(safe-area-inset-top);
+    box-shadow: none;
+    border: 0;
+    outline: 0;
+    transition:
+      box-shadow 0.25s ease,
+      background-color 0.25s ease;
+  }
+  /* Tapa cualquier hairline del contenido cuando estás en top */
+  #siteHeader::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: var(--color-surface, #fff);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+  #siteHeader.header--scrolled,
+  body.menu-open #siteHeader {
+    box-shadow: 0 12px 40px rgba(2, 6, 23, 0.1);
+  }
+  #siteHeader.header--scrolled::after,
+  body.menu-open #siteHeader::after {
+    opacity: 0;
+  }
+
+  /* Asegura consistencia visual del CTA en el header */
+  #siteHeader .btn {
+    line-height: 1;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // --- Portal al <body> para blindar el fixed ---
+    var get = function (id) {
+      return document.getElementById(id);
+    };
+    function portalToBody() {
+      var header = get("siteHeader"),
+        overlay = get("mobileOverlay"),
+        panel = get("mobileNav");
+      if (!header) return;
+      if (header.parentElement !== document.body) {
+        document.body.prepend(header);
+        if (overlay) document.body.appendChild(overlay);
+        if (panel) document.body.appendChild(panel);
+      }
+    }
+    portalToBody();
+
+    // Refs
+    var header = get("siteHeader");
+    var btn = get("menuBtn");
+    var panel = get("mobileNav");
+    var overlay = get("mobileOverlay");
+    var iconOpen = get("iconOpen");
+    var iconClose = get("iconClose");
+
+    // 1) Altura → CSS var
+    function setHeaderH() {
+      var h = (header && header.offsetHeight) || 64;
+      document.documentElement.style.setProperty("--header-h", h + "px");
+    }
+    setHeaderH();
+    addEventListener("resize", setHeaderH, { passive: true });
+
+    // 2) A11y: focus trap + inert en menú móvil
+    var roots = Array.prototype.slice.call(
+      document.querySelectorAll("main, #pageRoot, #app, [data-app-root]")
+    );
+    var lastFocused = null;
+    var focusableSel =
+      'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    function trapFocus(container, e) {
+      if (e.key !== "Tab") return;
+      var nodes = Array.prototype.slice
+        .call(container.querySelectorAll(focusableSel))
+        .filter(function (el) {
+          return el.offsetParent !== null;
+        });
+      if (!nodes.length) return;
+      var first = nodes[0],
+        last = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+    function onKeydownTrap(e) {
+      trapFocus(panel, e);
+    }
+
+    // 3) Abrir/cerrar móvil
+    function scrollbarW() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+    function setOpen(toggle) {
+      var willOpen =
+        typeof toggle === "boolean"
+          ? toggle
+          : panel.classList.contains("hidden");
+      if (willOpen) lastFocused = document.activeElement;
+
+      panel.classList.toggle("hidden", !willOpen);
+      overlay.classList.toggle("hidden", !willOpen);
+      if (btn) btn.setAttribute("aria-expanded", String(willOpen));
+      if (iconOpen) iconOpen.classList.toggle("hidden", willOpen);
+      if (iconClose) iconClose.classList.toggle("hidden", !willOpen);
+      document.body.classList.toggle("overflow-hidden", willOpen);
+      document.body.classList.toggle("menu-open", willOpen);
+      document.body.style.paddingRight = willOpen ? scrollbarW() + "px" : "";
+
+      roots.forEach(function (el) {
+        if (el) el.toggleAttribute("inert", willOpen);
+      });
+      if (willOpen) {
+        (panel.querySelector(focusableSel) || panel).focus();
+        panel.addEventListener("keydown", onKeydownTrap);
+      } else {
+        panel.removeEventListener("keydown", onKeydownTrap);
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+        else if (btn && btn.focus) btn.focus();
+      }
+    }
+
+    if (btn)
+      btn.addEventListener("click", function () {
+        setOpen();
+      });
+    if (overlay)
+      overlay.addEventListener("click", function () {
+        setOpen(false);
+      });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+    Array.prototype.forEach.call(
+      panel ? panel.querySelectorAll("a") : [],
+      function (a) {
+        a.addEventListener("click", function () {
+          setOpen(false);
+        });
+      }
+    );
+    var mq = matchMedia("(min-width: 768px)");
+    if (mq && mq.addEventListener)
+      mq.addEventListener("change", function (e) {
+        if (e.matches) setOpen(false);
+      });
+
+    // 4) Estado de scroll → sombra (umbral 1px)
+    function onScroll() {
+      if (header)
+        header.classList.toggle("header--scrolled", window.scrollY > 1);
+    }
+    onScroll();
+    addEventListener("scroll", onScroll, { passive: true });
+
+    // Helpers para #id y /#id
+    function getHashId(href) {
+      if (!href) return "";
+      var i = href.indexOf("#");
+      return i >= 0 ? href.slice(i + 1) : "";
+    }
+
+    // 5) Anchors con offset (click en #id y /#id)
+    document.addEventListener("click", function (e) {
+      var t = e.target;
+      if (!(t instanceof Element)) return;
+      var a = t.closest(
+        'a[href^="#"]:not([data-no-offset]), a[href^="/#"]:not([data-no-offset])'
+      );
+      if (!a) return;
+      var id = getHashId(a.getAttribute("href") || "");
+      var el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      var h = (header && header.offsetHeight) || 64;
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var y = Math.max(
+        0,
+        el.getBoundingClientRect().top + window.scrollY - h - 12
+      );
+      window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+    });
+
+    // 6) Ajuste hash con offset (carga directa o cambios de hash)
+    function scrollToHashIfNeeded() {
+      if (!location.hash) return;
+      var el = document.getElementById(location.hash.slice(1));
+      if (!el) return;
+      requestAnimationFrame(function () {
+        var h = (header && header.offsetHeight) || 64;
+        var y = Math.max(
+          0,
+          el.getBoundingClientRect().top + window.scrollY - h - 12
+        );
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    }
+    addEventListener("load", scrollToHashIfNeeded);
+    addEventListener("hashchange", scrollToHashIfNeeded);
+  })();
+</script>

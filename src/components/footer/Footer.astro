@@ -1,0 +1,48 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 bg-[color:var(--color-surface)]">
+  <div
+    class="container py-8 grid gap-6 md:grid-cols-3 [box-shadow:inset_0_1px_0_var(--color-border)]"
+  >
+    <div>
+      <div class="inline-flex items-center gap-2">
+        <span
+          class="inline-block w-6 h-6 rounded-[var(--radius-md)] bg-[color:var(--color-primary)]"
+        ></span>
+        <strong>Boilerplate</strong>
+      </div>
+      <p class="mt-3 text-sm text-[color:var(--color-fg-muted)]">
+        Plantilla base para landings con Astro + Tailwind.
+      </p>
+    </div>
+
+    <nav>
+      <h3 class="text-sm font-semibold mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="/legales/privacidad/" class="hover:underline">Privacidad</a>
+        </li>
+        <li>
+          <a href="/legales/terminos/" class="hover:underline">Términos</a>
+        </li>
+        <li><a href="/legales/cookies/" class="hover:underline">Cookies</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h3 class="text-sm font-semibold mb-3">Contacto</h3>
+      <p class="text-sm text-[color:var(--color-fg-muted)]">
+        hola@tu-dominio.com
+      </p>
+    </div>
+  </div>
+
+  <!-- Separador final SIN border: usamos inset shadow superior en el bloque -->
+  <div class="[box-shadow:inset_0_1px_0_var(--color-border)]">
+    <div class="container py-4 text-xs text-[color:var(--color-fg-muted)]">
+      © {year} Boilerplate. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>

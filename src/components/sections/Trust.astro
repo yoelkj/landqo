@@ -1,0 +1,48 @@
+---
+/**
+ * Trust.astro — Logos de confianza
+ *
+ * Props:
+ * - id?: string
+ * - logos?: string[]  → rutas de imágenes de clientes
+ * - title?: string    → texto accesible para screen readers
+ */
+
+interface Props {
+  id?: string;
+  logos?: string[];
+  title?: string;
+}
+
+const {
+  id = "trust",
+  logos = [
+    "/assets/logo1.svg",
+    "/assets/logo2.svg",
+    "/assets/logo3.svg",
+    "/assets/logo4.svg",
+  ],
+  title = "Confían en nosotros",
+} = Astro.props as Props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <h2 class="sr-only">{title}</h2>
+    <div
+      class="grid grid-cols-2 gap-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 place-items-center opacity-80"
+    >
+      {
+        logos.map((src: string, i: number) => (
+          <img
+            src={src}
+            alt={`Logo cliente ${i + 1}`}
+            class="h-10 w-auto max-w-[140px] object-contain"
+            loading="lazy"
+            decoding="async"
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+---
+// src/components/ui/Badge.astro
+interface Props {
+  variant?: "default" | "primary" | "accent" | "success" | "warning" | "danger";
+}
+
+const { variant = "default" } = Astro.props;
+---
+
+<span class={`badge badge-${variant}`}>
+  <slot />
+</span>
+
+<style is:global>
+  /* Base */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-[var(--radius-sm)] 
+           text-xs font-medium border;
+    line-height: 1.2;
+    transition:
+      background var(--transition),
+      color var(--transition),
+      border-color var(--transition);
+  }
+
+  /* Variants */
+  .badge-default {
+    background: var(--color-bg-elev);
+    border-color: var(--color-border);
+    color: var(--color-fg);
+  }
+  .badge-primary {
+    background: color-mix(in oklch, var(--color-primary) 15%, transparent);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  .badge-accent {
+    background: color-mix(in oklch, var(--color-accent) 15%, transparent);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .badge-success {
+    background: color-mix(in oklch, var(--color-success) 15%, transparent);
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+  .badge-warning {
+    background: color-mix(in oklch, var(--color-warning) 20%, transparent);
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+  }
+  .badge-danger {
+    background: color-mix(in oklch, var(--color-danger) 15%, transparent);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+</style>

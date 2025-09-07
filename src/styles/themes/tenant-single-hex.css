@@ -1,0 +1,34 @@
+/* TENANT A — SOLO UN COLOR (HEX) */
+@layer base {
+  html[data-tenant="single-hex"] {
+    /* PRIMITIVOS */
+    --brand-primary:    #0EA5E9;
+    --brand-on-primary: #FFFFFF;
+
+    /* Tonos 600/700 — FALLBACKS ESTÁTICOS (si no hay color-mix) */
+    --brand-primary-600: #0c91cd;
+    --brand-primary-700: #0b81b6;
+
+    /* Si el navegador soporta color-mix, estas líneas sobrescriben los fallbacks */
+    --brand-primary-600: color-mix(in oklch, var(--brand-primary) 90%, black);
+    --brand-primary-700: color-mix(in oklch, var(--brand-primary) 80%, black);
+
+    /* SEMÁNTICOS → forzamos aquí para que el cambio sea inmediato */
+    --color-primary:     var(--brand-primary)     !important;
+    --color-primary-600: var(--brand-primary-600) !important;
+    --color-primary-700: var(--brand-primary-700) !important;
+    --color-on-primary:  var(--brand-on-primary)  !important;
+
+    /* Focus ring coherente (si no defines acento, usamos el primario) */
+    --color-ring:        var(--brand-primary)     !important;
+
+    /* (opcional) Si quieres acento distinto, descomenta:
+    --brand-accent:      #14B8A6; 
+    --brand-on-accent:   #FFFFFF;
+
+    --color-accent:      var(--brand-accent)      !important;
+    --color-on-accent:   var(--brand-on-accent)   !important;
+    --color-ring:        var(--brand-accent)      !important;
+    */
+  }
+}

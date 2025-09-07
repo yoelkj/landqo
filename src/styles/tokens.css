@@ -1,0 +1,170 @@
+/* src/styles/tokens.css */
+/**
+ * TOKENS DE DISEÑO (PRIMITIVOS + SEMÁNTICOS)
+ * - PRIMITIVOS: define paletas base (HSL o HEX por marca).
+ * - SEMÁNTICOS: lo que consumen los componentes (no tocar).
+ * - Contrato flexible: si hay HEX, se usa; si no, cae a HSL.
+ */
+@layer base {
+
+  /* ───────────────────── PRIMITIVOS (marca/base) ──────────────────────── */
+  :root {
+    /* Paleta base en HSL (fácil de ajustar por marca/tenant) */
+    --brand-hue: 230;
+    --brand-sat: 90%;
+    --brand-lit: 55%;
+
+    /* Paleta en HEX (opcional). Si defines estos, se usan y anulan el HSL. */
+    /* --brand-primary:      #6366f1; */
+    /* --brand-primary-600:  #5558e5; */
+    /* --brand-primary-700:  #4a4ecc; */
+    /* --brand-on-primary:   #ffffff; */
+
+    /* Secundario / Acento en HEX (opcionales) */
+    /* --brand-secondary:    #06b6d4;  --brand-on-secondary: #ffffff; */
+    /* --brand-accent:       #f97316;  --brand-on-accent:    #ffffff; */
+
+    /* Si no defines HEX para acento, se deriva del primario vía HSL */
+    --accent-hue: calc(var(--brand-hue) + 20);
+    --accent-sat: 95%;
+    --accent-lit: 55%;
+
+    /* Neutros (HSL) */
+    --neutral-0:   0 0% 100%;
+    --neutral-50:  210 20% 98%;
+    --neutral-100: 210 20% 96%;
+    --neutral-200: 214 15% 91%;
+    --neutral-300: 212 12% 84%;
+    --neutral-400: 215 11% 65%;
+    --neutral-500: 214 10% 49%;
+    --neutral-600: 215 15% 35%;
+    --neutral-700: 215 19% 27%;
+    --neutral-800: 217 33% 17%;
+    --neutral-900: 222 47% 11%;
+    --neutral-950: 228 56% 6%;
+
+    /* Estados (HSL) — opcionalmente sobrescribe con HEX: --success-hex, etc. */
+    --success: 142 71% 45%;
+    --warning: 38  92% 50%;
+    --danger:  0   84% 60%;
+    --info:    199 89% 48%;
+
+    /* Tipografía */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* Escalas tipográficas (clamp responsivo) — v2 */
+    --text-xs:   clamp(0.80rem, 0.74rem + 0.14vw, 0.84rem);
+    --text-sm:   clamp(0.92rem, 0.86rem + 0.16vw, 0.98rem);
+    --text-base: clamp(1.02rem, 0.98rem + 0.18vw, 1.10rem);
+    --text-lg:   clamp(1.14rem, 1.07rem + 0.26vw, 1.30rem);
+    --text-xl:   clamp(1.32rem, 1.22rem + 0.38vw, 1.60rem);
+    --text-2xl:  clamp(1.50rem, 1.36rem + 0.50vw, 2.05rem);
+    --text-3xl:  clamp(1.82rem, 1.64rem + 0.82vw, 2.56rem);
+    --text-4xl:  clamp(2.20rem, 1.98rem + 1.08vw, 3.20rem);
+
+    /* Espaciado (8pt grid) */
+    --space-1:  0.25rem; /* 4px  */
+    --space-2:  0.5rem;  /* 8px  */
+    --space-3:  0.75rem; /* 12px */
+    --space-4:  1rem;    /* 16px */
+    --space-5:  1.25rem; /* 20px */
+    --space-6:  1.5rem;  /* 24px */
+    --space-8:  2rem;    /* 32px */
+    --space-10: 2.5rem;  /* 40px */
+    --space-12: 3rem;    /* 48px */
+    --space-16: 4rem;    /* 64px */
+    --space-20: 5rem;    /* 80px */
+
+    /* Radios & sombras */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+
+    --shadow-sm: 0 1px 2px hsl(220 3% 15% / .06);
+    --shadow-md: 0 8px 24px hsl(220 3% 15% / .10);
+    --shadow-lg: 0 18px 40px hsl(220 3% 15% / .12);
+
+    /* Transiciones */
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    --transition-fast: 120ms var(--ease);
+    --transition:      200ms var(--ease);
+    --transition-slow: 320ms var(--ease);
+
+    /* Z-index (alineados con componentes) */
+    --z-base:    1;
+    --z-sticky:  1000; /* header */
+    --z-overlay: 1050;
+    --z-modal:   1100;
+
+    /* Contenedores / layout */
+    --container-max: 1200px;
+    --container-pad: 1rem; /* fallback histórico */
+
+    /* NEW: gutters por breakpoint */
+    --container-pad-sm: 16px; /* móviles */
+    --container-pad-md: 24px; /* tablet/desktop base */
+    --container-pad-lg: 32px; /* desktop amplio */
+
+    /* Header (usado por ScrollUi, anchors con offset, etc.) */
+    --header-h: 64px;
+
+    /* Borde y ritmo vertical */
+    --border: 1px;
+    --section-y:    4rem; /* mobile */
+    --section-y-lg: 6rem; /* ≥768px */
+  }
+
+  /* ───────────────────── SEMÁNTICOS (para componentes) ─────────────────── */
+  :root {
+    /* Superficies / texto */
+    --color-bg:       hsl(var(--neutral-0));
+    --color-bg-elev:  hsl(var(--neutral-50));
+    --color-surface:  hsl(var(--neutral-100));
+    --color-border:   hsl(var(--neutral-200));
+    --color-fg:       hsl(var(--neutral-800));
+    --color-fg-muted: hsl(var(--neutral-500));
+
+    /* Primario (HEX si existe; si no, HSL). Tonos 600/700 autogenerados si faltan. */
+    --color-primary:     var(--brand-primary,     hsl(var(--brand-hue) var(--brand-sat) var(--brand-lit)));
+    --color-primary-600: var(--brand-primary-600, color-mix(in oklch, var(--color-primary) 90%, black));
+    --color-primary-700: var(--brand-primary-700, color-mix(in oklch, var(--color-primary) 80%, black));
+    --color-on-primary:  var(--brand-on-primary,  hsl(var(--neutral-0)));
+
+    /* Secundario / acento */
+    --color-accent:        var(--brand-accent,    hsl(var(--accent-hue) var(--accent-sat) var(--accent-lit)));
+    --color-on-accent:     var(--brand-on-accent, hsl(var(--neutral-0)));
+
+    --color-secondary:     var(--brand-secondary, var(--color-accent));
+    --color-secondary-600: var(--brand-secondary-600, color-mix(in oklch, var(--color-secondary) 90%, black));
+    --color-secondary-700: var(--brand-secondary-700, color-mix(in oklch, var(--color-secondary) 80%, black));
+    --color-on-secondary:  var(--brand-on-secondary, hsl(var(--neutral-0)));
+
+    /* Estados */
+    --color-success: hsl(var(--success));
+    --color-warning: hsl(var(--warning));
+    --color-danger:  hsl(var(--danger));
+    --color-info:    hsl(var(--info));
+
+    /* Ring / focus */
+    --color-ring: var(--color-primary);
+
+    /* Links (fallbacks globales; los themes pueden sobrescribir) */
+    --link:       var(--color-primary);
+    --link-hover: var(--color-primary-700);
+  }
+
+  /* ───────────────────── Dark Mode opcional ───────────────────────────────
+     Activa con <html data-theme="dark"> (no rompe otros temas/tenants).
+  ------------------------------------------------------------------------- */
+  [data-theme="dark"] {
+    --color-bg:       hsl(var(--neutral-900));
+    --color-bg-elev:  hsl(var(--neutral-800));
+    --color-surface:  hsl(var(--neutral-800));
+    --color-border:   hsl(var(--neutral-700));
+    --color-fg:       hsl(var(--neutral-50));
+    --color-fg-muted: hsl(var(--neutral-400));
+  }
+}
