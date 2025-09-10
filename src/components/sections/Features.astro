@@ -1,57 +1,59 @@
 ---
-/**
- * Features.astro — Sección de características
- *
- * Props:
- * - id?: string
- * - title?: string          — título de la sección (default: "Características")
- * - subtitle?: string       — subtítulo opcional
- * - features?: FeatureItem[]
- * - variant?: "default"|"alt"|"inverted"
- * - className?: string
- *
- * FeatureItem:
- * - title: string
- * - desc?: string
- * - icon?: string (emoji, SVG path o nombre de ícono futuro)
- */
-
 import Section from "@/components/ui/Section.astro";
 import type { BaseSectionProps, Variant } from "@/utils/section-types";
+
+type FeatureStringOrObj = string | FeatureItem;
 
 export interface FeatureItem {
   title: string;
   desc?: string;
-  icon?: string;
+  icon?: string; // SVG inline "<svg ...>...</svg>" o texto corto
 }
 
 interface Props extends BaseSectionProps {
   title?: string;
   subtitle?: string;
-  features?: FeatureItem[];
+  features?: FeatureStringOrObj[];
+  cols?: 2 | 3 | 4;
+  dense?: boolean;
 }
 
 const {
   id = "features",
-  title = "Características",
+  title = "Características clave",
   subtitle,
-  features = [
-    {
-      title: "Editor modular",
-      desc: "Construye secciones arrastrando y soltando.",
-    },
-    {
-      title: "Secciones reusables",
-      desc: "Crea componentes que puedes usar en múltiples páginas.",
-    },
-    {
-      title: "Temas por tenant",
-      desc: "Personaliza colores y estilos por cliente.",
-    },
-  ],
+  features = [],
+  cols = 3,
+  dense = false,
   variant = "default" as Variant,
   className = "",
 } = Astro.props as Props;
+
+const list: FeatureItem[] = (features || []).map((f) =>
+  typeof f === "string" ? ({ title: f } as FeatureItem) : f
+);
+
+const gridCols =
+  cols === 4
+    ? "sm:grid-cols-2 lg:grid-cols-4"
+    : cols === 3
+      ? "sm:grid-cols-2 lg:grid-cols-3"
+      : "sm:grid-cols-2 lg:grid-cols-2";
+
+const padY = dense ? "py-5" : "py-7";
+const gap = dense ? "gap-8" : "gap-14";
+
+const isInlineSvg = (s?: string) =>
+  !!s && s.trim().startsWith("<") && s.toLowerCase().includes("<svg");
+
+const wobble = [
+  "-rotate-2",
+  "-rotate-1",
+  "rotate-1",
+  "rotate-2",
+  "-rotate-1",
+  "rotate-1",
+];
 ---
 
 <Section
@@ -59,30 +61,81 @@ const {
   title={title}
   subtitle={subtitle}
   variant={variant}
-  className={className}
+  className={`text-center ${className}`.trim()}
+  titleAccent="underline"
+  subtitleMuted={true}
 >
   <div class="container">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul role="list" class={`grid ${gap} ${gridCols} mt-10`}>
       {
-        features.map((f) => (
-          <article class="card p-6 transition hover:shadow-md focus-within:ring-2 focus-within:ring-[color:var(--color-ring)] rounded-lg">
-            {f.icon && (
-              <div
-                class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg
-                       bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]"
-              >
-                <span class="text-xl">{f.icon}</span>
+        list.map((f, i) => (
+          <li>
+            <article
+              class={`group relative ${padY} px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]`}
+            >
+              <div class="mx-auto mb-6 relative h-[88px] w-[106px]">
+                <svg
+                  viewBox="0 0 106 88"
+                  class={`absolute inset-0 ${wobble[i % wobble.length]} transition-transform duration-300 group-hover:scale-[1.03]`}
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z"
+                    fill="hsl(var(--primary-500,210_100%_52%))"
+                    fill-opacity=".09"
+                    stroke="hsl(var(--primary-500,210_100%_52%))"
+                    stroke-opacity=".22"
+                    stroke-width="1"
+                  />
+                </svg>
+
+                <div
+                  class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]"
+                  aria-hidden="true"
+                >
+                  {f.icon ? (
+                    isInlineSvg(f.icon) ? (
+                      <span
+                        class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"
+                        set:html={f.icon}
+                      />
+                    ) : (
+                      <span class="text-2xl leading-none">{f.icon}</span>
+                    )
+                  ) : (
+                    <span
+                      class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"
+                      set:html={
+                        '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>'
+                      }
+                    />
+                  )}
+                </div>
+
+                <span
+                  class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
               </div>
-            )}
-            <h3 class="font-semibold text-lg">{f.title}</h3>
-            {f.desc && (
-              <p class="mt-2 text-sm text-[color:var(--color-fg-muted)]">
-                {f.desc}
-              </p>
-            )}
-          </article>
+
+              <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]">
+                {f.title}
+              </h3>
+
+              {f.desc && (
+                <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]">
+                  {f.desc}
+                </p>
+              )}
+            </article>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
 </Section>
