@@ -1,90 +1,55 @@
-// Tipado básico opcional
+// Templates — usa los 4 proyectos reales como “plantillas”
 export type TemplateCard = {
-  id: string;
   name: string;
-  industry: "SaaS" | "Educación" | "E-commerce" | "Servicios" | "Evento" | "Salud";
-  color?: string;              // badge opcional
-  image: string;               // ruta pública /images/templates/...
-  url?: string;                // demo en vivo (opcional)
-  figma?: string;              // link figma (opcional)
-  features: string[];          // bullets
-  tags?: string[];             // search/etiquetas opcionales
+  industry: string;   // filtro/categoría
+  image?: string;
+  url?: string;       // si no quieres “Ver demo”, déjalo vacío
+  color?: string;     // badge (hex)
+  features?: string[]; // se muestran máx. 3
 };
 
-const templates: TemplateCard[] = [
+const items: TemplateCard[] = [
   {
-    id: "saas-ignite",
-    name: "SaaS Ignite",
-    industry: "SaaS",
-    color: "#5865F2",
-    image: "/images/templates/saas-ignite.webp",
-    url: "/demos/saas-ignite/",
-    features: ["Hero con prueba gratis", "Testimonios", "Precios", "FAQ"],
-    tags: ["trial", "pricing", "stripe"],
-  },
-  {
-    id: "curso-pro",
-    name: "Curso Pro",
-    industry: "Educación",
-    color: "#F59E0B",
-    image: "/images/templates/curso-pro.webp",
-    url: "/demos/curso-pro/",
-    features: ["Agenda/temario", "Instructor", "Checkout", "FAQ"],
-    tags: ["webinar", "checkout"],
-  },
-  {
-    id: "shop-launch",
-    name: "Shop Launch",
-    industry: "E-commerce",
-    color: "#10B981",
-    image: "/images/templates/shop-launch.webp",
-    url: "/demos/shop-launch/",
-    features: ["Grid de productos", "Highlights", "CTA WhatsApp/Checkout"],
-    tags: ["catalogo", "whatsapp"],
-  },
-  {
-    id: "servicios-elite",
-    name: "Servicios Élite",
+    name: "Landqo",
     industry: "Servicios",
-    color: "#8B5CF6",
-    image: "/images/templates/servicios-elite.webp",
-    url: "/demos/servicios-elite/",
-    features: ["Problema→Solución", "Casos", "Formulario"],
-    tags: ["agencia", "b2b"],
+    image: "/assets/templates/landqo-cover.png",
+    color: "#6366F1",
+    features: ["Arquitectura modular", "Rendimiento alto", "SEO técnico listo"],
+    url: "https://pages.velcodi.com",
   },
   {
-    id: "evento-summit",
-    name: "Evento Summit",
-    industry: "Evento",
-    color: "#EC4899",
-    image: "/images/templates/evento-summit.webp",
-    url: "/demos/evento-summit/",
-    features: ["Ponentes", "Agenda", "Registro", "Patrocinadores"],
-    tags: ["ticket", "agenda"],
+    name: "Frevvo",
+    industry: "SaaS",
+    image: "/assets/templates/frevvo-cover.png",
+    color: "#22C55E",
+    features: ["Hero enfocado a conversión", "Sección de pricing", "Analítica configurada"],
+    url: "https://conten.velcodi.com",
   },
   {
-    id: "clinica-fit",
-    name: "Clínica Fit",
-    industry: "Salud",
+    name: "Tasqo",
+    industry: "SaaS",
+    image: "/assets/templates/tazqo-cover.png",
+    color: "#A855F7",
+    features: ["Beneficios claros", "Componentes reusables", "CTA persistente"],
+    url: "https://tareas.velcodi.com",
+  },
+  {
+    name: "Velcodi",
+    industry: "Micrositio",
+    image: "/assets/templates/velcodi-cover.png",
     color: "#0EA5E9",
-    image: "/images/templates/clinica-fit.webp",
-    url: "/demos/clinica-fit/",
-    features: ["Servicios", "Reseñas", "Agenda cita"],
-    tags: ["salud", "reservas"],
+    features: ["Estructura corporativa", "Secciones informativas", "Accesibilidad cuidada"],
+    url: "https://velcodi.com", // si quieres apuntar afuera
   },
 ];
 
-const filters = ["Todos", "SaaS", "Educación", "E-commerce", "Servicios", "Evento", "Salud"];
-
-const templatesSection = {
+export default {
   id: "templates",
-  title: "Plantillas listas para convertir",
+  title: "Plantillas",
   subtitle:
-    "Elige un punto de partida optimizado y lo adaptamos a tu marca, contenido y objetivos.",
-  ctaLabel: "Quiero esta plantilla",
+    "Ejemplos reales de cómo entregamos rápido, con diseño cuidado y base técnica sólida.",
+  ctaLabel: "Elegir",
   ctaHref: "#cta",
-  filters,
-  items: templates,
+  filters: ["Todos", "SaaS", "Servicios", "Micrositio"],
+  items,
 };
-
-export default templatesSection;

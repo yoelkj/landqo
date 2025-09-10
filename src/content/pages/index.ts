@@ -11,7 +11,6 @@ import ctafinal from '@/content/sections/ctafinal';
 /* NUEVOS (si ya existen en tu proyecto) */
 import gallery from '@/content/sections/gallery';        // → "Plantillas"
 import useCases from '@/content/sections/useCases';      // → "Casos de éxito"
-import resources from '@/content/sections/resources';    // → "Recursos"
 import templates from '@/content/sections/templates';    // → "Templates"
 
 // Cada entrada define la sección y las props a inyectar al componente.
@@ -31,9 +30,6 @@ const pageSections: PageSection[] = [
 
   /* Casos de éxito (social proof) para #cases */
   { key: 'useCases',  props: useCases },       // asegura id="cases"
-
-  /* Recursos (guías/integraciones) para #resources */
-  { key: 'resources', props: resources },      // asegura id="resources"
 
   /* Conversión */
   { key: 'pricing',   props: pricing },

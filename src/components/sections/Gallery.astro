@@ -1,43 +1,49 @@
 ---
-/**
- * Gallery.astro — Galería de imágenes
- *
- * Props:
- * - id?: string
- * - title?: string
- * - subtitle?: string
- * - images?: { src: string; alt?: string }[]
- * - variant?: "default"|"alt"|"inverted"
- * - className?: string
- */
+// Gallery.astro — Galería con hover y lightbox accesible
 
 import Section from "@/components/ui/Section.astro";
 import type { BaseSectionProps, Variant } from "@/utils/section-types";
 
-interface GalleryItem {
-  src: string;
-  alt?: string;
-}
+type ImgItem = string | { src: string; alt?: string; caption?: string };
 
 interface Props extends BaseSectionProps {
-  title?: string;
-  subtitle?: string;
-  images?: GalleryItem[];
+  images?: ImgItem[];
+  cols?: 2 | 3;
+  dense?: boolean;
 }
 
 const {
   id = "gallery",
   title = "Galería",
-  subtitle,
-  images = [
-    { src: "/assets/sample1.jpg", alt: "Ejemplo 1" },
-    { src: "/assets/sample2.jpg", alt: "Ejemplo 2" },
-    { src: "/assets/sample3.jpg", alt: "Ejemplo 3" },
-    { src: "/assets/sample4.jpg", alt: "Ejemplo 4" },
-  ],
+  subtitle = "Módulos y layouts de nuestras landings.",
   variant = "default" as Variant,
   className = "",
+  images = [],
+  cols = 3, // 3 por fila en desktop
+  dense = false,
 } = Astro.props as Props;
+
+const normalize = (it: ImgItem) =>
+  typeof it === "string"
+    ? { src: it, alt: "Imagen de galería", caption: "" }
+    : {
+        src: it.src,
+        alt: it.alt ?? "Imagen de galería",
+        caption: it.caption ?? "",
+      };
+
+const items = images.map(normalize);
+
+const pad = dense ? "p-4" : "p-5";
+const grid =
+  cols === 3
+    ? "sm:grid-cols-2 lg:grid-cols-3"
+    : "sm:grid-cols-2 lg:grid-cols-2";
+
+const rootId = `${id}-root`;
+const lbId = `${id}-lightbox`;
+const lbImgId = `${id}-lbimg`;
+const lbCapId = `${id}-lbcap`;
 ---
 
 <Section
@@ -47,20 +53,398 @@ const {
   variant={variant}
   className={className}
 >
-  <div class="container">
-    <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div id={rootId} class="container">
+    <ul role="list" class={`mt-6 grid gap-6 ${grid}`}>
       {
-        images.map((img) => (
-          <figure class="relative overflow-hidden rounded-[var(--radius-md)] border border-[color:var(--color-border)]">
-            <img
-              src={img.src}
-              alt={img.alt || "Imagen de galería"}
-              class="h-40 w-full object-cover transition-transform duration-300 hover:scale-105"
-              loading="lazy"
-            />
-          </figure>
+        items.map((img, i) => (
+          <li class="group">
+            <button
+              type="button"
+              class={`tile ${pad} w-full cursor-zoom-in text-left`}
+              data-index={i}
+              aria-label="Ampliar imagen"
+            >
+              <div class="frame">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  class="media"
+                  onerror="this.style.opacity=0"
+                />
+                <div class="fx" />
+                <div class="hint">
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"
+                    />
+                  </svg>
+                  <span>Ampliar</span>
+                </div>
+              </div>
+              {img.caption && (
+                <div class="mt-3 text-sm text-[color:var(--color-fg-muted)] line-clamp-2">
+                  {img.caption}
+                </div>
+              )}
+            </button>
+          </li>
         ))
       }
+    </ul>
+  </div>
+
+  <!-- Lightbox -->
+  <div id={lbId} class="lb hidden" aria-hidden="true">
+    <div class="lb__backdrop"></div>
+    <div
+      class="lb__viewport"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Visor de imágenes"
+    >
+      <button class="lb__close" aria-label="Cerrar (Esc)">
+        <svg viewBox="0 0 24 24" class="h-6 w-6">
+          <path
+            d="M6 6l12 12M18 6l-12 12"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <button class="lb__nav lb__prev" aria-label="Anterior (←)">
+        <svg viewBox="0 0 24 24" class="h-6 w-6"
+          ><path
+            fill="currentColor"
+            d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg
+        >
+      </button>
+      <button class="lb__nav lb__next" aria-label="Siguiente (→)">
+        <svg viewBox="0 0 24 24" class="h-6 w-6"
+          ><path
+            fill="currentColor"
+            d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z"></path></svg
+        >
+      </button>
+
+      <figure class="lb__figure">
+        <img id={lbImgId} alt="" />
+        <figcaption id={lbCapId} class="lb__caption"></figcaption>
+      </figure>
     </div>
   </div>
 </Section>
+
+<style is:inline>
+  .tile {
+    outline: none;
+  }
+  .frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--color-bg-elev);
+    border: 1px solid color-mix(in oklch, var(--color-border) 80%, transparent);
+    box-shadow:
+      0 1px 2px hsl(220 3% 15%/0.06),
+      0 20px 60px hsl(220 8% 10%/0.06);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .group:hover .frame,
+  .tile:focus-visible .frame {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 20px hsl(220 8% 10%/0.1),
+      0 40px 80px hsl(220 8% 10%/0.1);
+    border-color: color-mix(
+      in oklch,
+      var(--color-primary) 32%,
+      var(--color-border)
+    );
+  }
+  .media {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    border-radius: 18px;
+    transition:
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+  .group:hover .media {
+    transform: scale(1.02);
+    filter: saturate(1.03);
+  }
+  .fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(
+        60% 70% at 85% 20%,
+        color-mix(in oklch, var(--color-primary) 14%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 55% at 10% 90%,
+        color-mix(in oklch, var(--color-primary) 9%, transparent),
+        transparent 65%
+      );
+  }
+  .group:hover .fx {
+    opacity: 0.9;
+    mix-blend-mode: soft-light;
+  }
+  .hint {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 999px;
+    color: var(--color-on-primary);
+    background: color-mix(in oklch, var(--color-primary) 90%, black);
+    box-shadow: 0 10px 30px
+      color-mix(in oklch, var(--color-primary) 25%, transparent);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+  .group:hover .hint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+  }
+  .lb.hidden {
+    display: none;
+  }
+  .lb__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in oklch, var(--color-bg) 40%, black);
+    backdrop-filter: blur(6px);
+  }
+  .lb__viewport {
+    position: relative;
+    width: min(1200px, 92vw);
+    max-height: 88vh;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    border-radius: 20px;
+    background: var(--color-surface);
+    box-shadow: 0 30px 100px hsl(220 5% 10%/0.35);
+  }
+  .lb__figure {
+    margin: 0;
+  }
+  .lb__figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 76vh;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .lb__caption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-fg-muted);
+    text-align: center;
+  }
+  .lb__close,
+  .lb__nav {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    height: 44px;
+    width: 44px;
+    border-radius: 12px;
+    color: var(--color-fg);
+    background: color-mix(in oklch, var(--color-bg-elev) 80%, transparent);
+    border: 1px solid var(--color-border);
+  }
+  .lb__close {
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+  .lb__prev {
+    top: 50%;
+    left: 0.6rem;
+    transform: translateY(-50%);
+  }
+  .lb__next {
+    top: 50%;
+    right: 3.2rem;
+    transform: translateY(-50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frame,
+    .media,
+    .fx,
+    .hint {
+      transition: none !important;
+    }
+  }
+</style>
+
+<!-- Pasamos los IDs por data-* para evitar interpolaciones dentro del JS -->
+<script
+  is:inline
+  data-root-id={rootId}
+  data-lb-id={lbId}
+  data-lb-img-id={lbImgId}
+  data-lb-cap-id={lbCapId}
+>
+  (function () {
+    const s = document.currentScript;
+    if (!s) return;
+    const ds = s.dataset || {};
+    const rootId = ds.rootId;
+    const lbId = ds.lbId;
+    const lbImgId = ds.lbImgId;
+    const lbCapId = ds.lbCapId;
+
+    const root = document.getElementById(rootId);
+    if (!root) return;
+
+    const lb = document.getElementById(lbId);
+    const imgEl = document.getElementById(lbImgId);
+    const capEl = document.getElementById(lbCapId);
+    const btnClose = lb.querySelector(".lb__close");
+    const btnPrev = lb.querySelector(".lb__prev");
+    const btnNext = lb.querySelector(".lb__next");
+
+    const tiles = Array.from(root.querySelectorAll("[data-index]"));
+    const data = tiles.map(function (t) {
+      const i = t.querySelector("img");
+      const c = t.querySelector(".line-clamp-2");
+      return {
+        src: i?.getAttribute("src") || "",
+        alt: i?.getAttribute("alt") || "",
+        caption: c?.textContent?.trim() || "",
+      };
+    });
+
+    let idx = 0,
+      focusBefore = null;
+
+    function render(i) {
+      if (!data.length) return;
+      idx = (i + data.length) % data.length;
+      const d = data[idx];
+      if (imgEl) {
+        imgEl.src = d.src;
+        imgEl.alt = d.alt || "Imagen";
+      }
+      if (capEl) {
+        capEl.textContent = d.caption;
+        capEl.style.display = d.caption ? "" : "none";
+      }
+    }
+    function open(i) {
+      focusBefore = document.activeElement;
+      lb.classList.remove("hidden");
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      render(i);
+      (btnClose || lb).focus();
+      addEvents();
+    }
+    function close() {
+      lb.classList.add("hidden");
+      lb.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      removeEvents();
+      if (focusBefore && focusBefore.focus) focusBefore.focus();
+    }
+    function next() {
+      render(idx + 1);
+    }
+    function prev() {
+      render(idx - 1);
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev();
+      }
+    }
+    function onBackdrop(e) {
+      // cierra al hacer clic fuera del viewport (fondo)
+      if (
+        e.target === lb ||
+        (e.target &&
+          e.target.classList &&
+          e.target.classList.contains("lb__backdrop"))
+      )
+        close();
+    }
+
+    // Swipe
+    let sx = 0,
+      dx = 0;
+    function ts(e) {
+      sx = e.touches[0].clientX;
+    }
+    function tm(e) {
+      dx = e.touches[0].clientX - sx;
+    }
+    function te() {
+      if (dx > 60) prev();
+      else if (dx < -60) next();
+      sx = dx = 0;
+    }
+
+    function addEvents() {
+      document.addEventListener("keydown", onKey);
+      lb.addEventListener("click", onBackdrop);
+      lb.addEventListener("touchstart", ts, { passive: true });
+      lb.addEventListener("touchmove", tm, { passive: true });
+      lb.addEventListener("touchend", te, { passive: true });
+    }
+    function removeEvents() {
+      document.removeEventListener("keydown", onKey);
+      lb.removeEventListener("click", onBackdrop);
+      lb.removeEventListener("touchstart", ts);
+      lb.removeEventListener("touchmove", tm);
+      lb.removeEventListener("touchend", te);
+    }
+
+    root.addEventListener("click", function (ev) {
+      const btn = ev.target.closest("[data-index]");
+      if (!btn) return;
+      const i = Number(btn.getAttribute("data-index") || "0") || 0;
+      open(i);
+    });
+    btnClose && btnClose.addEventListener("click", close);
+    btnPrev && btnPrev.addEventListener("click", prev);
+    btnNext && btnNext.addEventListener("click", next);
+  })();
+</script>

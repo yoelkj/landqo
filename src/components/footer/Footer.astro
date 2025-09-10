@@ -1,48 +1,146 @@
 ---
 const year = new Date().getFullYear();
+
+const SECCIONES: Array<{ label: string; href: string }> = [
+  { label: "Inicio", href: "/#" },
+  { label: "Beneficios", href: "/#benefits" },
+  { label: "Características", href: "/#features" },
+  { label: "Plantillas", href: "/#templates" },
+  { label: "Galería", href: "/#gallery" },
+  { label: "Casos de uso", href: "/#use-cases" },
+  { label: "Proceso", href: "/#process" },
+  { label: "Precios", href: "/#pricing" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contacto", href: "/#cta" },
+];
+
+const RECURSOS: Array<{ label: string; href: string }> = [
+  { label: "Privacidad", href: "/legales/privacidad/" },
+  { label: "Términos", href: "/legales/terminos/" },
+  { label: "Cookies", href: "/legales/cookies/" },
+];
 ---
 
-<footer class="mt-16 bg-[color:var(--color-surface)]">
-  <div
-    class="container py-8 grid gap-6 md:grid-cols-3 [box-shadow:inset_0_1px_0_var(--color-border)]"
-  >
-    <div>
-      <div class="inline-flex items-center gap-2">
-        <span
-          class="inline-block w-6 h-6 rounded-[var(--radius-md)] bg-[color:var(--color-primary)]"
-        ></span>
-        <strong>Boilerplate</strong>
-      </div>
+<footer
+  class="mt-0 bg-[color:var(--color-surface)] text-[color:var(--color-fg)]"
+>
+  <!-- separador superior sutil -->
+  <div class="[box-shadow:inset_0_1px_0_var(--color-border)]"></div>
+
+  <div class="container py-10 md:py-12 grid gap-10 md:gap-12 md:grid-cols-12">
+    <!-- Marca Landqo -->
+    <div class="md:col-span-4">
+      <a
+        href="/#"
+        class="inline-flex items-center gap-1.5 hover:opacity-95"
+        aria-label="Landqo — ir al inicio"
+      >
+        <!-- Isotipo pill con “L” en negativo -->
+        <svg
+          class="h-8 w-8 shrink-0"
+          viewBox="0 0 64 64"
+          role="img"
+          aria-hidden="true"
+        >
+          <!-- fondo pill: usa el color primario del tema -->
+          <rect
+            x="6"
+            y="6"
+            width="52"
+            height="52"
+            rx="14"
+            fill="var(--color-primary)"></rect>
+          <!-- “L” blanca (bloque con esquina suave) -->
+          <path d="M22 18h8v24h20v8H22z" fill="#fff"></path>
+        </svg>
+
+        <!-- Wordmark: “Land” fuerte + “qo” atenuado -->
+        <span class="inline-flex items-baseline leading-none tracking-tight">
+          <span class="text-[1.25rem] sm:text-[1.35rem] font-semibold"
+            >Land</span
+          >
+          <span
+            class="text-[1.25rem] sm:text-[1.35rem] font-semibold text-[color:var(--color-fg-muted)]"
+            >qo</span
+          >
+        </span>
+      </a>
+
       <p class="mt-3 text-sm text-[color:var(--color-fg-muted)]">
-        Plantilla base para landings con Astro + Tailwind.
+        Landings a medida con rendimiento, SEO y medición listos desde el día
+        uno.
       </p>
+
+      <ul
+        class="mt-4 flex flex-wrap gap-2 text-[11px] text-[color:var(--color-fg-muted)]"
+      >
+        <li
+          class="rounded-full px-2.5 py-1 ring-1 ring-[color:var(--color-border)] bg-[color:var(--color-bg-elev)]"
+        >
+          Entrega en días
+        </li>
+        <li
+          class="rounded-full px-2.5 py-1 ring-1 ring-[color:var(--color-border)] bg-[color:var(--color-bg-elev)]"
+        >
+          Soporte post-lanzamiento
+        </li>
+      </ul>
     </div>
 
-    <nav>
-      <h3 class="text-sm font-semibold mb-3">Legal</h3>
-      <ul class="space-y-2 text-sm">
-        <li>
-          <a href="/legales/privacidad/" class="hover:underline">Privacidad</a>
-        </li>
-        <li>
-          <a href="/legales/terminos/" class="hover:underline">Términos</a>
-        </li>
-        <li><a href="/legales/cookies/" class="hover:underline">Cookies</a></li>
+    <!-- Secciones -->
+    <nav class="md:col-span-4">
+      <h3 class="text-sm font-semibold mb-3">Secciones</h3>
+      <ul class="grid grid-cols-2 gap-y-2 text-sm">
+        {
+          SECCIONES.map((i) => (
+            <li>
+              <a class="hover:underline underline-offset-4" href={i.href}>
+                {i.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
-    <div>
-      <h3 class="text-sm font-semibold mb-3">Contacto</h3>
-      <p class="text-sm text-[color:var(--color-fg-muted)]">
-        hola@tu-dominio.com
-      </p>
+    <!-- Legal + contacto -->
+    <div class="md:col-span-4 grid gap-8 sm:grid-cols-2">
+      <nav>
+        <h3 class="text-sm font-semibold mb-3">Legal</h3>
+        <ul class="space-y-2 text-sm">
+          {
+            RECURSOS.map((r) => (
+              <li>
+                <a class="hover:underline underline-offset-4" href={r.href}>
+                  {r.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div>
+        <h3 class="text-sm font-semibold mb-3">Contacto</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a class="hover:underline" href="mailto:hola@tu-dominio.com"
+              >hola@tu-dominio.com</a>
+          </li>
+          <li class="text-[color:var(--color-fg-muted)]">
+            Lun–Vie · 09:00–18:00
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <!-- Separador final SIN border: usamos inset shadow superior en el bloque -->
+  <!-- Barra inferior -->
   <div class="[box-shadow:inset_0_1px_0_var(--color-border)]">
-    <div class="container py-4 text-xs text-[color:var(--color-fg-muted)]">
-      © {year} Boilerplate. Todos los derechos reservados.
+    <div
+      class="container py-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-[color:var(--color-fg-muted)]"
+    >
+      <p>© {year} Landqo. Todos los derechos reservados.</p>
+      <p class="opacity-90">Hecho con Astro · Rendimiento primero.</p>
     </div>
   </div>
 </footer>

@@ -1,9 +1,9 @@
 ---
-// src/components/Header.astro  — Landqo (logo nuevo + fondo sólido)
+// src/components/Header.astro  — Landqo (logo unificado con el footer)
 /**
  * - Fondo inicial sólido (var(--color-bg)) para no interferir con el hero.
  * - Scroll (>12px) o menú móvil abierto: sombra sutil; SIN blur.
- * - Logo: SVG proporcional (28px) + wordmark; sin “cuadro” placeholder.
+ * - Logo: isotipo + wordmark iguales al footer (consistencia de marca).
  */
 const isHome =
   Astro.url.pathname === "/" ||
@@ -21,61 +21,38 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
   <div class="container flex items-center justify-between h-16">
     <!-- Brand -->
     <a href="/" class="flex items-center gap-2.5" aria-label="Landqo — Inicio">
-      <!-- Logomark -->
+      <!-- Isotipo pill con “L” (mismo SVG del footer) -->
       <svg
-        class="h-7 w-7 shrink-0"
-        viewBox="0 0 32 32"
-        fill="none"
+        class="h-7 w-7 md:h-8 md:w-8 shrink-0"
+        viewBox="0 0 64 64"
+        role="img"
         aria-hidden="true"
         focusable="false"
       >
-        <defs>
-          <linearGradient
-            id="lg"
-            x1="6"
-            y1="4"
-            x2="28"
-            y2="30"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop
-              offset="0"
-              stop-color="color-mix(in oklch, var(--color-primary) 98%, white)"
-            ></stop>
-            <stop
-              offset="1"
-              stop-color="color-mix(in oklch, var(--color-primary) 78%, black)"
-            ></stop>
-          </linearGradient>
-        </defs>
-        <!-- Shape -->
-        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="url(#lg)"
-        ></rect>
-        <!-- Inner ring (sutil) -->
+        <!-- fondo pill con color primario -->
         <rect
-          x="2.5"
-          y="2.5"
-          width="27"
-          height="27"
-          rx="8"
-          stroke="color-mix(in oklch, white 24%, transparent)"
-          stroke-opacity=".5"></rect>
-        <!-- L monogram -->
-        <path
-          d="M12 9.5v11.8c0 1.2.97 2.2 2.17 2.2H23"
-          stroke="white"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          opacity=".96"></path>
+          x="6"
+          y="6"
+          width="52"
+          height="52"
+          rx="14"
+          fill="var(--color-primary)"></rect>
+        <!-- “L” blanca en negativo -->
+        <path d="M22 18h8v24h20v8H22z" fill="#fff"></path>
       </svg>
 
-      <!-- Wordmark -->
+      <!-- Wordmark: “Land” fuerte + “qo” atenuado (igual al footer) -->
       <span
-        class="font-extrabold tracking-tight leading-none"
-        style="font-size: var(--nav-brand-size); letter-spacing: -0.015em; color: var(--color-fg);"
+        class="inline-flex items-baseline leading-none tracking-tight select-none"
       >
-        Landqo
+        <span
+          class="text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg)]"
+          >Land</span
+        >
+        <span
+          class="ml-[1px] text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg-muted)]"
+          >qo</span
+        >
       </span>
     </a>
 
@@ -93,18 +70,16 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         href={homeHash("templates")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">Plantillas</a
       >
-      <a
-        href={homeHash("pricing")}
-        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a
-      >
+
       <a
         href={homeHash("use-cases")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">Casos de uso</a
       >
       <a
-        href={homeHash("resources")}
-        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Recursos</a
+        href={homeHash("pricing")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a
       >
+
       <a
         href={homeHash("faq")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">FAQ</a
@@ -176,37 +151,43 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         <a
           href={homeHash("features")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Características</a>
+          >Características</a
+        >
       </li>
       <li>
         <a
           href={homeHash("templates")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Plantillas</a>
+          >Plantillas</a
+        >
       </li>
       <li>
         <a
           href={homeHash("pricing")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Precios</a>
+          >Precios</a
+        >
       </li>
       <li>
         <a
           href={homeHash("use-cases")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Casos de uso</a>
+          >Casos de uso</a
+        >
       </li>
       <li>
         <a
           href={homeHash("resources")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Recursos</a>
+          >Recursos</a
+        >
       </li>
       <li>
         <a
           href={homeHash("faq")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >FAQ</a>
+          >FAQ</a
+        >
       </li>
     </ul>
     <div class="mt-4 pt-4 [box-shadow:inset_0_1px_0_var(--color-border)]">

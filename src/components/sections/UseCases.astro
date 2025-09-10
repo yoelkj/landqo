@@ -1,52 +1,45 @@
 ---
-/**
- * UseCases.astro — Casos de uso
- *
- * Props:
- * - id?: string
- * - title?: string
- * - subtitle?: string
- * - cases?: { title: string; desc: string; icon?: string }[]
- * - variant?: "default"|"alt"|"inverted"
- * - className?: string
- */
-
 import Section from "@/components/ui/Section.astro";
 import type { BaseSectionProps, Variant } from "@/utils/section-types";
 
-type UseCase = { title: string; desc: string; icon?: string };
+type UseCaseItem = {
+  title: string;
+  desc: string;
+  icon?: string; // SVG inline "<svg ...>...</svg>"
+  href?: string; // opcional: ancla o link
+};
 
 interface Props extends BaseSectionProps {
   title?: string;
   subtitle?: string;
-  cases?: UseCase[];
+  cases?: UseCaseItem[];
+  cols?: 2 | 3 | 4;
+  dense?: boolean;
   variant?: Variant;
 }
 
 const {
   id = "use-cases",
   title = "Casos de uso",
-  subtitle = "Plantillas y bloques listos para múltiples escenarios",
-  cases = [
-    {
-      title: "SaaS",
-      desc: "Lanza tu producto con social proof y pricing.",
-      icon: "⚙️",
-    },
-    {
-      title: "Servicio local",
-      desc: "Capta leads con formulario de contacto y mapa.",
-      icon: "📍",
-    },
-    {
-      title: "Evento",
-      desc: "Agenda, speakers y registro en minutos.",
-      icon: "🎤",
-    },
-  ],
+  subtitle = "Donde Landqo aporta más valor.",
+  cases = [],
+  cols = 3,
+  dense = false,
   variant = "default" as Variant,
   className = "",
 } = Astro.props as Props;
+
+const isInlineSvg = (s?: string) =>
+  !!s && s.trim().startsWith("<") && s.toLowerCase().includes("<svg");
+
+const gridCols =
+  cols === 4
+    ? "sm:grid-cols-2 lg:grid-cols-4"
+    : cols === 2
+      ? "sm:grid-cols-2 lg:grid-cols-2"
+      : "sm:grid-cols-2 lg:grid-cols-3";
+
+const pad = dense ? "p-5" : "p-6";
 ---
 
 <Section
@@ -54,28 +47,80 @@ const {
   title={title}
   subtitle={subtitle}
   variant={variant}
-  className={className}
+  className={className + " text-center"}
+  titleAccent="underline"
+  subtitleMuted={true}
 >
   <div class="container">
-    <div class="mt-8 grid gap-6 md:grid-cols-3">
+    <ul role="list" class={`mt-8 grid gap-6 ${gridCols}`}>
       {
-        cases.map((c) => (
-          <article class="card p-6 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] focus-within:ring-2 focus-within:ring-[color:var(--color-ring)] rounded-lg">
-            {c.icon && (
-              <div
-                class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg
-                     bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]"
-              >
-                <span class="text-xl">{c.icon}</span>
+        cases.map((c) => {
+          const Card = (
+            <article
+              class={`group relative card ${pad} h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]`}
+            >
+              {/* badge orgánica */}
+              <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]">
+                <svg
+                  viewBox="0 0 96 84"
+                  class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z"
+                    fill="currentColor"
+                    fill-opacity=".09"
+                    stroke="currentColor"
+                    stroke-opacity=".22"
+                    stroke-width="1"
+                  />
+                </svg>
+                <div class="relative z-[1] flex h-full w-full items-center justify-center">
+                  {isInlineSvg(c.icon) ? (
+                    <span
+                      class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"
+                      set:html={c.icon!}
+                    />
+                  ) : (
+                    <span class="text-2xl">{c.icon ?? "•"}</span>
+                  )}
+                </div>
+                <span
+                  class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
               </div>
-            )}
-            <h3 class="font-semibold text-lg">{c.title}</h3>
-            <p class="mt-2 text-sm text-[color:var(--color-fg-muted)]">
-              {c.desc}
-            </p>
-          </article>
-        ))
+
+              <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]">
+                {c.title}
+              </h3>
+              <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]">
+                {c.desc}
+              </p>
+            </article>
+          );
+
+          return (
+            <li>
+              {c.href ? (
+                <a
+                  href={c.href}
+                  class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-primary)]/70 rounded-3xl"
+                >
+                  {Card}
+                </a>
+              ) : (
+                Card
+              )}
+            </li>
+          );
+        })
       }
-    </div>
+    </ul>
   </div>
 </Section>

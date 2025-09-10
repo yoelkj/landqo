@@ -87,19 +87,14 @@ const offsetExtra = toNum(raw.offsetExtra, 12)
 )}
 
 {showGoTop && (
-  <!-- Go to top (solo render si showGoTop=true) -->
+  <!-- Go to top (UI refinada) -->
   <button
     id="goTop"
     aria-label="Volver arriba"
-    class="hidden fixed bottom-6 right-6 z-[1100]
-           h-12 w-12 rounded-full
-           bg-[var(--color-surface)] text-[var(--color-fg)]
-           ring-1 ring-[var(--color-border)] shadow-[var(--shadow-md)]
-           hover:text-[var(--color-primary)]
-           focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]"
+    class="hidden fixed z-[1100] goTopBtn group"
   >
-    <svg viewBox="0 0 24 24" class="mx-auto h-6 w-6" aria-hidden="true">
-      <path fill="currentColor" d="M12 5l-7 7h4v7h6v-7h4z"></path>
+    <svg viewBox="0 0 24 24" class="mx-auto h-5 w-5 md:h-6 md:w-6 transition-colors" aria-hidden="true">
+      <path fill="currentColor" d="M12 7l-5.2 5.2a1 1 0 0 0 1.4 1.4L11 11.8V17a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-5.2l2.8 2.8a1 1 0 1 0 1.4-1.4L12 7z"/>
     </svg>
   </button>
 )}
@@ -115,14 +110,75 @@ const offsetExtra = toNum(raw.offsetExtra, 12)
   #siteHeader nav a.nav-active,
   #mobileNav a.nav-active { color: var(--color-primary) !important; font-weight: 600; }
 
-  /* Si menu móvil abierto, ocultar goTop (si existe) */
+  /* Si menú móvil abierto, ocultar goTop (si existe) */
   body.menu-open #goTop { display: none; }
 
-  /* Suavizado de la barra (respeta reduced motion) */
+  /* Barra de progreso: suavizado (respeta reduced motion) */
   #progressBar { transition: width 80ms linear; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto !important; }
     #progressBar { transition: none !important; }
+  }
+
+  /* Botón goTop — vidrio + aro sutil + elevación + safe-area */
+  #goTop {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
+    right:  calc(env(safe-area-inset-right,  0px) + 1.25rem);
+  }
+  @media (min-width: 768px) {
+    #goTop {
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 1.75rem);
+      right:  calc(env(safe-area-inset-right,  0px) + 1.75rem);
+    }
+  }
+
+  .goTopBtn {
+    --_bg: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
+    --_ring: color-mix(in oklch, var(--color-border) 90%, transparent);
+    --_fg: color-mix(in oklch, var(--color-fg) 88%, transparent);
+
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background: var(--_bg);
+    color: var(--_fg);
+    border: 1px solid var(--_ring);
+    backdrop-filter: saturate(1.2) blur(6px);
+    box-shadow: 0 6px 24px -10px rgba(0,0,0,.35);
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease,
+      color .18s ease,
+      border-color .18s ease,
+      background-color .18s ease;
+  }
+  @media (min-width: 768px) {
+    .goTopBtn { width: 3.5rem; height: 3.5rem; }
+  }
+
+  .goTopBtn:hover {
+    transform: translateY(-2px);
+    color: var(--color-primary);
+    border-color: color-mix(in oklch, var(--color-primary) 45%, var(--color-border));
+    box-shadow: 0 16px 40px -18px rgba(0,0,0,.5);
+  }
+  .goTopBtn:focus-visible {
+    outline: 2px solid color-mix(in oklch, var(--color-primary) 70%, white);
+    outline-offset: 2px;
+  }
+  .goTopBtn::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent);
+  }
+
+  /* Tema oscuro: un poco más de fondo para contraste */
+  [data-theme="dark"] .goTopBtn {
+    --_bg: color-mix(in oklch, var(--color-surface) 88%, transparent);
+    --_fg: color-mix(in oklch, var(--color-fg) 92%, transparent);
   }
 </style>
 
@@ -238,7 +294,7 @@ const offsetExtra = toNum(raw.offsetExtra, 12)
         ids.forEach(function (key) {
           var on = key === id;
           var rec = spyMap.get(key);
-          if (!rec) return;
+        if (!rec) return;
           rec.anchors.forEach(function (a) {
             a.classList.toggle("nav-active", on);
             a.setAttribute("aria-current", on ? "page" : "false");

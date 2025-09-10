@@ -431,3 +431,6 @@ body[data-bg-grid]::before {
 @media (min-width: 1280px){
   .hero-grid h1{ letter-spacing:-0.02em; }
 }
+
+
+section[id] { scroll-margin-top: 88px; }

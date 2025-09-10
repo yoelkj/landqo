@@ -1,34 +1,9 @@
 ---
 /**
  * Pricing.astro — Tabla de precios con toggle mensual/anual (sin animaciones)
- *
- * ✅ Características
- * - Toggle accesible Mensual/Anual (botones aria-pressed; teclado ← → Space/Enter)
- * - Precios y “/mes” vs “/año” conmutables sin recargar
- * - Resalta “Popular” con diseño profesional (borde, glow sutil, fondo gradiente)
- * - Tokens y variantes visuales via <Section variant="...">
- * - Sin transiciones/animaciones JS; solo estilos
- *
- * Props:
- * - id?: string
- * - title?: string
- * - subtitle?: string
- * - variant?: "default" | "alt" | "inverted"
- * - className?: string
- * - currency?: string                     (default: "USD")
- * - locale?: string                       (default: "es-PE")
- * - defaultBilling?: "monthly" | "yearly" (default: "monthly")
- * - discountNote?: string                 (nota junto al toggle)
- * - cols?: 2 | 3                          (default: 3 → en desktop)
- * - plans: Array<{
- *     name: string;
- *     description?: string;
- *     badge?: string;          // p.ej. "Popular"
- *     popular?: boolean;       // aplica estilo destacado
- *     price: { monthly: number; yearly: number };
- *     features?: string[];
- *     cta?: { label: string; href: string };
- *   }>
+ * Ajustes:
+ * - Título con raya (titleAccent="underline")
+ * - Card popular más grande en desktop (padding, escala, tipografía, CTA)
  */
 
 import Section from "@/components/ui/Section.astro";
@@ -76,7 +51,9 @@ const {
 const qs = Astro.url?.searchParams?.get("billing");
 const initBilling = (qs === "yearly" || qs === "monthly") ? qs : defaultBilling;
 
-const gridCols = cols === 2 ? "sm:grid-cols-2 lg:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+const gridCols = cols === 2
+  ? "sm:grid-cols-2 lg:grid-cols-2"
+  : "sm:grid-cols-2 lg:grid-cols-3";
 
 const fmt = (n: number) => {
   try { return new Intl.NumberFormat(locale, { style: "currency", currency }).format(n); }
@@ -89,7 +66,15 @@ const rootId = `${id}-root`;
 const noteId = discountNote ? `${id}-discount` : undefined;
 ---
 
-<Section id={id} title={title} subtitle={subtitle} variant={variant} className={className}>
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+  titleAccent="underline"
+  subtitleMuted={true}
+>
   <div id={rootId} class="container" data-billing={initBilling} data-init={initBilling}>
     <!-- Toggle de intervalo -->
     <div class="flex flex-wrap items-center justify-center gap-3">
@@ -127,12 +112,12 @@ const noteId = discountNote ? `${id}-discount` : undefined;
     </div>
 
     <!-- Cards -->
-    <ul class={`mt-8 grid gap-6 ${gridCols}`} role="list">
+    <ul class={`mt-8 grid ${gridCols} gap-6 items-stretch`} role="list">
       {
         plans.map((p) => (
           <li
             data-popular={p.popular ? "true" : "false"}
-            class={`pricing-card h-full card p-6 md:p-7 rounded-[var(--radius-2xl)]
+            class={`pricing-card h-full card rounded-[var(--radius-2xl)]
                     border border-[color:var(--color-border)] shadow-[var(--shadow-sm)]
                     ${p.popular ? "is-popular" : ""}`}
           >
@@ -146,7 +131,7 @@ const noteId = discountNote ? `${id}-discount` : undefined;
             <!-- Header -->
             <div class="flex items-start justify-between gap-3">
               <div>
-                <h3 class="text-lg md:text-xl font-semibold tracking-tight">{p.name}</h3>
+                <h3 class="plan-title">{p.name}</h3>
                 {p.description && <p class="mt-1 text-sm text-[color:var(--color-fg-muted)]">{p.description}</p>}
               </div>
               {!p.popular && p.badge && (
@@ -162,7 +147,7 @@ const noteId = discountNote ? `${id}-discount` : undefined;
                   class={initBilling === "yearly" ? "hidden" : ""}
                   aria-hidden={initBilling === "yearly" ? "true" : "false"}
                 >
-                  <span class="text-3xl md:text-[2rem] font-extrabold">{fmt(p.price.monthly)}</span>
+                  <span class="price-figure">{fmt(p.price.monthly)}</span>
                 </span>
 
                 <span
@@ -170,7 +155,7 @@ const noteId = discountNote ? `${id}-discount` : undefined;
                   class={initBilling === "monthly" ? "hidden" : ""}
                   aria-hidden={initBilling === "monthly" ? "true" : "false"}
                 >
-                  <span class="text-3xl md:text-[2rem] font-extrabold">{fmt(p.price.yearly)}</span>
+                  <span class="price-figure">{fmt(p.price.yearly)}</span>
                 </span>
 
                 <span data-per="monthly" class={`per text-sm ${initBilling === "yearly" ? "hidden" : ""}`}>{perMonth}</span>
@@ -197,7 +182,7 @@ const noteId = discountNote ? `${id}-discount` : undefined;
               <div class="mt-6">
                 <a
                   href={p.cta.href}
-                  class={`btn w-full h-10 rounded-[var(--radius-lg)] transition-none ${p.popular ? "btn-primary" : "btn-outline"}`}
+                  class={`btn w-full rounded-[var(--radius-lg)] transition-none ${p.popular ? "btn-primary btn-lg" : "btn-outline btn-md"}`}
                 >
                   {p.cta.label}
                 </a>
@@ -237,6 +222,15 @@ const noteId = discountNote ? `${id}-discount` : undefined;
     position: relative;
     overflow: hidden;
     isolation: isolate;
+    /* padding base */
+    padding: 1.5rem;
+  }
+
+  /* Título del plan */
+  .plan-title {
+    font-weight: 700;
+    letter-spacing: -.01em;
+    font-size: 1.125rem; /* ~text-lg */
   }
 
   /* Chip neutro (no popular) */
@@ -251,21 +245,26 @@ const noteId = discountNote ? `${id}-discount` : undefined;
     box-shadow: inset 0 0 0 1px var(--color-border);
   }
 
-  /* POPULAR — realce visual profesional, sin animaciones */
+  /* Precio (tamaño base) */
+  .price-figure {
+    font-weight: 800;
+    font-size: clamp(1.75rem, 2.6vw, 2rem);
+    line-height: 1.1;
+  }
+  .price-block .per {
+    color: var(--color-fg-muted);
+  }
+
+  /* CTA tamaños */
+  .btn-md { height: 2.5rem; }
+  .btn-lg { height: 2.75rem; }
+
+  /* ===== POPULAR (hero) — más grande en desktop, sin animaciones ===== */
   .pricing-card.is-popular {
     border-color: color-mix(in oklch, var(--color-primary) 40%, var(--color-border));
     box-shadow:
       0 1px 2px hsl(220 3% 15% / .08),
       0 10px 30px color-mix(in oklch, var(--color-primary) 20%, transparent);
-  }
-  .pricing-card.is-popular::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    background:
-      radial-gradient(700px 200px at 0% -10%, color-mix(in oklch, var(--color-primary) 8%, transparent), transparent 60%),
-      radial-gradient(700px 200px at 100% -10%, color-mix(in oklch, var(--color-primary) 8%, transparent), transparent 60%);
-    z-index: -1;
   }
   .pricing-card.is-popular::after {
     /* barra superior sutil */
@@ -276,7 +275,6 @@ const noteId = discountNote ? `${id}-discount` : undefined;
     height: 6px;
     background: linear-gradient(90deg, color-mix(in oklch, var(--color-primary) 85%, white), var(--color-primary));
   }
-
   .popular-badge {
     position: absolute;
     top: .5rem;
@@ -290,12 +288,26 @@ const noteId = discountNote ? `${id}-discount` : undefined;
     box-shadow: var(--shadow-sm);
   }
 
-  /* Precio */
-  .price-block .per {
-    color: var(--color-fg-muted);
+  /* Upgrades de tamaño SOLO para popular en pantallas grandes */
+  @media (min-width: 1024px) {
+    .pricing-card.is-popular {
+      padding: 2rem;              /* más aire */
+      transform: scale(1.04);     /* hero estático (sin transiciones) */
+      z-index: 1;
+    }
+    .pricing-card.is-popular .plan-title {
+      font-size: 1.25rem;         /* ~text-xl */
+    }
+    .pricing-card.is-popular .price-figure {
+      font-size: clamp(2.25rem, 3.2vw, 2.9rem);
+    }
+    .pricing-card.is-popular .btn-lg {
+      height: 3rem;
+      font-weight: 700;
+    }
   }
 
-  /* Asegura contraste en tenants oscuros */
+  /* Mejor contraste en dark */
   [data-theme="dark"] .pricing-card.is-popular {
     border-color: color-mix(in oklch, var(--color-primary) 50%, var(--color-border));
   }
@@ -357,9 +369,7 @@ const noteId = discountNote ? `${id}-discount` : undefined;
           setMode(m);
         } else if (key === "ArrowLeft" || key === "ArrowRight") {
           ev.preventDefault();
-          var current = root.getAttribute("data-billing") || "monthly";
           var next = (key === "ArrowRight") ? "yearly" : "monthly";
-          if (current === next && key === "ArrowLeft") next = "monthly";
           setMode(next);
           var target = root.querySelector('[data-mode="' + next + '"]');
           if (target) target.focus();
