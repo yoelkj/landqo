@@ -1,14 +1,10 @@
 ---
+// src/components/Header.astro  — Landqo (logo nuevo + fondo sólido)
 /**
- * Header tipo Hostinger (sin scroll-spy aquí):
- * - Top: sin línea/border (se enmascara con ::after).
- * - Scroll o menú abierto: SOLO sombra.
- * - CTA visible (desktop y móvil) usando .btn .btn-primary (tokens).
- * - Enlaces rediseñados: .nav-link (desktop y móvil), hover consistente.
- * - Anchors con offset (#id y /#id).
- * - A11y: focus trap + inert. Fixed blindado con portal al <body>.
+ * - Fondo inicial sólido (var(--color-bg)) para no interferir con el hero.
+ * - Scroll (>12px) o menú móvil abierto: sombra sutil; SIN blur.
+ * - Logo: SVG proporcional (28px) + wordmark; sin “cuadro” placeholder.
  */
-
 const isHome =
   Astro.url.pathname === "/" ||
   Astro.url.pathname === "/index" ||
@@ -23,15 +19,69 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
   class="fixed top-0 inset-x-0 z-[1000] isolate"
 >
   <div class="container flex items-center justify-between h-16">
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2">
-      <span class="h-8 w-8 rounded-lg bg-[var(--color-primary)] block"></span>
-      <span class="font-semibold tracking-tight">Boilerplate</span>
+    <!-- Brand -->
+    <a href="/" class="flex items-center gap-2.5" aria-label="Landqo — Inicio">
+      <!-- Logomark -->
+      <svg
+        class="h-7 w-7 shrink-0"
+        viewBox="0 0 32 32"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <linearGradient
+            id="lg"
+            x1="6"
+            y1="4"
+            x2="28"
+            y2="30"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop
+              offset="0"
+              stop-color="color-mix(in oklch, var(--color-primary) 98%, white)"
+            ></stop>
+            <stop
+              offset="1"
+              stop-color="color-mix(in oklch, var(--color-primary) 78%, black)"
+            ></stop>
+          </linearGradient>
+        </defs>
+        <!-- Shape -->
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="url(#lg)"
+        ></rect>
+        <!-- Inner ring (sutil) -->
+        <rect
+          x="2.5"
+          y="2.5"
+          width="27"
+          height="27"
+          rx="8"
+          stroke="color-mix(in oklch, white 24%, transparent)"
+          stroke-opacity=".5"></rect>
+        <!-- L monogram -->
+        <path
+          d="M12 9.5v11.8c0 1.2.97 2.2 2.17 2.2H23"
+          stroke="white"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          opacity=".96"></path>
+      </svg>
+
+      <!-- Wordmark -->
+      <span
+        class="font-extrabold tracking-tight leading-none"
+        style="font-size: var(--nav-brand-size); letter-spacing: -0.015em; color: var(--color-fg);"
+      >
+        Landqo
+      </span>
     </a>
 
     <!-- Desktop nav -->
     <nav
-      class="hidden md:flex items-center gap-1 text-sm"
+      class="hidden md:flex items-center gap-1"
       aria-label="Navegación principal"
     >
       <a
@@ -40,22 +90,31 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         >Características</a
       >
       <a
+        href={homeHash("templates")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Plantillas</a
+      >
+      <a
         href={homeHash("pricing")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a
+      >
+      <a
+        href={homeHash("use-cases")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Casos de uso</a
+      >
+      <a
+        href={homeHash("resources")}
+        class="nav-link hover:bg-[color:var(--color-bg-elev)]">Recursos</a
       >
       <a
         href={homeHash("faq")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">FAQ</a
       >
-
-      <!-- CTA DESKTOP -->
       <a href="#cta" class="btn btn-primary h-10 px-4 ml-2">Empezar</a>
     </nav>
 
-    <!-- Mobile: CTA + Hamburguesa -->
+    <!-- Mobile: CTA + menú -->
     <div class="md:hidden flex items-center gap-2">
       <a href="#cta" class="btn btn-primary h-10 px-4">Empezar</a>
-
       <button
         id="menuBtn"
         class="inline-flex items-center justify-center rounded-lg h-10 w-10 border border-[color:var(--color-border)] hover:bg-[color:var(--color-bg-elev)]"
@@ -93,7 +152,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
   </div>
 </header>
 
-<!-- Overlay -->
+<!-- Overlay móvil -->
 <div
   id="mobileOverlay"
   class="md:hidden hidden fixed inset-x-0 bottom-0 bg-black/60"
@@ -117,25 +176,39 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         <a
           href={homeHash("features")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Características</a
-        >
+          >Características</a>
+      </li>
+      <li>
+        <a
+          href={homeHash("templates")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >Plantillas</a>
       </li>
       <li>
         <a
           href={homeHash("pricing")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Precios</a
-        >
+          >Precios</a>
+      </li>
+      <li>
+        <a
+          href={homeHash("use-cases")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >Casos de uso</a>
+      </li>
+      <li>
+        <a
+          href={homeHash("resources")}
+          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
+          >Recursos</a>
       </li>
       <li>
         <a
           href={homeHash("faq")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >FAQ</a
-        >
+          >FAQ</a>
       </li>
     </ul>
-
     <div class="mt-4 pt-4 [box-shadow:inset_0_1px_0_var(--color-border)]">
       <a href="#cta" class="btn btn-primary w-full h-12 rounded-xl">Empezar</a>
     </div>
@@ -147,40 +220,49 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
     --header-h: 64px;
   }
 
-  /* Estado top: SIN línea visible; sombra sólo en scroll */
+  /* Fondo sólido desde el inicio (no interfiere con el hero) */
   #siteHeader {
-    background: var(--color-surface, #fff);
+    background-color: var(--color-bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-border) 35%, transparent);
+    background-clip: padding-box;
+    transform: translateZ(0);
     padding-top: env(safe-area-inset-top);
-    box-shadow: none;
-    border: 0;
-    outline: 0;
     transition:
       box-shadow 0.25s ease,
-      background-color 0.25s ease;
-  }
-  /* Tapa cualquier hairline del contenido cuando estás en top */
-  #siteHeader::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: 1px;
-    background: var(--color-surface, #fff);
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-  }
-  #siteHeader.header--scrolled,
-  body.menu-open #siteHeader {
-    box-shadow: 0 12px 40px rgba(2, 6, 23, 0.1);
-  }
-  #siteHeader.header--scrolled::after,
-  body.menu-open #siteHeader::after {
-    opacity: 0;
+      border-color 0.25s ease;
   }
 
-  /* Asegura consistencia visual del CTA en el header */
+  /* Scroll / menú abierto → elevación sutil */
+  #siteHeader.header--scrolled,
+  body.menu-open #siteHeader {
+    box-shadow: 0 8px 28px hsl(220 3% 15% / 0.1);
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 75%,
+      transparent
+    );
+  }
+
+  [data-theme="dark"] #siteHeader {
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 50%,
+      transparent
+    );
+  }
+  [data-theme="dark"] #siteHeader.header--scrolled {
+    box-shadow: 0 10px 32px hsl(220 3% 5% / 0.28);
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 70%,
+      transparent
+    );
+  }
+
   #siteHeader .btn {
     line-height: 1;
   }
@@ -188,55 +270,50 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
 
 <script is:inline>
   (function () {
-    // --- Portal al <body> para blindar el fixed ---
-    var get = function (id) {
-      return document.getElementById(id);
-    };
-    function portalToBody() {
-      var header = get("siteHeader"),
-        overlay = get("mobileOverlay"),
-        panel = get("mobileNav");
+    const $ = (id) => document.getElementById(id);
+
+    // Stacking correcto
+    (function () {
+      const header = $("siteHeader"),
+        overlay = $("mobileOverlay"),
+        panel = $("mobileNav");
       if (!header) return;
       if (header.parentElement !== document.body) {
         document.body.prepend(header);
         if (overlay) document.body.appendChild(overlay);
         if (panel) document.body.appendChild(panel);
       }
-    }
-    portalToBody();
+    })();
 
-    // Refs
-    var header = get("siteHeader");
-    var btn = get("menuBtn");
-    var panel = get("mobileNav");
-    var overlay = get("mobileOverlay");
-    var iconOpen = get("iconOpen");
-    var iconClose = get("iconClose");
+    const header = $("siteHeader");
+    const btn = $("menuBtn");
+    const panel = $("mobileNav");
+    const overlay = $("mobileOverlay");
+    const iconOpen = $("iconOpen");
+    const iconClose = $("iconClose");
 
-    // 1) Altura → CSS var
     function setHeaderH() {
-      var h = (header && header.offsetHeight) || 64;
+      const h = (header && header.offsetHeight) || 64;
       document.documentElement.style.setProperty("--header-h", h + "px");
     }
     setHeaderH();
     addEventListener("resize", setHeaderH, { passive: true });
 
-    // 2) A11y: focus trap + inert en menú móvil
-    var roots = Array.prototype.slice.call(
+    // Apertura/cierre móvil + focus trap
+    const roots = Array.from(
       document.querySelectorAll("main, #pageRoot, #app, [data-app-root]")
     );
-    var lastFocused = null;
-    var focusableSel =
+    let lastFocused = null;
+    const focusableSel =
       'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
     function trapFocus(container, e) {
       if (e.key !== "Tab") return;
-      var nodes = Array.prototype.slice
-        .call(container.querySelectorAll(focusableSel))
-        .filter(function (el) {
-          return el.offsetParent !== null;
-        });
+      const nodes = Array.from(container.querySelectorAll(focusableSel)).filter(
+        (el) => el.offsetParent !== null
+      );
       if (!nodes.length) return;
-      var first = nodes[0],
+      const first = nodes[0],
         last = nodes[nodes.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
@@ -250,12 +327,11 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       trapFocus(panel, e);
     }
 
-    // 3) Abrir/cerrar móvil
     function scrollbarW() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
     function setOpen(toggle) {
-      var willOpen =
+      const willOpen =
         typeof toggle === "boolean"
           ? toggle
           : panel.classList.contains("hidden");
@@ -270,9 +346,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       document.body.classList.toggle("menu-open", willOpen);
       document.body.style.paddingRight = willOpen ? scrollbarW() + "px" : "";
 
-      roots.forEach(function (el) {
-        if (el) el.toggleAttribute("inert", willOpen);
-      });
+      roots.forEach((el) => el && el.toggleAttribute("inert", willOpen));
       if (willOpen) {
         (panel.querySelector(focusableSel) || panel).focus();
         panel.addEventListener("keydown", onKeydownTrap);
@@ -283,75 +357,66 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       }
     }
 
-    if (btn)
-      btn.addEventListener("click", function () {
-        setOpen();
-      });
-    if (overlay)
-      overlay.addEventListener("click", function () {
-        setOpen(false);
-      });
-    document.addEventListener("keydown", function (e) {
+    if (btn) btn.addEventListener("click", () => setOpen());
+    if (overlay) overlay.addEventListener("click", () => setOpen(false));
+    document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") setOpen(false);
     });
-    Array.prototype.forEach.call(
-      panel ? panel.querySelectorAll("a") : [],
-      function (a) {
-        a.addEventListener("click", function () {
-          setOpen(false);
-        });
-      }
+    (panel ? panel.querySelectorAll("a") : []).forEach((a) =>
+      a.addEventListener("click", () => setOpen(false))
     );
-    var mq = matchMedia("(min-width: 768px)");
+    const mq = matchMedia("(min-width: 768px)");
     if (mq && mq.addEventListener)
-      mq.addEventListener("change", function (e) {
+      mq.addEventListener("change", (e) => {
         if (e.matches) setOpen(false);
       });
 
-    // 4) Estado de scroll → sombra (umbral 1px)
+    // Scroll: activa solo la sombra
+    const SCROLL_THRESHOLD = 12;
     function onScroll() {
       if (header)
-        header.classList.toggle("header--scrolled", window.scrollY > 1);
+        header.classList.toggle(
+          "header--scrolled",
+          window.scrollY > SCROLL_THRESHOLD
+        );
     }
-    onScroll();
+    requestAnimationFrame(onScroll);
     addEventListener("scroll", onScroll, { passive: true });
 
-    // Helpers para #id y /#id
+    // Anchors con offset del header
     function getHashId(href) {
       if (!href) return "";
-      var i = href.indexOf("#");
+      const i = href.indexOf("#");
       return i >= 0 ? href.slice(i + 1) : "";
     }
-
-    // 5) Anchors con offset (click en #id y /#id)
     document.addEventListener("click", function (e) {
-      var t = e.target;
+      const t = e.target;
       if (!(t instanceof Element)) return;
-      var a = t.closest(
+      const a = t.closest(
         'a[href^="#"]:not([data-no-offset]), a[href^="/#"]:not([data-no-offset])'
       );
       if (!a) return;
-      var id = getHashId(a.getAttribute("href") || "");
-      var el = document.getElementById(id);
+      const id = getHashId(a.getAttribute("href") || "");
+      const el = document.getElementById(id);
       if (!el) return;
       e.preventDefault();
-      var h = (header && header.offsetHeight) || 64;
-      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var y = Math.max(
+      const h = (header && header.offsetHeight) || 64;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const y = Math.max(
         0,
         el.getBoundingClientRect().top + window.scrollY - h - 12
       );
       window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
     });
 
-    // 6) Ajuste hash con offset (carga directa o cambios de hash)
+    // Respetar hash al aterrizar
     function scrollToHashIfNeeded() {
       if (!location.hash) return;
-      var el = document.getElementById(location.hash.slice(1));
+      const el = document.getElementById(location.hash.slice(1));
       if (!el) return;
       requestAnimationFrame(function () {
-        var h = (header && header.offsetHeight) || 64;
-        var y = Math.max(
+        const h = (header && header.offsetHeight) || 64;
+        const y = Math.max(
           0,
           el.getBoundingClientRect().top + window.scrollY - h - 12
         );

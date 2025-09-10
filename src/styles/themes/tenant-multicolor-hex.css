@@ -1,49 +1,12 @@
-/* TENANT B — PALETA COMPLETA (HEX) */
+/* MULTICOLOR-HEX: overrides por atributo */
 @layer base {
   html[data-tenant="multicolor-hex"] {
-    /* PRIMITIVOS */
-    --brand-primary:       #6366F1;
-    --brand-on-primary:    #FFFFFF;
+    --brand-primary:      #6D5AED;
+    --brand-primary-600:  #5B48E2;
+    --brand-primary-700:  #4A3AD1;
+    --brand-on-primary:   #ffffff;
 
-    --brand-secondary:     #06B6D4;
-    --brand-on-secondary:  #FFFFFF;
-
-    --brand-accent:        #F97316;
-    --brand-on-accent:     #FFFFFF;
-
-    /* Tonos 600/700 — FALLBACKS ESTÁTICOS (si no hay color-mix) */
-    --brand-primary-600:   #5558e5;
-    --brand-primary-700:   #4a4ecc;
-    --brand-secondary-600: #059bb5;
-    --brand-secondary-700: #04879d;
-
-    /* Si el navegador soporta color-mix, estas líneas sobrescriben los fallbacks */
-    --brand-primary-600:   color-mix(in oklch, var(--brand-primary) 90%, black);
-    --brand-primary-700:   color-mix(in oklch, var(--brand-primary) 80%, black);
-    --brand-secondary-600: color-mix(in oklch, var(--brand-secondary) 90%, black);
-    --brand-secondary-700: color-mix(in oklch, var(--brand-secondary) 80%, black);
-
-    /* Estados (si en tokens tienes los -hex, se usarán) */
-    --success-hex: #22C55E;
-    --warning-hex: #F59E0B;
-    --danger-hex:  #EF4444;
-    --info-hex:    #0EA5E9;
-
-    /* SEMÁNTICOS (forzados para este tenant) */
-    --color-primary:       var(--brand-primary)       !important;
-    --color-primary-600:   var(--brand-primary-600)   !important;
-    --color-primary-700:   var(--brand-primary-700)   !important;
-    --color-on-primary:    var(--brand-on-primary)    !important;
-
-    --color-secondary:     var(--brand-secondary)     !important;
-    --color-secondary-600: var(--brand-secondary-600) !important;
-    --color-secondary-700: var(--brand-secondary-700) !important;
-    --color-on-secondary:  var(--brand-on-secondary)  !important;
-
-    --color-accent:        var(--brand-accent)        !important;
-    --color-on-accent:     var(--brand-on-accent)     !important;
-
-    /* Focus ring coherente con la paleta multicolor */
-    --color-ring:          var(--brand-accent)        !important;
+    --brand-accent:       #16B364; /* verde */
+    --brand-on-accent:    #ffffff;
   }
 }

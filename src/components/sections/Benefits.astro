@@ -2,27 +2,16 @@
 import Section from "@/components/ui/Section.astro";
 import type { BaseSectionProps, Variant } from "@/utils/section-types";
 
-/**
- * Props del componente:
- * - id, title, subtitle, variant, className (de BaseSectionProps)
- * - items: Array<string | { title: string; description?: string; icon?: string }>
- * - cols: 2 | 3 | 4 (número de columnas en desktop, por defecto 3)
- */
-
 type BenefitItem = {
   title: string;
   description?: string;
-  /** icon puede ser:
-   *  - emoji (💡)
-   *  - texto corto (✓)
-   *  - SVG inline como string ("<svg ...>...</svg>")
-   */
-  icon?: string;
+  icon?: string; // SVG inline "<svg ...>...</svg>"
 };
 
 interface Props extends BaseSectionProps {
-  items?: Array<string | BenefitItem>;
+  items?: Array<BenefitItem>;
   cols?: 2 | 3 | 4;
+  dense?: boolean;
 }
 
 const {
@@ -31,59 +20,91 @@ const {
   subtitle,
   variant = "default" as Variant,
   className = "",
-  items = ["Velocidad", "SEO listo", "Responsivo"],
+  items = [],
   cols = 3,
+  dense = false,
 } = Astro.props as Props;
 
-// Normaliza items (strings -> objetos)
-const list: BenefitItem[] = (items || []).map((it) =>
-  typeof it === "string" ? ({ title: it } as BenefitItem) : it
-);
-
-// Grid responsive según cols (desktop). Mantenemos 1 col en mobile, 2 en sm.
-const gridCols =
-  cols === 4
-    ? "sm:grid-cols-2 lg:grid-cols-4"
-    : cols === 2
-    ? "sm:grid-cols-2 lg:grid-cols-2"
-    : "sm:grid-cols-2 lg:grid-cols-3"; // default 3
-
-// Render icon helper
 const isInlineSvg = (s?: string) =>
   !!s && s.trim().startsWith("<") && s.toLowerCase().includes("<svg");
 
 const defaultIcon =
-  '<svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"/></svg>';
+  '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"/></svg>';
+
+const gridCols =
+  cols === 4
+    ? "sm:grid-cols-2 lg:grid-cols-4"
+    : cols === 2
+      ? "sm:grid-cols-2 lg:grid-cols-2"
+      : "sm:grid-cols-2 lg:grid-cols-3";
+
+const pad = dense ? "p-5" : "p-6";
+const gap = dense ? "gap-5" : "gap-6";
 ---
 
-<Section id={id} title={title} subtitle={subtitle} variant={variant} className={className}>
+<Section
+  id={id}
+  title={title}
+  subtitle={subtitle}
+  variant={variant}
+  className={className}
+  titleAccent="underline"
+  subtitleMuted={true}
+>
   <div class="container">
-    <ul class={`mt-8 grid gap-6 ${gridCols}`}>
+    <ul role="list" class={`mt-8 grid ${gap} ${gridCols}`}>
       {
-        list.map((b) => (
-          <li class="group card p-6 h-full transition-transform will-change-transform">
-            <!-- Icono -->
+        (items || []).map((b) => (
+          <li class="relative">
             <div
-              class="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full
-                     bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]
-                     ring-1 ring-[color:var(--color-border)]/50
-                     group-hover:scale-105 transition-transform duration-200"
-              aria-hidden="true"
+              class={`group relative ${pad} h-full overflow-hidden rounded-3xl
+                   border border-[var(--color-border)]/50
+                   bg-[var(--color-surface,transparent)]/90
+                   shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)]
+                   transition-all duration-300 will-change-transform
+                   hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)]
+                   hover:bg-[var(--color-primary)]`}
             >
-              {
-                isInlineSvg(b.icon)
-                  ? <span set:html={b.icon!} />
-                  : <span class="font-semibold leading-none">{b.icon ?? "✓"}</span>
-              }
-            </div>
+              {/* Icono */}
+              <div
+                class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl
+                     border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/06
+                     text-[var(--color-primary)]
+                     transition-colors duration-300
+                     group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10"
+                aria-hidden="true"
+              >
+                {isInlineSvg(b.icon) ? (
+                  <span
+                    class="icon [&>svg]:h-6 [&>svg]:w-6
+                           [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"
+                    set:html={b.icon!}
+                  />
+                ) : (
+                  <span
+                    class="icon [&>svg]:h-5 [&>svg]:w-5
+                           [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"
+                    set:html={defaultIcon}
+                  />
+                )}
+              </div>
 
-            <!-- Título y descripción -->
-            <h3 class="font-semibold tracking-tight">{b.title}</h3>
-            {b.description && (
-              <p class="mt-2 text-sm text-[color:var(--color-fg-muted)]">
-                {b.description}
-              </p>
-            )}
+              {/* Título + descripción */}
+              <h3
+                class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight
+                     transition-colors duration-300 group-hover:text-white"
+              >
+                {b.title}
+              </h3>
+              {b.description && (
+                <p
+                  class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)]
+                       transition-colors duration-300 group-hover:text-white/85"
+                >
+                  {b.description}
+                </p>
+              )}
+            </div>
           </li>
         ))
       }

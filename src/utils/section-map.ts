@@ -18,7 +18,8 @@ export type SectionKey =
   | 'resources'
   | 'gallery'
   | 'contact'
-  | 'ctafinal';
+  | 'ctafinal'
+  | 'templates';
 
 type LazyAstroComponent = () => Promise<{ default: any }>;
 
@@ -38,4 +39,5 @@ export const sectionsRegistry: Record<SectionKey, { component: LazyAstroComponen
   gallery:      { component: () => import('@/components/sections/Gallery.astro') },
   contact:      { component: () => import('@/components/sections/Contact.astro') },
   ctafinal:     { component: () => import('@/components/sections/CTAFinal.astro') },
+  templates:     { component: () => import('@/components/sections/Templates.astro') },
 };

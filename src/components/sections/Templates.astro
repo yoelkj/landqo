@@ -1,0 +1,158 @@
+---
+import type { TemplateCard } from "@/content/sections/templates";
+const {
+  id = "templates",
+  title = "Plantillas",
+  subtitle = "",
+  ctaLabel = "Elegir",
+  ctaHref = "#cta",
+  filters = [],
+  items = [],
+} = Astro.props as {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  filters?: string[];
+  items?: TemplateCard[];
+};
+const sectionId = id || "templates";
+---
+
+<section id={sectionId} class="section">
+  <div class="container">
+    <header class="max-w-2xl mb-6">
+      <h2 class="h2">{title}</h2>
+      {subtitle && <p class="lead mt-2">{subtitle}</p>}
+    </header>
+
+    {/* Filtros */}
+    {
+      filters?.length > 0 && (
+        <div
+          class="flex flex-wrap gap-2 mb-6"
+          aria-label="Filtros de plantillas"
+        >
+          {filters.map((f, i) => (
+            <button
+              class={`btn btn-outline h-10 px-4 rounded-xl data-[active=true]:btn-soft`}
+              data-filter={f}
+              data-active={i === 0 ? "true" : "false"}
+              type="button"
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+      )
+    }
+
+    {/* Grid */}
+    <div id="tplGrid" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        items.map((t) => (
+          <article
+            class="card overflow-hidden group"
+            data-item
+            data-industry={t.industry}
+          >
+            <a href={t.url || ctaHref} class="block">
+              <div class="aspect-[16/10] bg-[color:var(--color-bg-elev)] overflow-hidden">
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300"
+                  onerror="this.style.display='none'; this.parentElement.style.background='hsl(var(--neutral-100))';"
+                />
+              </div>
+            </a>
+
+            <div class="p-4 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="text-lg font-semibold tracking-tight">{t.name}</h3>
+                {t.color && (
+                  <span
+                    class="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-semibold"
+                    style={`background:${t.color}20;color:${t.color}`}
+                  >
+                    {t.industry}
+                  </span>
+                )}
+                {!t.color && (
+                  <span class="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-semibold bg-[color:var(--color-bg-elev)] text-[color:var(--color-fg-muted)]">
+                    {t.industry}
+                  </span>
+                )}
+              </div>
+
+              {t.features?.length > 0 && (
+                <ul class="text-sm text-[color:var(--color-fg-muted)] space-y-1">
+                  {t.features.slice(0, 3).map((f) => (
+                    <li>• {f}</li>
+                  ))}
+                </ul>
+              )}
+
+              <div class="mt-2 flex gap-2">
+                {t.url ? (
+                  <a href={t.url} class="btn btn-outline h-10 px-3">
+                    Ver demo
+                  </a>
+                ) : null}
+                <a href={ctaHref} class="btn btn-primary h-10 px-3">
+                  {ctaLabel}
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <script is:inline>
+    // Filtro simple en cliente (sin frameworks)
+    (function () {
+      var grid = document.getElementById("tplGrid");
+      if (!grid) return;
+      var buttons = Array.prototype.slice.call(
+        document.querySelectorAll("[data-filter]")
+      );
+      var items = Array.prototype.slice.call(
+        grid.querySelectorAll("[data-item]")
+      );
+
+      function setActive(btn) {
+        buttons.forEach(function (b) {
+          b.dataset.active = "false";
+        });
+        if (btn) btn.dataset.active = "true";
+      }
+
+      function applyFilter(val) {
+        items.forEach(function (card) {
+          var cat = card.getAttribute("data-industry") || "";
+          var show = val === "Todos" || val === cat;
+          card.style.display = show ? "" : "none";
+        });
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var val = btn.getAttribute("data-filter") || "Todos";
+          setActive(btn);
+          applyFilter(val);
+        });
+      });
+
+      // Estado inicial
+      var first = buttons[0];
+      if (first) {
+        setActive(first);
+        applyFilter(first.getAttribute("data-filter") || "Todos");
+      }
+    })();
+  </script>
+</section>

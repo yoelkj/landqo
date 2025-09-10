@@ -7,7 +7,8 @@ import CookieConsent from "@/components/ui/CookieConsent.astro";
 import { buildSeo } from "@/utils/seo";
 
 const {
-  title = "Landing Boilerplate",
+  // ⤵️ Branding por defecto para Landqo (solo contenido, no rompe nada)
+  title = "Landqo — Landing pages que convierten",
   lang = "es",
   tenant: tenantProp,
   theme: themeProp, // light | dark | auto
@@ -20,12 +21,14 @@ const metaTags = (seo.tags?.meta ?? []) as Array<Record<string, string>>;
 const linkTags = (seo.tags?.link ?? []) as Array<Record<string, string>>;
 const scriptTags = (seo.tags?.script ?? []) as Array<{ type?: string; innerHTML: string }>;
 
-// Detectar/forzar noindex
+// ── Indexación: respetar prop y permitir desactivar por ENV (PUBLIC_INDEXING=false)
+const PUBLIC_INDEXING = String(import.meta.env.PUBLIC_INDEXING ?? "true").toLowerCase() !== "false";
 const NOINDEX =
+  !PUBLIC_INDEXING ||
   Boolean(seoProps?.noindex) ||
   metaTags.some((m) => (m.name || "").toLowerCase() === "robots" && (m.content || "").includes("noindex"));
 
-// Canonical robusto (solo si no NOINDEX)
+// ── Canonical robusto (solo si indexable)
 const siteFromEnv = (import.meta.env.PUBLIC_SITE_URL || "").replace(/\/+$/, "");
 const currentPathAndQs = Astro.url ? (Astro.url.pathname + (Astro.url.search || "")) : "/";
 const fallbackOrigin =
@@ -36,12 +39,12 @@ const canonicalHref = (siteFromEnv || fallbackOrigin || "").replace(/\/+$/, "") 
 const hasCanonical = linkTags.some((t) => (t.rel || "").toLowerCase() === "canonical");
 const hasOgUrl = metaTags.some((m) => (m.property || "").toLowerCase() === "og:url");
 
-// Querystring (dev helpers)
+// ── Dev helpers via querystring
 const qs = Astro.url?.searchParams;
 const qsTenant = qs?.get("tenant") || null; // default | single-hex | multicolor-hex
 const qsTheme = qs?.get("theme") || null;   // light | dark | auto
 
-// Env públicas
+// ── Env públicas
 const ENV_TENANT = (import.meta.env.PUBLIC_TENANT || "").trim().toLowerCase();
 const ENV_COLOR_MODE = (import.meta.env.PUBLIC_COLOR_MODE || "").trim().toLowerCase();
 const ENV_THEME_RAW = (import.meta.env.PUBLIC_THEME || "").trim().toLowerCase();
@@ -69,7 +72,7 @@ const theme =
 const dataTenant = tenant === "default" ? undefined : tenant;
 const dataTheme = theme ?? undefined;
 
-// Si es noindex, opcionalmente añade header X-Robots-Tag (si el adaptador lo respeta)
+// X-Robots para noindex (si el adaptador lo soporta)
 if (NOINDEX && Astro.response) {
   try { Astro.response.headers.set("X-Robots-Tag", "noindex, nofollow"); } catch {}
 }
@@ -83,25 +86,25 @@ if (NOINDEX && Astro.response) {
 
     <title>{seo.title || title}</title>
 
-    <!-- Meta / OG / Twitter generados -->
+    {/* Meta / OG / Twitter generados */}
     {metaTags.map((m) => <meta {...m} />)}
     {linkTags.map((l) => <link {...l} />)}
     {scriptTags.map((s) => <script type={s.type} set:html={s.innerHTML} />)}
 
-    <!-- Robots noindex (si aplica) -->
+    {/* Robots noindex (si aplica) */}
     {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
     {NOINDEX && <meta name="googlebot" content="noindex, nofollow" />}
 
-    <!-- Canonical y og:url solo si indexable -->
+    {/* Canonical y og:url solo si indexable */}
     {!NOINDEX && !hasCanonical && canonicalHref && <link rel="canonical" href={canonicalHref} />}
     {!NOINDEX && !hasOgUrl && canonicalHref && <meta property="og:url" content={canonicalHref} />}
 
-    <!-- Favicons -->
+    {/* Favicons */}
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Dev helper: tenant/theme via querystring -->
+    {/* Dev helper: tenant/theme via querystring */}
     <script is:inline>
       (() => {
         const p = new URLSearchParams(location.search);
@@ -116,7 +119,7 @@ if (NOINDEX && Astro.response) {
       })();
     </script>
 
-    <!-- Google Analytics (consent-aware) -->
+    {/* Google Analytics (consent-aware) */}
     {GA_ID && (
       <script is:inline>
         (function () {

@@ -1,243 +1,496 @@
 ---
-/**
- * Hero.astro — Cabecera principal de la landing
- *
- * ✅ Características
- * - Variantes de layout: `align="center" | "split"`
- * - Variantes visuales (wrapper Section): `variant="default|alt|inverted"`
- * - Eyebrow opcional (pequeño texto encima del título)
- * - CTA primario y secundario (botón outline)
- * - Media opcional: imagen o video (con poster, loop, muted, autoplay)
- * - Slot de formulario opcional (<slot name="form" />)
- * - Fila opcional de “confianza” (logos o badges)
- * - Accesible: heading h1, aria-describedby si hay subtítulo
- *
- * Props:
- * - id?: string
- * - variant?: 'default' | 'alt' | 'inverted'       (default: 'default')
- * - className?: string
- * - align?: 'center' | 'split'                     (default: 'split')
- * - eyebrow?: string                               (opcional)
- * - title?: string                                 (default: "Construye landings ultra-rápidas")
- * - subtitle?: string                              (opcional)
- * - ctaPrimary?: { label: string; href: string }   (default: {label:"Empezar", href:"#pricing"})
- * - ctaSecondary?: { label: string; href: string } (opcional)
- * - media?: { type: 'image'|'video'; src: string; alt?: string; poster?: string; loop?: boolean|string; autoplay?: boolean|string; muted?: boolean|string; }
- * - trust?: Array<{ src: string; alt?: string; width?: number; height?: number }>
- *
- * Slots:
- * - default: contenido bajo el bloque principal (raro)
- * - form:   slot a la derecha (o bajo) para la variante con formulario
- */
-
-import Section from "@/components/ui/Section.astro";
-import type { Variant } from "@/utils/section-types";
+import hero from "@/content/sections/hero";
 
 type CTA = { label: string; href: string };
-type Media = {
-  type: "image" | "video";
-  src: string;
-  alt?: string;
-  poster?: string;
-  loop?: boolean | string;
-  autoplay?: boolean | string;
-  muted?: boolean | string;
+type Badge = {
+  text: string;
+  icon?: "rocket" | "zap" | "shield" | "clock" | "chart";
 };
-type TrustLogo = { src: string; alt?: string; width?: number; height?: number };
+type Msg = { text: string; dot: "blue" | "green" | "yellow" | "red" };
 
-interface Props {
-  id?: string;
-  variant?: Variant;
-  className?: string;
-  align?: "center" | "split";
-  eyebrow?: string;
-  title?: string;
-  subtitle?: string;
-  ctaPrimary?: CTA;
-  ctaSecondary?: CTA;
-  media?: Media | null;
-  trust?: TrustLogo[] | null;
-}
-
-// normalizador boolean (acepta boolean o "true"/"false"/"")
-const toBool = (v: unknown, dflt: boolean) => {
-  if (v === undefined || v === null) return dflt;
-  if (typeof v === "boolean") return v;
-  if (typeof v === "string") {
-    const s = v.trim().toLowerCase();
-    if (s === "") return true;
-    if (s === "true") return true;
-    if (s === "false") return false;
-  }
-  return dflt;
+const data = hero as {
+  align: "left" | "center";
+  title: string;
+  subtitle: string;
+  ctaPrimary: CTA;
+  ctaSecondary: CTA;
+  badges: Badge[];
+  mediaList: { src: string; alt: string }[];
+  messages: Msg[];
 };
 
-const {
-  id = "hero",
-  variant = "default" as Variant,
-  className = "",
-  align = "split",
+const colAlign = data.align === "center" ? "text-center md:text-left" : "";
 
-  eyebrow,
-  title = "Construye landings ultra-rápidas",
-  subtitle = "Boilerplate profesional con Astro + Tailwind",
+/* ── POSICIONES DE CHIPS (8) ──────────────────────────────────────────── */
+const posDesktop = [
+  { top: "-6%", left: "46%", tx: "-50%" },
+  { top: "-2%", left: "72%" },
+  { top: "10%", right: "2%" },
+  { top: "18%", left: "2%" },
+  { top: "26%", right: "12%" },
+  { top: "34%", left: "6%" },
+  { top: "42%", right: "5%" },
+  { bottom: "6%", right: "10%" },
+];
 
-  ctaPrimary = { label: "Empezar", href: "#pricing" } as CTA,
-  ctaSecondary,
-
-  media = {
-    type: "image",
-    src: "/assets/og-hero.png",
-    alt: "Vista previa del sitio",
-  } as Media,
-
-  trust = [
-    { src: "/assets/logos/logo1.svg", alt: "Cliente 1", width: 96, height: 24 },
-    { src: "/assets/logos/logo2.svg", alt: "Cliente 2", width: 96, height: 24 },
-    { src: "/assets/logos/logo3.svg", alt: "Cliente 3", width: 96, height: 24 },
-  ] as TrustLogo[] | null,
-} = Astro.props as Props;
-
-// layout classes
-const isCenter = align === "center";
-const gridWrap = isCenter
-  ? "grid gap-10 place-items-center text-center"
-  : "grid gap-10 md:grid-cols-2 md:items-center";
-
-// id de subtítulo para aria-describedby
-const subId = subtitle ? `${id}-subtitle` : undefined;
+const posMobile = [
+  { top: "-8%", left: "50%", tx: "-50%" },
+  { top: "10%", right: "4%" }, // despega del notch
+  { top: "22%", left: "4%" },
+  { top: "36%", right: "6%" },
+  { top: "50%", left: "6%" },
+  { bottom: "24%", left: "8%" },
+  { bottom: "16%", right: "10%" },
+  { bottom: "0%", left: "20%" }, // no entra al fade
+];
 ---
 
-<Section
-  id={id}
-  variant={variant}
-  className={`relative overflow-hidden ${className}`}
+<section
+  class="relative overflow-hidden hero-grid bg-grid soft"
+  style="--hero-spotlight:none"
 >
-  <!-- Decoración de fondo sutil (no interfiere con tenants) -->
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 -z-[1] [mask-image:radial-gradient(60%_40%_at_50%_0%,black,transparent)]"
-    style="
-      background:
-        radial-gradient(1200px 480px at 0% -10%, hsl(var(--neutral-100)) 0%, transparent 60%),
-        radial-gradient(1000px 360px at 100% -20%, hsl(var(--neutral-100)) 0%, transparent 60%);
-    "
-  >
-  </div>
+  <div class="mx-auto max-w-7xl px-4 pt-20 md:pt-28 pb-12 md:pb-24">
+    <div class="grid items-center gap-10 md:gap-20 lg:gap-28 md:grid-cols-12">
+      <!-- COPY -->
+      <div class={`md:col-span-6 ${colAlign}`}>
+        <h1 class="hero-title text-[color:var(--color-fg)]">
+          {
+            data.title
+              .split("\n")
+              .map((line) => <span class="block">{line}</span>)
+          }
+        </h1>
 
-  <div class="container">
-    <div class={gridWrap}>
-      <!-- Columna texto -->
-      <div class={isCenter ? "max-w-3xl" : "max-w-2xl"}>
-        {
-          eyebrow && (
-            <span
-              class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium
-                       ring-1 ring-[color:var(--color-border)]
-                       bg-[color:var(--color-bg-elev)]/70"
-            >
-              {eyebrow}
-            </span>
-          )
-        }
-        <h1 class="h1 mt-3">{title}</h1>
-        {
-          subtitle && (
-            <p id={subId} class="lead mt-4">
-              {subtitle}
-            </p>
-          )
-        }
-
-        <!-- CTAs -->
-        <div
-          class={`mt-8 flex ${isCenter ? "justify-center" : ""} gap-3 flex-wrap`}
+        <p
+          class="hero-subtitle mt-4 md:mt-5 text-[color:var(--color-fg-muted)]"
         >
-          {
-            ctaPrimary && (
-              <a href={ctaPrimary.href} class="btn btn-primary">
-                {ctaPrimary.label}
-              </a>
-            )
-          }
-          {
-            ctaSecondary && (
-              <a href={ctaSecondary.href} class="btn btn-outline">
-                {ctaSecondary.label}
-              </a>
-            )
-          }
+          {data.subtitle}
+        </p>
+
+        <div class="mt-7 md:mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href={data.ctaPrimary.href}
+            class="btn btn-primary btn-pill btn-lg"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path>
+            </svg>
+            {data.ctaPrimary.label}
+          </a>
+          <a href={data.ctaSecondary.href} class="btn btn-soft btn-pill btn-lg">
+            <svg
+              viewBox="0 0 24 24"
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9"></circle><path d="M10 8l6 4-6 4V8z"
+              ></path>
+            </svg>
+            {data.ctaSecondary.label}
+          </a>
         </div>
 
-        <!-- Logos de confianza -->
         {
-          trust && trust.length > 0 && (
-            <div
-              class={`mt-8 ${isCenter ? "justify-center" : ""} flex flex-wrap items-center gap-6 opacity-80`}
-            >
-              {trust.map((logo) => (
-                <img
-                  src={logo.src}
-                  alt={logo.alt || "Logo"}
-                  width={logo.width || 96}
-                  height={logo.height || 24}
-                  loading="lazy"
-                  class="h-6 w-auto object-contain opacity-80"
-                />
-              ))}
+          data.badges?.length && (
+            <div class="mt-6 md:mt-6">
+              <div class="badges-wrap badge-row">
+                {data.badges.map((b) => (
+                  <div
+                    class="badge-chip"
+                    style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-fg);"
+                  >
+                    {b.icon === "rocket" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 19c1.5-3.5 5.5-4.5 8-3l6-6a5 5 0 0 0-7-7l-6 6c1.5 2.5.5 6.5-3 8l3 2 2 3Z" />
+                        <path d="M15 9l-6 6" />
+                      </svg>
+                    )}
+                    {b.icon === "zap" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        aria-hidden="true"
+                      >
+                        <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+                      </svg>
+                    )}
+                    {b.icon === "shield" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z" />
+                        <path d="M9.5 12.5l1.5 1.5 3.5-3.5" />
+                      </svg>
+                    )}
+                    {b.icon === "clock" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        aria-hidden="true"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v6l4 2" />
+                      </svg>
+                    )}
+                    {b.icon === "chart" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        aria-hidden="true"
+                      >
+                        <path d="M4 19h16M7 16V8m5 8V5m5 14V11" />
+                      </svg>
+                    )}
+                    <span>{b.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )
         }
       </div>
 
-      <!-- Columna media / formulario -->
-      <div class={isCenter ? "w-full max-w-3xl" : "w-full md:justify-self-end"}>
-        <!-- slot de formulario (tiene prioridad si está presente) -->
-        <slot name="form" />
+      <!-- VISUAL -->
+      <div class="md:col-span-6">
+        <div
+          id="heroVisual"
+          class="relative mx-auto max-w-[620px] perspective-1000 mt-10 md:mt-0"
+        >
+          <!-- ÚNICA sombra/glow azul (definida en global.css) -->
+          <div class="visual-floor" aria-hidden="true" role="presentation">
+          </div>
 
-        {
-          Astro.slots.has("form") ? null : (
-            <>
-              {media && media.type === "image" && media.src && (
-                <figure
-                  class="w-[min(560px,92vw)] mx-auto aspect-[4/3] rounded-[var(--radius-2xl)]
-                       bg-[color:var(--color-bg-elev)]
-                       border border-[color:var(--color-border)] shadow-[var(--shadow-md)] overflow-hidden"
+          <div class="relative w-full">
+            <!-- Desktop card -->
+            <div
+              id="desktopCard"
+              class="relative rounded-[24px] overflow-hidden ring-1 translate-y-2 md:translate-y-0 scale-[.98] md:scale-100"
+              style="
+                background: var(--color-surface);
+                border-color: color-mix(in oklch, var(--color-border) 80%, transparent);
+                box-shadow: 0 28px 64px var(--hero-shadow-color);
+              "
+            >
+              <div
+                class="h-14 px-5 flex items-center gap-3"
+                style="background: hsl(0 0% 100% / .85);"
+              >
+                <div class="h-3.5 w-28 rounded ui-muted"></div>
+                <div class="h-3 w-16 rounded ui-muted"></div>
+              </div>
+              <div class="p-6 ui-skeleton">
+                <div class="ui-line w-48 h-4 mb-3"></div>
+                <div class="ui-line w-2/3 h-3 mb-6"></div>
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                  <div class="ui-card h-24"></div><div class="ui-card h-24">
+                  </div><div class="ui-card h-24"></div>
+                </div>
+                <div class="space-y-3">
+                  <div class="ui-line h-3 w-[92%]"></div>
+                  <div class="ui-line h-3 w-[78%]"></div>
+                  <div class="ui-line h-3 w-[65%]"></div>
+                </div>
+                <div
+                  class="mt-7 h-12 w-full rounded-xl ui-cta"
+                  style="background: var(--color-primary); box-shadow: 0 12px 28px color-mix(in oklch, var(--color-primary) 32%, transparent);"
                 >
-                  <img
-                    src={media.src}
-                    alt={media.alt || ""}
-                    loading="lazy"
-                    class="h-full w-full object-cover"
-                  />
-                </figure>
-              )}
+                </div>
+              </div>
+            </div>
 
-              {media && media.type === "video" && media.src && (
-                <figure
-                  class="w-[min(560px,92vw)] mx-auto aspect-[16/9] rounded-[var(--radius-2xl)]
-                       bg-[color:var(--color-bg-elev)]
-                       border border-[color:var(--color-border)] shadow-[var(--shadow-md)] overflow-hidden"
+            <!-- Phone (SIN sombra propia) -->
+            <div
+              id="phone"
+              class="absolute z-10 md:left-[-6%] md:bottom-0 left-1/2 -translate-x-1/2 -bottom-10 md:translate-x-0 w-[250px] sm:w-[300px] md:w-[320px] rotate-[-3deg]"
+              style="box-shadow:none;"
+            >
+              <div
+                class="relative rounded-[32px] bg-[hsl(222_20%_10%)] p-2 ring-1 ring-black/5"
+              >
+                <div
+                  class="absolute left-1/2 -translate-x-1/2 top-3 h-5 w-24 rounded-full bg-black/70"
                 >
-                  <video
-                    src={media.src}
-                    poster={media.poster}
-                    playsinline
-                    muted={toBool(media.muted, true)}
-                    autoplay={toBool(media.autoplay, true)}
-                    loop={toBool(media.loop, true)}
-                    class="h-full w-full object-cover"
-                    aria-label={media.alt || "Video de demostración"}
-                  />
-                </figure>
-              )}
-            </>
-          )
-        }
+                </div>
+                <div class="rounded-[28px] overflow-hidden bg-white">
+                  <div class="p-4 ui-skeleton">
+                    <div class="ui-line h-3.5 w-40 mb-2"></div>
+                    <div class="ui-line h-3 w-44 mb-5"></div>
+                    <div class="grid grid-cols-3 gap-3 mb-5">
+                      <div class="ui-card h-16"></div><div class="ui-card h-16">
+                      </div><div class="ui-card h-16"></div>
+                      <div class="ui-card h-16"></div><div class="ui-card h-16">
+                      </div><div class="ui-card h-16"></div>
+                    </div>
+                    <div class="ui-line h-3 w-[86%] mb-2"></div>
+                    <div class="ui-line h-3 w-[72%] mb-2"></div>
+                    <div class="ui-line h-3 w-[58%] mb-5"></div>
+                    <div
+                      class="h-10 w-full rounded-xl ui-cta"
+                      style="background: var(--color-primary); box-shadow: 0 8px 18px color-mix(in oklch, var(--color-primary) 28%, transparent);"
+                    >
+                    </div>
+                    <div class="mx-auto mt-4 h-1.5 w-14 rounded-full ui-muted">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chips desktop -->
+          <div class="chip-anchor hidden md:block">
+            {
+              posDesktop.map((p, i) => {
+                const m = data.messages[i % data.messages.length];
+                const style = `
+                ${p.top ? `top:${p.top};` : ""}${p.bottom ? `bottom:${p.bottom};` : ""}
+                ${p.left ? `left:${p.left};` : ""}${p.right ? `right:${p.right};` : ""}
+                ${p.tx ? `--tx:${p.tx};` : ""}
+              `;
+                return (
+                  <div class="chip-wrap" style={style}>
+                    <div
+                      class={`chip ${m.dot === "green" ? "green" : m.dot === "yellow" ? "amber" : "blue"}`}
+                    >
+                      {m.text}
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+
+          <!-- Chips móvil -->
+          <div class="chip-anchor md:hidden">
+            {
+              posMobile.map((p, i) => {
+                const m = data.messages[i % data.messages.length];
+                const style = `
+                ${p.top ? `top:${p.top};` : ""}${p.bottom ? `bottom:${p.bottom};` : ""}
+                ${p.left ? `left:${p.left};` : ""}${p.right ? `right:${p.right};` : ""}
+                ${p.tx ? `--tx:${p.tx};` : ""}
+              `;
+                return (
+                  <div class="chip-wrap" style={style}>
+                    <div
+                      class={`chip chip--sm ${m.dot === "green" ? "green" : m.dot === "yellow" ? "amber" : "blue"}`}
+                    >
+                      {m.text}
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Slot por si quieres contenido extra bajo el hero -->
-    <slot />
   </div>
-</Section>
+
+  <!-- Fade inferior para evitar corte duro con la siguiente sección -->
+  <div class="hero-fade" aria-hidden="true"></div>
+
+  <style is:inline>
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    /* (¡OJO! Sin .visual-floor aquí: se usa la global) */
+
+    /* Skeleton */
+    .ui-skeleton {
+      --ui-muted: hsl(220 14% 95%);
+      --ui-card: hsl(220 16% 97%);
+    }
+    [data-theme="dark"] .ui-skeleton {
+      --ui-muted: hsl(220 12% 18%);
+      --ui-card: hsl(220 14% 16%);
+    }
+    .ui-line {
+      border-radius: 8px;
+      background: var(--ui-muted);
+    }
+    .ui-card {
+      border-radius: 14px;
+      background: var(--ui-card);
+      box-shadow: inset 0 0 0 1px hsl(220 14% 40%/0.06);
+    }
+    .ui-muted {
+      background: var(--ui-muted);
+    }
+    .ui-cta {
+      transform: translateZ(0);
+    }
+
+    /* Chips overlay */
+    .chip-anchor {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 40;
+    }
+    .chip-wrap {
+      position: absolute;
+      opacity: 0;
+      --tx: 0;
+      --bump: 0px;
+      transform: translate(var(--tx), var(--bump));
+    }
+    .chip-wrap .chip {
+      pointer-events: auto;
+    }
+
+    /* Anti-solapes sutil */
+    .chip-anchor .chip-wrap:nth-child(even) {
+      --bump: 6px;
+    }
+    @media (max-width: 767px) {
+      .chip-anchor .chip-wrap:nth-child(6) {
+        --bump: -10px;
+      }
+    }
+
+    /* Animaciones */
+    @media (prefers-reduced-motion: no-preference) {
+      .chip-wrap {
+        animation: chip-in 0.6s ease forwards;
+      }
+      .chip {
+        animation: chip-float 6s ease-in-out infinite;
+      }
+      #desktopCard {
+        animation: desk-pop 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.02s both;
+      }
+      #phone {
+        animation:
+          phone-pop 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.08s both,
+          phone-float 7.5s ease-in-out infinite;
+      }
+    }
+    @keyframes chip-in {
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes chip-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-3px);
+      }
+    }
+    @keyframes phone-pop {
+      from {
+        opacity: 0;
+        transform: translateY(10px) rotate(-3deg) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(-3deg) scale(1);
+      }
+    }
+    @keyframes phone-float {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+      50% {
+        transform: translateY(-6px) rotate(-3deg);
+      }
+    }
+    @keyframes desk-pop {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script is:inline>
+    (function () {
+      const mm = (q) =>
+        typeof matchMedia !== "undefined" ? matchMedia(q) : { matches: false };
+      const rmo = mm("(prefers-reduced-motion: reduce)").matches;
+      const visual = document.getElementById("heroVisual");
+      const phone = document.getElementById("phone");
+      const desk = document.getElementById("desktopCard");
+      const isDesktop = () => mm("(min-width: 768px)").matches;
+
+      function onScroll() {
+        if (rmo || !isDesktop()) return;
+        const rect = visual.getBoundingClientRect();
+        const vh = innerHeight || 1;
+        const p = Math.max(
+          -0.85,
+          Math.min(0.85, (vh / 2 - rect.top) / (vh / 2))
+        ); // clamp
+        if (desk) desk.style.transform = `translate3d(0, ${p * -8}px, 0)`;
+        if (phone)
+          phone.style.transform = `translate3d(0, ${p * -14}px, 0) rotate(-3deg)`;
+      }
+      onScroll();
+      addEventListener("scroll", onScroll, { passive: true });
+
+      let raf = 0;
+      function onMove(e) {
+        if (rmo || !isDesktop()) return;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const b = visual.getBoundingClientRect();
+          const x = (e.clientX - b.left) / b.width - 0.5;
+          const y = (e.clientY - b.top) / b.height - 0.5;
+          visual.style.transform = `rotateX(${(y * -5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`;
+        });
+      }
+      function resetTilt() {
+        if (isDesktop()) visual.style.transform = "";
+      }
+      visual.addEventListener("mousemove", onMove);
+      visual.addEventListener("mouseleave", resetTilt);
+      addEventListener("resize", () => {
+        if (!isDesktop()) {
+          visual.style.transform = "";
+          if (desk) desk.style.transform = "";
+          if (phone) phone.style.transform = "rotate(-3deg)";
+        }
+      });
+    })();
+  </script>
+</section>
