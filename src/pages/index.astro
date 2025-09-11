@@ -1,40 +1,86 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import pageSections from "@/content/pages/index";
-import { sectionsRegistry } from "@/utils/section-map";
+import { sectionsRegistry, type SectionKey } from "@/utils/section-map";
 
-// SEO de la Home (lo inyecta BaseLayout vía utils/seo.ts)
 const seo = {
-  title: "Landing Starter — Astro + Tailwind",
+  // Copys afinados
+  title: "Landqo — Tu landing lista en días, no en semanas",
   description:
-    "Boilerplate de producción con multi-tenant, SEO y formularios reales.",
-  image: "/assets/og-hero.png",
+    "Creamos landings que convierten: copy claro, diseño a medida, SEO técnico, velocidad 95+ en Lighthouse y analítica desde el día uno. Entrega en días.",
+  image: "/assets/og-image.png",
+  imageAlt: "Landqo: tu landing lista en días, no en semanas",
   type: "website",
   lang: "es",
+  siteName: "Landqo",
+  // Importante: indexable (no poner noindex aquí)
+  noindex: false,
   schema: {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Landing Boilerplate",
+    "@type": "Organization",
+    name: "Landqo",
     url: Astro.site
-      ? new URL(Astro.url.pathname, Astro.site).toString()
-      : undefined,
+      ? String(Astro.site)
+      : import.meta.env.PUBLIC_SITE_URL || undefined,
+    logo: "/assets/icons/isotype.png",
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: import.meta.env.PUBLIC_CONTACT_EMAIL || undefined,
+        telephone: import.meta.env.PUBLIC_CONTACT_PHONE || undefined,
+        availableLanguage: (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
+          .split(",")
+          .map((s: string) => s.trim()),
+      },
+    ],
   },
 };
 
-// Resolvemos todos los componentes antes de renderizar
-const resolved = await Promise.all(
+type ResolvedSection = {
+  key: SectionKey | string;
+  Comp: any | null;
+  props?: Record<string, any>;
+  error?: string | null;
+};
+
+const resolved: ResolvedSection[] = await Promise.all(
   pageSections.map(async ({ key, props }) => {
-    const mod = await sectionsRegistry[key].component();
-    return { Comp: mod.default, key, props };
+    const entry = sectionsRegistry[key as SectionKey];
+    if (!entry || typeof entry.component !== "function") {
+      const error = `Sección "${key}" no está registrada en sectionsRegistry.`;
+      console.warn("[sectionsRegistry]", error);
+      return { key, Comp: null, props, error };
+    }
+    try {
+      const mod = await entry.component();
+      const Comp = mod?.default ?? null;
+      if (!Comp) {
+        const error = `Sección "${key}" no exporta 'default'.`;
+        console.error("[sectionsRegistry]", error);
+        return { key, Comp: null, props, error };
+      }
+      return { key, Comp, props, error: null };
+    } catch (e) {
+      const error = `Error importando "${key}": ${String(e)}`;
+      console.error("[sectionsRegistry]", error);
+      return { key, Comp: null, props, error };
+    }
   })
 );
 ---
 
 <BaseLayout seo={seo}>
   {
-    resolved.map(({ Comp, key, props }) => (
-      // @ts-ignore - Astro permite componentes dinámicos
-      <Comp {...(props || {})} data-key={key} />
-    ))
+    resolved.map(({ Comp, key, props, error }) =>
+      error || !Comp ? (
+        <div data-key={key} class="container mx-auto my-6 text-sm text-red-600">
+          <strong>Error en sección "{key}":</strong> {error}
+        </div>
+      ) : (
+        // @ts-ignore
+        <Comp {...(props || {})} data-key={key} />
+      )
+    )
   }
 </BaseLayout>

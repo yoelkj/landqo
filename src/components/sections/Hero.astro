@@ -1,5 +1,7 @@
 ---
+// Hero.astro — CTAs: WhatsApp (primario) y ancla a #pricing (secundario)
 import hero from "@/content/sections/hero";
+import { CONTACT } from "@/utils/contact";
 
 type CTA = { label: string; href: string };
 type Badge = {
@@ -21,6 +23,12 @@ const data = hero as {
 
 const colAlign = data.align === "center" ? "text-center md:text-left" : "";
 
+// Enlaces finales (sin cambiar UI):
+// - Primario: WhatsApp con intención "propuesta" y source "hero"
+// - Secundario: ancla a sección de precios (#pricing)
+const hrefPrimary = CONTACT.ctaHref({ intent: "ventas", source: "hero" });
+const hrefSecondary = "#pricing";
+
 /* ── POSICIONES DE CHIPS (8) ──────────────────────────────────────────── */
 const posDesktop = [
   { top: "-6%", left: "46%", tx: "-50%" },
@@ -35,13 +43,13 @@ const posDesktop = [
 
 const posMobile = [
   { top: "-8%", left: "50%", tx: "-50%" },
-  { top: "10%", right: "4%" }, // despega del notch
+  { top: "10%", right: "4%" },
   { top: "22%", left: "4%" },
   { top: "36%", right: "6%" },
   { top: "50%", left: "6%" },
   { bottom: "24%", left: "8%" },
   { bottom: "16%", right: "10%" },
-  { bottom: "0%", left: "20%" }, // no entra al fade
+  { bottom: "0%", left: "20%" },
 ];
 ---
 
@@ -68,10 +76,7 @@ const posMobile = [
         </p>
 
         <div class="mt-7 md:mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href={data.ctaPrimary.href}
-            class="btn btn-primary btn-pill btn-lg"
-          >
+          <a href={hrefPrimary} class="btn btn-primary btn-pill btn-lg">
             <svg
               viewBox="0 0 24 24"
               class="h-4 w-4"
@@ -84,7 +89,7 @@ const posMobile = [
             </svg>
             {data.ctaPrimary.label}
           </a>
-          <a href={data.ctaSecondary.href} class="btn btn-soft btn-pill btn-lg">
+          <a href={hrefSecondary} class="btn btn-soft btn-pill btn-lg">
             <svg
               viewBox="0 0 24 24"
               class="h-4 w-4"
@@ -93,8 +98,8 @@ const posMobile = [
               stroke-width="2"
               aria-hidden="true"
             >
-              <circle cx="12" cy="12" r="9"></circle><path d="M10 8l6 4-6 4V8z"
-              ></path>
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M10 8l6 4-6 4V8z"></path>
             </svg>
             {data.ctaSecondary.label}
           </a>
@@ -187,7 +192,6 @@ const posMobile = [
           id="heroVisual"
           class="relative mx-auto max-w-[620px] perspective-1000 mt-10 md:mt-0"
         >
-          <!-- ÚNICA sombra/glow azul (definida en global.css) -->
           <div class="visual-floor" aria-hidden="true" role="presentation">
           </div>
 
@@ -318,17 +322,13 @@ const posMobile = [
     </div>
   </div>
 
-  <!-- Fade inferior para evitar corte duro con la siguiente sección -->
+  <!-- Fade inferior -->
   <div class="hero-fade" aria-hidden="true"></div>
 
   <style is:inline>
     .perspective-1000 {
       perspective: 1000px;
     }
-
-    /* (¡OJO! Sin .visual-floor aquí: se usa la global) */
-
-    /* Skeleton */
     .ui-skeleton {
       --ui-muted: hsl(220 14% 95%);
       --ui-card: hsl(220 16% 97%);
@@ -353,7 +353,6 @@ const posMobile = [
       transform: translateZ(0);
     }
 
-    /* Chips overlay */
     .chip-anchor {
       position: absolute;
       inset: 0;
@@ -370,8 +369,6 @@ const posMobile = [
     .chip-wrap .chip {
       pointer-events: auto;
     }
-
-    /* Anti-solapes sutil */
     .chip-anchor .chip-wrap:nth-child(even) {
       --bump: 6px;
     }
@@ -381,7 +378,6 @@ const posMobile = [
       }
     }
 
-    /* Animaciones */
     @media (prefers-reduced-motion: no-preference) {
       .chip-wrap {
         animation: chip-in 0.6s ease forwards;
@@ -460,7 +456,7 @@ const posMobile = [
         const p = Math.max(
           -0.85,
           Math.min(0.85, (vh / 2 - rect.top) / (vh / 2))
-        ); // clamp
+        );
         if (desk) desk.style.transform = `translate3d(0, ${p * -8}px, 0)`;
         if (phone)
           phone.style.transform = `translate3d(0, ${p * -14}px, 0) rotate(-3deg)`;

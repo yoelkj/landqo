@@ -1,17 +1,85 @@
 ---
-// src/pages/legales/privacidad.astro
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// ── ENV & Lang
+const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
+  .split(",")
+  .map((s: string) => s.trim())
+  .filter(Boolean);
+const DEFAULT_LANG = (import.meta.env.PUBLIC_DEFAULT_LANG || "es").trim();
+const BRAND = (import.meta.env.PUBLIC_BRAND_NAME || "Landqo").trim();
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL || "").trim();
+const CONTACT_EMAIL = (
+  import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@landqo.com"
+).trim();
+
+const path = Astro.url?.pathname || "/";
+const parts = path.replace(/^\/+/, "").split("/");
+const maybeLang = parts[0] || "";
+const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
+
+const UPDATED = (import.meta.env.PUBLIC_PRIV_UPDATED || "2025-09-01").trim();
+
+const pageTitle = `Política de Privacidad · ${BRAND}`;
+const pageDesc = `Cómo recopilamos, usamos y protegemos tus datos personales en ${BRAND}.`;
+const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: pageTitle,
+  inLanguage: detectedLang,
+  url: pageUrl,
+  dateModified: UPDATED,
+};
 ---
 
 <BaseLayout
-  title="Política de Privacidad · Landing Boilerplate"
-  seo={{ noindex: true }}
+  seo={{
+    title: pageTitle,
+    description: pageDesc,
+    noindex: true,
+    lang: detectedLang,
+    schema,
+  }}
 >
   <main class="section" role="main">
     <div class="container prose">
       <h1>Política de Privacidad</h1>
-      <p>Última actualización: 2025-09-06</p>
-      <!-- contenido -->
+      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+
+      <h2>Datos que recopilamos</h2>
+      <ul>
+        <li>
+          Datos de contacto (por ejemplo, nombre y correo) cuando nos escribes.
+        </li>
+        <li>Métricas de uso del sitio (si aceptas cookies analíticas).</li>
+      </ul>
+
+      <h2>Finalidades</h2>
+      <ul>
+        <li>Responder consultas y gestionar solicitudes comerciales.</li>
+        <li>Mejorar el sitio y nuestros servicios.</li>
+      </ul>
+
+      <h2>Bases legales y retención</h2>
+      <p>
+        Tratamos datos con base en tu consentimiento o interés legítimo para
+        comunicaciones comerciales. Conservamos la información el tiempo
+        necesario para las finalidades indicadas.
+      </p>
+
+      <h2>Tus derechos</h2>
+      <p>
+        Puedes solicitar acceso, rectificación o eliminación de tus datos.
+        Escríbenos a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2>Seguridad</h2>
+      <p>
+        Aplicamos medidas técnicas y organizativas razonables para proteger tus
+        datos.
+      </p>
     </div>
   </main>
 </BaseLayout>

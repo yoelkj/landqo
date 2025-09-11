@@ -1,3 +1,4 @@
+// src/content/sections/use-cases.ts
 // Íconos (SVG inline) – estilo stroke para heredar currentColor
 const icoSaaS =
   '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M8 16h8M7 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2"/></svg>';
@@ -20,37 +21,38 @@ const icoApp =
 export default {
   id: "use-cases",
   title: "Casos de uso",
-  subtitle: "Dónde nuestros landings rinden mejor.",
+  subtitle:
+    "Así es como una landing bien hecha potencia distintos modelos de negocio y ayuda a vender más.",
   cols: 3,
   cases: [
     {
-      title: "SaaS / Productos digitales",
-      desc: "Landing enfocada en conversión: propuesta clara, social proof, pricing y llamada a prueba gratis.",
+      title: "SaaS y productos digitales",
+      desc: "Muestra tu propuesta de valor, explica cómo funciona y facilita el registro o prueba gratis para captar usuarios.",
       icon: icoSaaS,
     },
     {
       title: "Servicios locales",
-      desc: "Captación de leads con WhatsApp/agenda, mapa y testimonios. Ideal para clínicas, talleres o consultorías.",
+      desc: "Convierte visitas en clientes con botones a WhatsApp, formularios rápidos y testimonios. Ideal para clínicas, talleres o consultorías.",
       icon: icoLocal,
     },
     {
       title: "Eventos y webinars",
-      desc: "Registro rápido, agenda y speakers. Integraciones con herramientas de mailing para recordatorios.",
+      desc: "Página de registro con agenda clara, speakers y recordatorios automáticos por email o WhatsApp.",
       icon: icoEvent,
     },
     {
       title: "Cursos e infoproductos",
-      desc: "Presentación del programa, beneficios y módulos. Lead magnet y checkout externo listos.",
+      desc: "Expón beneficios y módulos de tu programa, ofrece un lead magnet y facilita la compra con un checkout externo.",
       icon: icoCourse,
     },
     {
-      title: "Consultoría / B2B",
-      desc: "Propuesta de valor, casos de éxito y agenda con calendario para agendar reuniones sin fricción.",
+      title: "Consultoría B2B",
+      desc: "Refuerza credibilidad con casos de éxito, explica tu propuesta y permite agendar reuniones sin fricciones.",
       icon: icoB2B,
     },
     {
       title: "Apps móviles",
-      desc: "Features, capturas y enlaces a stores, con reseñas y FAQ para disminuir objeciones.",
+      desc: "Presenta capturas de pantalla, reseñas y enlaces directos a App Store o Google Play para aumentar descargas.",
       icon: icoApp,
     },
   ],

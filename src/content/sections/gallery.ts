@@ -1,8 +1,9 @@
-// Galería — simple y directa (el componente ya usa <Section>, por eso incluimos título/subtítulo)
+// src/content/sections/gallery.ts
 export default {
   id: "gallery",
-  title: "Galería",
-  subtitle: "Un vistazo a páginas y bloques que hemos construido recientemente.",
+  title: "Galería de ejemplos",
+  subtitle:
+    "Explora algunas de las landings y secciones que hemos diseñado y publicado. Cada proyecto es único, pero todos comparten velocidad, claridad y enfoque en conversión.",
   images: [
     // Landqo
     "/assets/gallery/landqo-01.png",

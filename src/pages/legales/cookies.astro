@@ -1,16 +1,94 @@
 ---
-// src/pages/legales/cookies.astro
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// ── ENV & Lang
+const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
+  .split(",")
+  .map((s: string) => s.trim())
+  .filter(Boolean);
+const DEFAULT_LANG = (import.meta.env.PUBLIC_DEFAULT_LANG || "es").trim();
+const BRAND = (import.meta.env.PUBLIC_BRAND_NAME || "Landqo").trim();
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL || "").trim();
+const CONTACT_EMAIL = (
+  import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@landqo.com"
+).trim();
+
+// Detectar lang por prefijo en la URL
+const path = Astro.url?.pathname || "/";
+const parts = path.replace(/^\/+/, "").split("/");
+const maybeLang = parts[0] || "";
+const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
+
+// Fecha de última actualización (puedes exponerla por env)
+const UPDATED = (import.meta.env.PUBLIC_COOKIES_UPDATED || "2025-09-01").trim();
+
+const pageTitle = `Política de Cookies · ${BRAND}`;
+const pageDesc = `Información sobre el uso de cookies, finalidades y cómo gestionar tus preferencias en ${BRAND}.`;
+const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: pageTitle,
+  inLanguage: detectedLang,
+  url: pageUrl,
+  dateModified: UPDATED,
+};
 ---
 
 <BaseLayout
-  title="Política de Cookies · Landing Boilerplate"
-  seo={{ noindex: true }}
+  seo={{
+    title: pageTitle,
+    description: pageDesc,
+    noindex: true,
+    lang: detectedLang,
+    schema,
+  }}
 >
   <main class="section" role="main">
     <div class="container prose">
       <h1>Política de Cookies</h1>
-      <!-- contenido -->
+      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+
+      <h2>¿Qué son las cookies?</h2>
+      <p>
+        Las cookies son pequeños archivos que un sitio web almacena en tu
+        dispositivo para recordar información sobre tu visita (por ejemplo, tu
+        preferencia de consentimiento).
+      </p>
+
+      <h2>¿Qué cookies usamos?</h2>
+      <ul>
+        <li>
+          <strong>Esenciales</strong>: necesarias para el funcionamiento básico
+          del sitio y para recordar tu preferencia de cookies.
+        </li>
+        <li>
+          <strong>Analíticas</strong> (opcionales): nos ayudan a entender el uso
+          del sitio para mejorar la experiencia. Solo se activan si das tu consentimiento
+          en el banner de cookies.
+        </li>
+      </ul>
+
+      <h3>Google Analytics</h3>
+      <p>
+        Si aceptas cookies analíticas, usamos Google Analytics 4 para medir
+        tráfico y eventos clave. Puedes retirar tu consentimiento cuando
+        quieras.
+      </p>
+
+      <h2>Gestión de preferencias</h2>
+      <p>
+        Puedes cambiar tu preferencia en cualquier momento desde el banner o
+        borrando cookies en tu navegador. Si rechazas las analíticas, el sitio
+        seguirá funcionando.
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Si tienes preguntas sobre esta política, escríbenos a
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
     </div>
   </main>
 </BaseLayout>

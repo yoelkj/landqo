@@ -23,7 +23,8 @@ export type SectionKey =
 
 type LazyAstroComponent = () => Promise<{ default: any }>;
 
-export const sectionsRegistry: Record<SectionKey, { component: LazyAstroComponent }> = {
+// Tipado estricto con `satisfies` para detectar claves mal escritas en build
+export const sectionsRegistry = {
   hero:         { component: () => import('@/components/sections/Hero.astro') },
   benefits:     { component: () => import('@/components/sections/Benefits.astro') },
   features:     { component: () => import('@/components/sections/Features.astro') },
@@ -39,5 +40,5 @@ export const sectionsRegistry: Record<SectionKey, { component: LazyAstroComponen
   gallery:      { component: () => import('@/components/sections/Gallery.astro') },
   contact:      { component: () => import('@/components/sections/Contact.astro') },
   ctafinal:     { component: () => import('@/components/sections/CTAFinal.astro') },
-  templates:     { component: () => import('@/components/sections/Templates.astro') },
-};
+  templates:    { component: () => import('@/components/sections/Templates.astro') },
+} satisfies Record<SectionKey, { component: LazyAstroComponent }>;

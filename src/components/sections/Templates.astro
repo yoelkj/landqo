@@ -1,6 +1,7 @@
 ---
 import Section from "@/components/ui/Section.astro";
 import type { TemplateCard } from "@/content/sections/templates";
+import { CONTACT } from "@/utils/contact";
 
 const {
   id = "templates",
@@ -25,6 +26,17 @@ const {
 const hasItems = Array.isArray(items) && items.length > 0;
 const hasFilters = hasItems && Array.isArray(filters) && filters.length > 0;
 const uiFilters = hasFilters ? (filters[0] === "Todos" ? filters : ["Todos", ...filters]) : [];
+
+// CTA para el empty state → WhatsApp (intención: catálogo)
+const emptyCta = CONTACT.ctaLink({ intent: "catalogo", source: "templates" });
+
+// Helper por tarjeta → WhatsApp (intención: contratar) con nombre e industria
+const wantLinkFor = (t: TemplateCard) =>
+  CONTACT.ctaLink({
+    intent: "contratar",
+    source: "templates",
+    extra: `Plantilla de interés: ${t.name}${t.industry ? " · " + t.industry : ""}`,
+  });
 ---
 
 <Section
@@ -48,7 +60,13 @@ const uiFilters = hasFilters ? (filters[0] === "Todos" ? filters : ["Todos", ...
           Estamos maquetando las primeras plantillas de Landqo. Si quieres ver opciones o recibir propuestas, contáctanos y te enviamos un preview.
         </p>
         <div class="mt-5">
-          <a href={ctaHref} class="btn btn-primary h-11 rounded-xl px-4">{ctaLabel}</a>
+          <a
+            href={emptyCta.href}
+            class="btn btn-primary h-11 rounded-xl px-4"
+            {...(emptyCta.target ? { target: emptyCta.target, rel: emptyCta.rel } : {})}
+          >
+            {ctaLabel}
+          </a>
         </div>
       </div>
     )}
@@ -135,9 +153,19 @@ const uiFilters = hasFilters ? (filters[0] === "Todos" ? filters : ["Todos", ...
                     Ver demo
                   </a>
                 ) : null}
-                <a href={ctaHref} class="btn btn-primary h-10 px-3 rounded-xl">
-                  {ctaLabel}
-                </a>
+
+                {(() => {
+                  const l = wantLinkFor(t);
+                  return (
+                    <a
+                      href={l.href}
+                      class="btn btn-primary h-10 px-3 rounded-xl"
+                      {...(l.target ? { target: l.target, rel: l.rel } : {})}
+                    >
+                      {ctaLabel}
+                    </a>
+                  );
+                })()}
               </div>
             </div>
           </article>
@@ -235,9 +263,7 @@ const uiFilters = hasFilters ? (filters[0] === "Todos" ? filters : ["Todos", ...
       backdrop-filter:saturate(1.4) blur(4px);
     }
 
-    .shot--fallback{
-      background: var(--color-bg-elev);
-    }
+    .shot--fallback{ background: var(--color-bg-elev); }
 
     /* ===== Meta ===== */
     .meta{ padding:16px 16px 18px; }

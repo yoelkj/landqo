@@ -1,30 +1,119 @@
 ---
+// src/pages/404.astro
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// Asegurar status 404 real
+try {
+  Astro.response.status = 404;
+} catch {}
+
+// ── Idiomas desde .env
+const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
+  .split(",")
+  .map((s: string) => s.trim())
+  .filter(Boolean);
+
+const DEFAULT_LANG = (import.meta.env.PUBLIC_DEFAULT_LANG || "es").trim();
+
+// Detectar /{lang}/ en la ruta actual del 404
+const path = Astro.url?.pathname || "/";
+const parts = path.replace(/^\/+/, "").split("/");
+const maybeLang = parts[0] || "";
+const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
+
+// Si tu home real está en "/[lang]/", usamos eso. Si usas "/" como home, cambia a `"/"`
+const homeHref = `/${detectedLang}/`;
+
+// Link de contacto: si la sección vive en la home, enviamos al hash de esa home
+const contactHref = `${homeHref}#contacto`;
+
+// Enlaces sugeridos (edítalos a tu gusto; se resuelven por idioma)
+const suggestions: Array<{ href: string; label: string }> = [
+  { href: `${homeHref}#servicios`, label: "Servicios" },
+  { href: `${homeHref}#plantillas`, label: "Plantillas" },
+  { href: `${homeHref}#pricing`, label: "Precios" },
+  { href: `${homeHref}#faq`, label: "Preguntas frecuentes" },
+  { href: contactHref, label: "Contacto" },
+];
+
+// SEO del 404 (noindex)
+const SEO_TITLE = "Página no encontrada · Landqo";
+const SEO_DESC =
+  "La página que buscas no existe o fue movida. Vuelve al inicio de Landqo o navega por nuestras secciones.";
 ---
 
 <BaseLayout
-  title="Página no encontrada · Landing Boilerplate"
-  seo={{ noindex: true }}
+  seo={{
+    title: SEO_TITLE,
+    description: SEO_DESC,
+    noindex: true,
+    lang: detectedLang,
+  }}
 >
-  <main class="section" role="main">
+  <main class="section py-16 md:py-24" role="main">
     <div class="container">
-      <section class="card p-8 md:p-12 rounded-[var(--radius-2xl)] text-center">
-        <p class="text-sm text-[color:var(--color-fg-muted)]">Error 404</p>
-        <h1 class="h1 mt-2">Página no encontrada</h1>
-        <p class="mt-3 lead">
-          Lo sentimos, el recurso que buscas no existe o fue movido.
+      <section
+        class="card px-6 py-10 md:px-12 md:py-14 rounded-[var(--radius-2xl)] text-center mx-auto max-w-3xl"
+        aria-labelledby="not-found-title"
+      >
+        <p
+          class="text-xs tracking-wide uppercase text-[color:var(--color-fg-muted)]"
+        >
+          Error 404
         </p>
-        <div class="mt-6 flex items-center justify-center gap-3 flex-wrap">
+
+        <h1 id="not-found-title" class="h1 mt-2">Página no encontrada</h1>
+
+        <p class="mt-4 text-balance text-[color:var(--color-fg-soft)]">
+          Lo sentimos, la página que buscas no existe o fue movida. Puedes
+          volver al inicio, contactar con nosotros o explorar estas secciones.
+        </p>
+
+        <div class="mt-8 flex items-center justify-center gap-3 flex-wrap">
           <a
-            href="/"
+            href={homeHref}
             class="btn btn-primary h-10 px-5 rounded-[var(--radius-lg)]"
-            >Volver al inicio</a
           >
+            Volver al inicio
+          </a>
+
           <a
-            href="#contacto"
+            href={contactHref}
             class="btn btn-outline h-10 px-5 rounded-[var(--radius-lg)]"
-            >Contacto</a
           >
+            Contacto
+          </a>
+
+          <button
+            type="button"
+            class="btn btn-ghost h-10 px-5 rounded-[var(--radius-lg)]"
+            onclick="history.length > 1 ? history.back() : (location.href = this.dataset.href)"
+            data-href={homeHref}
+          >
+            Volver atrás
+          </button>
+        </div>
+
+        <div class="mt-10 border-t border-[color:var(--color-border)] pt-8">
+          <h2 class="h6 text-[color:var(--color-fg-muted)]">Quizá buscabas</h2>
+          <ul class="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {
+              suggestions.map((s) => (
+                <li>
+                  <a
+                    href={s.href}
+                    class="chip inline-flex items-center h-9 rounded-full px-4 hover:translate-y-[-1px] transition"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="mt-8 text-xs text-[color:var(--color-fg-muted)]">
+          <p>Si crees que es un error, por favor escríbenos y lo revisamos.</p>
         </div>
       </section>
     </div>

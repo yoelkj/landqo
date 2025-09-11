@@ -1,4 +1,5 @@
-// Templates — usa los 4 proyectos reales como “plantillas”
+// src/content/sections/templates.ts
+
 export type TemplateCard = {
   name: string;
   industry: string;   // filtro/categoría
@@ -14,7 +15,11 @@ const items: TemplateCard[] = [
     industry: "Servicios",
     image: "/assets/templates/landqo-cover.png",
     color: "#6366F1",
-    features: ["Arquitectura modular", "Rendimiento alto", "SEO técnico listo"],
+    features: [
+      "Diseño moderno y flexible",
+      "Entrega rápida en días",
+      "SEO técnico desde el inicio"
+    ],
     url: "https://pages.velcodi.com",
   },
   {
@@ -22,7 +27,11 @@ const items: TemplateCard[] = [
     industry: "SaaS",
     image: "/assets/templates/frevvo-cover.png",
     color: "#22C55E",
-    features: ["Hero enfocado a conversión", "Sección de pricing", "Analítica configurada"],
+    features: [
+      "Hero enfocado en captar leads",
+      "Sección de planes y precios",
+      "Analítica lista para medir"
+    ],
     url: "https://conten.velcodi.com",
   },
   {
@@ -30,7 +39,11 @@ const items: TemplateCard[] = [
     industry: "SaaS",
     image: "/assets/templates/tazqo-cover.png",
     color: "#A855F7",
-    features: ["Beneficios claros", "Componentes reusables", "CTA persistente"],
+    features: [
+      "Beneficios claros y directos",
+      "Componentes reusables",
+      "CTA visible en todo momento"
+    ],
     url: "https://tareas.velcodi.com",
   },
   {
@@ -38,18 +51,22 @@ const items: TemplateCard[] = [
     industry: "Micrositio",
     image: "/assets/templates/velcodi-cover.png",
     color: "#0EA5E9",
-    features: ["Estructura corporativa", "Secciones informativas", "Accesibilidad cuidada"],
-    url: "https://velcodi.com", // si quieres apuntar afuera
+    features: [
+      "Estructura corporativa limpia",
+      "Secciones informativas clave",
+      "Accesibilidad cuidada"
+    ],
+    url: "https://velcodi.com",
   },
 ];
 
 export default {
   id: "templates",
-  title: "Plantillas",
+  title: "Plantillas reales",
   subtitle:
-    "Ejemplos reales de cómo entregamos rápido, con diseño cuidado y base técnica sólida.",
-  ctaLabel: "Elegir",
-  ctaHref: "#cta",
+    "Estos proyectos ya están online y muestran cómo podemos lanzar tu landing con diseño profesional, dominio propio y todo listo para convertir.",
+  ctaLabel: "Quiero una así",
+  ctaHref: "#contacto",
   filters: ["Todos", "SaaS", "Servicios", "Micrositio"],
   items,
 };

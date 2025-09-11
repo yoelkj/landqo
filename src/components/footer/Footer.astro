@@ -1,5 +1,18 @@
 ---
+import { CONTACT } from "@/utils/contact";
+
 const year = new Date().getFullYear();
+
+const BRAND = (import.meta.env.PUBLIC_BRAND_NAME || "Landqo").trim();
+const EMAIL = (
+  import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@landqo.com"
+).trim();
+const PHONE = (import.meta.env.PUBLIC_CONTACT_PHONE || "").trim();
+
+const DEV_BY_NAME = (import.meta.env.PUBLIC_DEV_BY_NAME || "Velcodi").trim();
+const DEV_BY_URL = (
+  import.meta.env.PUBLIC_DEV_BY_URL || "https://velcodi.com"
+).trim();
 
 const SECCIONES: Array<{ label: string; href: string }> = [
   { label: "Inicio", href: "/#" },
@@ -19,30 +32,30 @@ const RECURSOS: Array<{ label: string; href: string }> = [
   { label: "Términos", href: "/legales/terminos/" },
   { label: "Cookies", href: "/legales/cookies/" },
 ];
+
+// CTA a WhatsApp (target _blank si aplica)
+const contactLink = CONTACT.ctaLink({
+  intent: "contacto",
+  source: "footer",
+  fallback: "/#cta",
+});
 ---
 
 <footer
-  class="mt-0 bg-[color:var(--color-surface)] text-[color:var(--color-fg)]"
+  class="ft mt-0 bg-[color:var(--color-surface)] text-[color:var(--color-fg)]"
 >
-  <!-- separador superior sutil -->
-  <div class="[box-shadow:inset_0_1px_0_var(--color-border)]"></div>
+  <div class="ft-sep-top"></div>
 
   <div class="container py-10 md:py-12 grid gap-10 md:gap-12 md:grid-cols-12">
-    <!-- Marca Landqo -->
+    <!-- Marca -->
     <div class="md:col-span-4">
-      <a
-        href="/#"
-        class="inline-flex items-center gap-1.5 hover:opacity-95"
-        aria-label="Landqo — ir al inicio"
-      >
-        <!-- Isotipo pill con “L” en negativo -->
+      <a href="/#" class="brand" aria-label={`${BRAND} — ir al inicio`}>
         <svg
-          class="h-8 w-8 shrink-0"
+          class="brand-iso"
           viewBox="0 0 64 64"
           role="img"
           aria-hidden="true"
         >
-          <!-- fondo pill: usa el color primario del tema -->
           <rect
             x="6"
             y="6"
@@ -50,19 +63,11 @@ const RECURSOS: Array<{ label: string; href: string }> = [
             height="52"
             rx="14"
             fill="var(--color-primary)"></rect>
-          <!-- “L” blanca (bloque con esquina suave) -->
           <path d="M22 18h8v24h20v8H22z" fill="#fff"></path>
         </svg>
-
-        <!-- Wordmark: “Land” fuerte + “qo” atenuado -->
-        <span class="inline-flex items-baseline leading-none tracking-tight">
-          <span class="text-[1.25rem] sm:text-[1.35rem] font-semibold"
-            >Land</span
-          >
-          <span
-            class="text-[1.25rem] sm:text-[1.35rem] font-semibold text-[color:var(--color-fg-muted)]"
-            >qo</span
-          >
+        <span class="brand-word">
+          <span class="strong">{BRAND.slice(0, 4) || "Land"}</span>
+          <span class="muted">{BRAND.slice(4) || "qo"}</span>
         </span>
       </a>
 
@@ -71,31 +76,30 @@ const RECURSOS: Array<{ label: string; href: string }> = [
         uno.
       </p>
 
-      <ul
-        class="mt-4 flex flex-wrap gap-2 text-[11px] text-[color:var(--color-fg-muted)]"
-      >
-        <li
-          class="rounded-full px-2.5 py-1 ring-1 ring-[color:var(--color-border)] bg-[color:var(--color-bg-elev)]"
-        >
-          Entrega en días
-        </li>
-        <li
-          class="rounded-full px-2.5 py-1 ring-1 ring-[color:var(--color-border)] bg-[color:var(--color-bg-elev)]"
-        >
-          Soporte post-lanzamiento
-        </li>
+      <ul class="chips">
+        <li class="chip">Entrega en días</li>
+        <li class="chip">Soporte post-lanzamiento</li>
       </ul>
     </div>
 
     <!-- Secciones -->
-    <nav class="md:col-span-4">
-      <h3 class="text-sm font-semibold mb-3">Secciones</h3>
-      <ul class="grid grid-cols-2 gap-y-2 text-sm">
+    <nav class="md:col-span-4" aria-labelledby="ft-sec">
+      <div class="ft-head">
+        <h3 id="ft-sec" class="ft-title">Secciones</h3>
+        <i class="ft-line" aria-hidden="true"></i>
+      </div>
+      <ul class="ft-links grid grid-cols-2 gap-y-2">
         {
           SECCIONES.map((i) => (
             <li>
-              <a class="hover:underline underline-offset-4" href={i.href}>
-                {i.label}
+              <a class="ft-link" href={i.href}>
+                <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"
+                  />
+                </svg>
+                <span>{i.label}</span>
               </a>
             </li>
           ))
@@ -105,42 +109,224 @@ const RECURSOS: Array<{ label: string; href: string }> = [
 
     <!-- Legal + contacto -->
     <div class="md:col-span-4 grid gap-8 sm:grid-cols-2">
-      <nav>
-        <h3 class="text-sm font-semibold mb-3">Legal</h3>
-        <ul class="space-y-2 text-sm">
+      <nav aria-labelledby="ft-legal">
+        <div class="ft-head">
+          <h3 id="ft-legal" class="ft-title">Legal</h3>
+          <i class="ft-line" aria-hidden="true"></i>
+        </div>
+        <ul class="ft-links">
           {
             RECURSOS.map((r) => (
               <li>
-                <a class="hover:underline underline-offset-4" href={r.href}>
-                  {r.label}
+                <a class="ft-link" href={r.href}>
+                  <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"
+                    />
+                  </svg>
+                  <span>{r.label}</span>
                 </a>
               </li>
             ))
           }
         </ul>
       </nav>
-      <div>
-        <h3 class="text-sm font-semibold mb-3">Contacto</h3>
-        <ul class="space-y-2 text-sm">
+
+      <div aria-labelledby="ft-contact">
+        <div class="ft-head">
+          <h3 id="ft-contact" class="ft-title">Contacto</h3>
+          <i class="ft-line" aria-hidden="true"></i>
+        </div>
+        <ul class="ft-links">
           <li>
-            <a class="hover:underline" href="mailto:hola@tu-dominio.com"
-              >hola@tu-dominio.com</a>
+            <a class="ft-link ft-icon" href={`mailto:${EMAIL}`}>
+              <svg viewBox="0 0 24 24" class="ico" aria-hidden="true">
+                <path fill="currentColor" d="M4 6h16v12H4V6Zm8 5L5 7h14l-7 4Z"
+                ></path>
+              </svg>
+              <span>{EMAIL}</span>
+            </a>
           </li>
-          <li class="text-[color:var(--color-fg-muted)]">
+          {
+            PHONE && (
+              <li class="text-sm text-[color:var(--color-fg-muted)]">
+                Tel. {PHONE}
+              </li>
+            )
+          }
+          <li class="text-sm text-[color:var(--color-fg-muted)]">
             Lun–Vie · 09:00–18:00
           </li>
         </ul>
+
+        <!-- CTA único -->
+        <a
+          href={contactLink.href}
+          class="btn btn-primary btn-pill w-full sm:w-auto justify-center gap-2 mt-3"
+          aria-label="Contactar"
+          {...contactLink.target
+            ? { target: contactLink.target, rel: contactLink.rel }
+            : {}}
+        >
+          Contactar
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- Barra inferior -->
-  <div class="[box-shadow:inset_0_1px_0_var(--color-border)]">
+  <div class="ft-sep-bottom">
     <div
       class="container py-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-[color:var(--color-fg-muted)]"
     >
-      <p>© {year} Landqo. Todos los derechos reservados.</p>
-      <p class="opacity-90">Hecho con Astro · Rendimiento primero.</p>
+      <p>© {year} {BRAND}. Todos los derechos reservados.</p>
+      <p class="opacity-90">
+        Desarrollado por
+        <a
+          href={DEV_BY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="devby">{DEV_BY_NAME}</a
+        >.
+      </p>
     </div>
   </div>
 </footer>
+
+<style is:inline>
+  .ft-sep-top,
+  .ft-sep-bottom {
+    box-shadow: inset 0 1px 0 var(--color-border);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .brand-iso {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+  .brand-word {
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .brand-word .strong {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+  }
+  .brand-word .muted {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+    color: color-mix(in oklch, var(--color-fg) 60%, transparent);
+  }
+
+  .chips {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    color: var(--color-fg-muted);
+  }
+  .chip {
+    border-radius: 999px;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--color-bg-elev);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+
+  .ft-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .ft-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .ft-line {
+    height: 2px;
+    flex: 1;
+    border-radius: 2px;
+    background: color-mix(in oklch, var(--color-border) 70%, transparent);
+  }
+
+  .ft-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ft-bullet {
+    width: 14px;
+    height: 14px;
+    opacity: 0.45;
+    transform: translateX(0);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+  }
+  .ft-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: inherit;
+    text-decoration: none;
+  }
+  .ft-link:hover .ft-bullet,
+  .ft-link:focus-visible .ft-bullet {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+  .ft-link:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .ft-icon .ico {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* CTA: asegura pill */
+  .btn.btn-pill {
+    border-radius: 999px;
+  }
+
+  /* “Desarrollado por …” sin subrayado, acento al hover */
+  .devby {
+    color: inherit;
+    text-decoration: none;
+    transition:
+      color 0.18s ease,
+      opacity 0.18s ease;
+    opacity: 0.92;
+  }
+  .devby:hover,
+  .devby:focus-visible {
+    color: var(--color-primary);
+    opacity: 1;
+    outline: 0;
+  }
+
+  /* Dark tweaks */
+  [data-theme="dark"] .ft-line {
+    background: color-mix(in oklch, var(--color-border) 85%, transparent);
+  }
+  [data-theme="dark"] .chip {
+    background: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
+  }
+</style>

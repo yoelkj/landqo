@@ -1,12 +1,13 @@
 ---
 /**
- * ScrollUi configurable (respetando props aunque vengan como string).
+ * ScrollUi configurable (respeta props aunque vengan como string).
  * Props:
  *  - showBar?: boolean        (default: true)
  *  - showGoTop?: boolean      (default: false)
  *  - spy?: boolean            (default: true)
  *  - showAfter?: { bar: number; top: number }  // umbrales px
  *  - offsetExtra?: number     // colchón extra al alto del header
+ *  - goTopStyle?: 'primary' | 'glass'          // look del botón (default: primary)
  */
 type ShowAfter = { bar: number; top: number }
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   spy?: boolean | string
   showAfter?: ShowAfter | { bar: number | string; top: number | string } | string
   offsetExtra?: number | string
+  goTopStyle?: 'primary' | 'glass' | string
 }
 
 const raw = Astro.props as Props
@@ -52,6 +54,8 @@ if (typeof raw.showAfter === 'object' && raw.showAfter !== null && !Array.isArra
   topAfter = 300
 }
 const offsetExtra = toNum(raw.offsetExtra, 12)
+
+const goTopStyle = (String(raw.goTopStyle || 'primary').toLowerCase() === 'glass') ? 'glass' : 'primary'
 ---
 
 <!-- Config embebida en data-* (el script del cliente lee aquí) -->
@@ -73,118 +77,114 @@ const offsetExtra = toNum(raw.offsetExtra, 12)
     class="hidden fixed left-0 right-0 pointer-events-none z-[1100]"
     style="top: calc(var(--header-h, 64px));"
   >
-    <div
-      class="h-[3px] overflow-hidden"
-      style="background-color: var(--color-border, #e5e7eb); opacity:.6;"
-    >
-      <div
-        id="progressBar"
-        class="h-full"
-        style="width:0%; background-color: var(--color-primary, #6366f1);"
-      ></div>
+    <div class="h-[3px] overflow-hidden" style="background-color: var(--color-border, #e5e7eb); opacity:.6;">
+      <div id="progressBar" class="h-full" style="width:0%; background-color: var(--color-primary, #6366f1);"></div>
     </div>
   </div>
 )}
 
 {showGoTop && (
-  <!-- Go to top (UI refinada) -->
+  <!-- Go to top — ICON-ONLY (primary/glass) -->
   <button
     id="goTop"
     aria-label="Volver arriba"
-    class="hidden fixed z-[1100] goTopBtn group"
+    class="hidden fixed z-[1100] goTopBtn"
+    data-style={goTopStyle}
   >
-    <svg viewBox="0 0 24 24" class="mx-auto h-5 w-5 md:h-6 md:w-6 transition-colors" aria-hidden="true">
-      <path fill="currentColor" d="M12 7l-5.2 5.2a1 1 0 0 0 1.4 1.4L11 11.8V17a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-5.2l2.8 2.8a1 1 0 1 0 1.4-1.4L12 7z"/>
-    </svg>
+    <span class="inner" aria-hidden="true">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path fill="currentColor" d="M12 7l-5.2 5.2a1 1 0 0 0 1.4 1.4L11 11.8V17a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-5.2l2.8 2.8a1 1 0 1 0 1.4-1.4L12 7z"/>
+      </svg>
+    </span>
   </button>
 )}
 
 <style is:inline>
   /* Hover + activo en nav */
-  #siteHeader nav a {
-    transition: color .18s ease, background-color .18s ease;
-    text-decoration: none !important;
-  }
-  #siteHeader nav a:hover,
-  #mobileNav a:hover { color: var(--color-primary) !important; }
-  #siteHeader nav a.nav-active,
-  #mobileNav a.nav-active { color: var(--color-primary) !important; font-weight: 600; }
+  #siteHeader nav a{transition:color .18s ease,background-color .18s ease;text-decoration:none!important}
+  #siteHeader nav a:hover, #mobileNav a:hover{color:var(--color-primary)!important}
+  #siteHeader nav a.nav-active, #mobileNav a.nav-active{color:var(--color-primary)!important;font-weight:600}
 
-  /* Si menú móvil abierto, ocultar goTop (si existe) */
-  body.menu-open #goTop { display: none; }
+  /* Oculta goTop si menú móvil está abierto */
+  body.menu-open #goTop{display:none}
 
-  /* Barra de progreso: suavizado (respeta reduced motion) */
-  #progressBar { transition: width 80ms linear; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto !important; }
-    #progressBar { transition: none !important; }
+  /* Barra de progreso */
+  #progressBar{transition:width 80ms linear}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto!important}
+    #progressBar{transition:none!important}
   }
 
-  /* Botón goTop — vidrio + aro sutil + elevación + safe-area */
-  #goTop {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
-    right:  calc(env(safe-area-inset-right,  0px) + 1.25rem);
+  /* Posición con safe-area */
+  #goTop{
+    bottom:calc(env(safe-area-inset-bottom,0px) + 1.1rem);
+    right: calc(env(safe-area-inset-right, 0px) + 1.1rem);
   }
-  @media (min-width: 768px) {
-    #goTop {
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 1.75rem);
-      right:  calc(env(safe-area-inset-right,  0px) + 1.75rem);
+  @media (min-width:768px){
+    #goTop{
+      bottom:calc(env(safe-area-inset-bottom,0px) + 1.5rem);
+      right: calc(env(safe-area-inset-right, 0px) + 1.5rem);
     }
   }
 
-  .goTopBtn {
-    --_bg: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
-    --_ring: color-mix(in oklch, var(--color-border) 90%, transparent);
-    --_fg: color-mix(in oklch, var(--color-fg) 88%, transparent);
+  /* Base del botón circular */
+  .goTopBtn{
+    border:0; outline:0; border-radius:9999px;
+    -webkit-tap-highlight-color: transparent;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .goTopBtn .inner{
+    display:grid; place-items:center;
+    width:3rem; height:3rem; border-radius:inherit;
+  }
+  @media (min-width:768px){
+    .goTopBtn .inner{ width:3.25rem; height:3.25rem }
+  }
+  .goTopBtn .icon{ width:1.15rem; height:1.15rem }
+  @media (min-width:768px){ .goTopBtn .icon{ width:1.25rem; height:1.25rem } }
 
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-    background: var(--_bg);
-    color: var(--_fg);
-    border: 1px solid var(--_ring);
+  /* ===== Variant: PRIMARY (match Empezar/WhatsApp) ===== */
+  .goTopBtn[data-style="primary"]{
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow:
+      0 22px 60px -22px color-mix(in oklch, var(--color-primary) 45%, transparent),
+      0 10px 28px -14px hsl(220 8% 10% / .25);
+  }
+  .goTopBtn[data-style="primary"] .inner{
+    box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-primary) 20%, white);
+  }
+  .goTopBtn[data-style="primary"]:hover{ transform:translateY(-2px); filter:saturate(1.02) }
+  .goTopBtn[data-style="primary"]:focus-visible{ outline:2px solid color-mix(in oklch, var(--color-primary) 70%, white); outline-offset:3px }
+
+  /* ===== Variant: GLASS (look anterior) ===== */
+  .goTopBtn[data-style="glass"]{
+    background: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
+    color: color-mix(in oklch, var(--color-fg) 88%, transparent);
+    border: 1px solid color-mix(in oklch, var(--color-border) 90%, transparent);
     backdrop-filter: saturate(1.2) blur(6px);
     box-shadow: 0 6px 24px -10px rgba(0,0,0,.35);
-    transition:
-      transform .18s ease,
-      box-shadow .18s ease,
-      color .18s ease,
-      border-color .18s ease,
-      background-color .18s ease;
   }
-  @media (min-width: 768px) {
-    .goTopBtn { width: 3.5rem; height: 3.5rem; }
-  }
-
-  .goTopBtn:hover {
-    transform: translateY(-2px);
+  .goTopBtn[data-style="glass"]:hover{
+    transform:translateY(-2px);
     color: var(--color-primary);
     border-color: color-mix(in oklch, var(--color-primary) 45%, var(--color-border));
     box-shadow: 0 16px 40px -18px rgba(0,0,0,.5);
   }
-  .goTopBtn:focus-visible {
-    outline: 2px solid color-mix(in oklch, var(--color-primary) 70%, white);
-    outline-offset: 2px;
-  }
-  .goTopBtn::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    pointer-events: none;
+  .goTopBtn[data-style="glass"]::after{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
     box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent);
   }
 
-  /* Tema oscuro: un poco más de fondo para contraste */
-  [data-theme="dark"] .goTopBtn {
-    --_bg: color-mix(in oklch, var(--color-surface) 88%, transparent);
-    --_fg: color-mix(in oklch, var(--color-fg) 92%, transparent);
+  /* Dark ajustes para glass */
+  [data-theme="dark"] .goTopBtn[data-style="glass"]{
+    background: color-mix(in oklch, var(--color-surface) 88%, transparent);
+    color: color-mix(in oklch, var(--color-fg) 92%, transparent);
   }
 </style>
 
 <script is:inline>
   (function () {
-    // Lee configuración normalizada (desde data-*)
     var cfgEl = document.getElementById('scrollUiCfg');
     if (!cfgEl) return;
     var ds = cfgEl.dataset;
@@ -199,150 +199,112 @@ const offsetExtra = toNum(raw.offsetExtra, 12)
     var bar  = document.getElementById("progressBar");
     var btn  = document.getElementById("goTop");
 
-    // Portal al <body> (solo si existen)
+    // Porta al <body>
     if (SHOW_BAR && wrap && wrap.parentElement !== document.body) document.body.appendChild(wrap);
     if (SHOW_TOP && btn  && btn.parentElement  !== document.body) document.body.appendChild(btn);
 
-    function getScrollTop () {
-      var d = document.documentElement, b = document.body;
-      return window.pageYOffset || d.scrollTop || b.scrollTop || 0;
-    }
-    function getMaxScroll () {
-      var d = document.documentElement, b = document.body;
-      var scrollH = Math.max(
-        b.scrollHeight, d.scrollHeight,
-        b.offsetHeight, d.offsetHeight,
-        b.clientHeight, d.clientHeight
-      );
-      return Math.max(1, scrollH - d.clientHeight);
+    function getScrollTop(){ var d=document.documentElement,b=document.body; return window.pageYOffset||d.scrollTop||b.scrollTop||0 }
+    function getMaxScroll(){
+      var d=document.documentElement,b=document.body;
+      var H=Math.max(b.scrollHeight,d.scrollHeight,b.offsetHeight,d.offsetHeight,b.clientHeight,d.clientHeight);
+      return Math.max(1, H - d.clientHeight);
     }
 
-    function updateUI () {
-      if (SHOW_BAR && wrap && bar) {
-        var scrolled = getScrollTop();
-        var pct = Math.min(100, Math.max(0, (scrolled / getMaxScroll()) * 100));
-        bar.style.width = pct + "%";
-        if (scrolled > BAR_AFTER) wrap.classList.remove("hidden");
-        else { wrap.classList.add("hidden"); bar.style.width = "0%"; }
+    function updateUI(){
+      var y=getScrollTop();
+      if (SHOW_BAR && wrap && bar){
+        var pct=Math.min(100, Math.max(0, (y/getMaxScroll())*100));
+        bar.style.width=pct+"%";
+        if (y>BAR_AFTER) wrap.classList.remove("hidden"); else {wrap.classList.add("hidden"); bar.style.width="0%";}
       }
-      if (SHOW_TOP && btn) {
-        if (getScrollTop() > TOP_AFTER) btn.classList.remove("hidden");
-        else btn.classList.add("hidden");
-      }
+      if (SHOW_TOP && btn){ if (y>TOP_AFTER) btn.classList.remove("hidden"); else btn.classList.add("hidden"); }
     }
 
-    var ticking = false;
-    addEventListener("scroll", function () {
-      if (!ticking) {
-        requestAnimationFrame(function () { updateUI(); ticking = false; });
-        ticking = true;
-      }
-    }, { passive: true });
-    addEventListener("resize", updateUI, { passive: true });
+    var ticking=false;
+    addEventListener("scroll", function(){
+      if (!ticking){ requestAnimationFrame(function(){ updateUI(); ticking=false }); ticking=true }
+    }, {passive:true});
+    addEventListener("resize", updateUI, {passive:true});
     updateUI();
 
-    if (SHOW_TOP && btn) {
-      btn.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
+    if (SHOW_TOP && btn){
+      btn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
     }
 
     // ===== Scroll-Spy =====
     if (!SPY_ON) return;
 
-    var headerEl = document.getElementById("siteHeader");
-    function headerH () {
-      var h = headerEl && headerEl.offsetHeight;
-      if (h) return h;
-      var cssVar = getComputedStyle(document.documentElement).getPropertyValue("--header-h");
-      var parsed = parseFloat(cssVar);
-      return isFinite(parsed) ? parsed : 64;
+    var headerEl=document.getElementById("siteHeader");
+    function headerH(){ var h=headerEl&&headerEl.offsetHeight; if(h) return h;
+      var cssVar=getComputedStyle(document.documentElement).getPropertyValue("--header-h"); var parsed=parseFloat(cssVar);
+      return isFinite(parsed)?parsed:64;
     }
-    function getHashId (href) {
-      if (!href) return "";
-      var i = href.indexOf("#");
-      return i >= 0 ? href.slice(i + 1) : "";
-    }
+    function getHashId(href){ if(!href) return ""; var i=href.indexOf("#"); return i>=0?href.slice(i+1):"" }
 
-    var linkNodes = Array.prototype.slice.call(document.querySelectorAll(
-      'a[data-spy="true"][href*="#"], ' +
-      '#siteHeader nav a[href^="#"], #siteHeader nav a[href^="/#"], ' +
+    var linkNodes=Array.prototype.slice.call(document.querySelectorAll(
+      'a[data-spy="true"][href*="#"], '+
+      '#siteHeader nav a[href^="#"], #siteHeader nav a[href^="/#"], '+
       '#mobileNav  a[href^="#"],     #mobileNav  a[href^="/#"]'
     ));
 
-    var spyMap = (function () {
-      var map = new Map();
-      linkNodes.forEach(function (a) {
-        var id = getHashId(a.getAttribute("href") || "");
-        if (!id) return;
-        if (!map.has(id)) map.set(id, { anchors: [], section: null });
-        map.get(id).anchors.push(a);
+    var spyMap=(function(){
+      var map=new Map();
+      linkNodes.forEach(function(a){
+        var id=getHashId(a.getAttribute("href")||""); if(!id) return;
+        if(!map.has(id)) map.set(id,{anchors:[],section:null}); map.get(id).anchors.push(a);
       });
-      Array.from(map.keys()).forEach(function (id) {
-        var v = map.get(id);
-        v.section = document.getElementById(id);
-        if (!v.section) map.delete(id);
+      Array.from(map.keys()).forEach(function(id){
+        var v=map.get(id); v.section=document.getElementById(id); if(!v.section) map.delete(id);
       });
       return map;
     })();
 
-    if (spyMap.size) {
-      var ids = Array.from(spyMap.keys());
-      var sections = ids.map(function (id) { return spyMap.get(id).section; });
+    if (spyMap.size){
+      var ids=Array.from(spyMap.keys());
+      var sections=ids.map(function(id){ return spyMap.get(id).section });
 
-      function setActive (id) {
-        ids.forEach(function (key) {
-          var on = key === id;
-          var rec = spyMap.get(key);
-        if (!rec) return;
-          rec.anchors.forEach(function (a) {
-            a.classList.toggle("nav-active", on);
-            a.setAttribute("aria-current", on ? "page" : "false");
-          });
+      function setActive(id){
+        ids.forEach(function(key){
+          var on=key===id; var rec=spyMap.get(key); if(!rec) return;
+          rec.anchors.forEach(function(a){ a.classList.toggle("nav-active", on); a.setAttribute("aria-current", on?"page":"false"); });
         });
       }
 
       var io;
-      function buildIO () {
+      function buildIO(){
         if (io) io.disconnect();
-        var topMargin = headerH() + OFFSET_X + 12;
-        io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (ent) { if (ent.isIntersecting) setActive(ent.target.id); });
-        }, { rootMargin: "-" + topMargin + "px 0px -55% 0px", threshold: 0.01 });
-        sections.forEach(function (s) { if (s) io.observe(s); });
+        var topMargin=headerH()+Number(ds.offsetExtra||12)+12;
+        io=new IntersectionObserver(function(entries){
+          entries.forEach(function(ent){ if(ent.isIntersecting) setActive(ent.target.id) });
+        }, {rootMargin:"-"+topMargin+"px 0px -55% 0px", threshold:0.01});
+        sections.forEach(function(s){ if(s) io.observe(s) });
       }
       buildIO();
-      addEventListener("resize", buildIO, { passive: true });
+      addEventListener("resize", buildIO, {passive:true});
 
-      function spyFallback () {
-        if (!sections.length) return;
-        var y = window.scrollY + headerH() + OFFSET_X;
-        var currentId = sections[0].id;
-        for (var i = 0; i < sections.length; i++) {
-          var s = sections[i]; if (!s) continue;
-          var top = s.getBoundingClientRect().top + window.scrollY;
-          if (top - 1 <= y) currentId = s.id; else break;
+      function spyFallback(){
+        if(!sections.length) return;
+        var y=window.scrollY+headerH()+Number(ds.offsetExtra||12);
+        var currentId=sections[0].id;
+        for (var i=0;i<sections.length;i++){
+          var s=sections[i]; if(!s) continue;
+          var top=s.getBoundingClientRect().top+window.scrollY;
+          if(top-1<=y) currentId=s.id; else break;
         }
-        var atBottom = Math.abs(innerHeight + window.scrollY - document.documentElement.scrollHeight) < 2;
-        if (atBottom) currentId = sections[sections.length - 1].id;
+        var atBottom=Math.abs(innerHeight+window.scrollY-document.documentElement.scrollHeight)<2;
+        if(atBottom) currentId=sections[sections.length-1].id;
         setActive(currentId);
       }
-      addEventListener("scroll", spyFallback, { passive: true });
+      addEventListener("scroll", spyFallback, {passive:true});
 
-      if (location.hash && spyMap.has(location.hash.slice(1))) setActive(location.hash.slice(1));
-      else spyFallback();
-
-      document.addEventListener("click", function (e) {
-        var t = e.target;
-        if (!(t instanceof Element)) return;
-        var a = t.closest('a[href^="#"], a[href^="/#"]');
-        if (!a) return;
-        var id = getHashId(a.getAttribute("href") || "");
-        if (id && spyMap.has(id)) setActive(id);
+      if (location.hash && spyMap.has(location.hash.slice(1))) setActive(location.hash.slice(1)); else spyFallback();
+      document.addEventListener("click", function(e){
+        var t=e.target; if(!(t instanceof Element)) return;
+        var a=t.closest('a[href^="#"], a[href^="/#"]'); if(!a) return;
+        var id=getHashId(a.getAttribute("href")||""); if(id && spyMap.has(id)) setActive(id);
       });
-      addEventListener("hashchange", function () {
-        var id = location.hash.slice(1);
-        if (id && spyMap.has(id)) setActive(id);
+      addEventListener("hashchange", function(){
+        var id=location.hash.slice(1); if(id && spyMap.has(id)) setActive(id);
       });
     }
   })();

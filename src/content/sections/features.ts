@@ -19,37 +19,38 @@ const icoSupport =
 export default {
   id: "features",
   title: "Características clave",
-  subtitle: "Así trabajamos en Landqo para que tu landing llegue rápido y con calidad profesional.",
+  subtitle:
+    "En Landqo no solo diseñamos: entregamos tu landing lista para vender, con todo lo que necesitas desde el día uno.",
   cols: 3,
   features: [
     {
       title: "Diseño a medida",
-      desc: "Cada landing refleja la identidad de tu marca, sin plantillas genéricas.",
+      desc: "Creamos un diseño único para tu negocio, alineado a tu identidad y pensado para generar confianza.",
       icon: icoDesign,
     },
     {
       title: "Copywriting persuasivo",
-      desc: "Textos claros y enfocados en guiar al usuario hacia la conversión.",
+      desc: "Redactamos textos claros y directos que guían a tus visitantes hacia la acción que importa.",
       icon: icoCopy,
     },
     {
       title: "Visuales profesionales",
-      desc: "Selección de imágenes e ilustraciones alineadas con tu mensaje.",
+      desc: "Seleccionamos imágenes e ilustraciones que refuercen tu mensaje y transmitan credibilidad.",
       icon: icoVisual,
     },
     {
-      title: "Proceso colaborativo",
-      desc: "Iteramos contigo para ajustar rápido y sin fricciones hasta la publicación.",
+      title: "Proceso ágil y colaborativo",
+      desc: "Trabajamos contigo paso a paso, ajustando rápido hasta que tu landing esté lista para salir online.",
       icon: icoProcess,
     },
     {
-      title: "Hosting y dominio listos",
-      desc: "Nos encargamos de la parte técnica: tu landing queda online sin complicaciones.",
+      title: "Hosting y dominio incluidos",
+      desc: "Lanza en un subdominio de Velcodi o conecta tu dominio propio con SSL y hosting configurados.",
       icon: icoHosting,
     },
     {
       title: "Soporte post-lanzamiento",
-      desc: "Pequeños ajustes y mejoras tras la publicación, sin costos ocultos.",
+      desc: "Estamos contigo después de publicar: ajustes menores, mejoras y asesoría sin costos ocultos.",
       icon: icoSupport,
     },
   ],

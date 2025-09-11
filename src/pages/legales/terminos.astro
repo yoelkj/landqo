@@ -1,16 +1,92 @@
 ---
-// src/pages/legales/terminos.astro
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+// ── ENV & Lang
+const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
+  .split(",")
+  .map((s: string) => s.trim())
+  .filter(Boolean);
+const DEFAULT_LANG = (import.meta.env.PUBLIC_DEFAULT_LANG || "es").trim();
+const BRAND = (import.meta.env.PUBLIC_BRAND_NAME || "Landqo").trim();
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL || "").trim();
+const CONTACT_EMAIL = (
+  import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@landqo.com"
+).trim();
+
+const path = Astro.url?.pathname || "/";
+const parts = path.replace(/^\/+/, "").split("/");
+const maybeLang = parts[0] || "";
+const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
+
+const UPDATED = (import.meta.env.PUBLIC_TOS_UPDATED || "2025-09-01").trim();
+
+const pageTitle = `Términos y Condiciones · ${BRAND}`;
+const pageDesc = `Condiciones de uso de los servicios y del sitio web de ${BRAND}.`;
+const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: pageTitle,
+  inLanguage: detectedLang,
+  url: pageUrl,
+  dateModified: UPDATED,
+};
 ---
 
 <BaseLayout
-  title="Términos y Condiciones · Landing Boilerplate"
-  seo={{ noindex: true }}
+  seo={{
+    title: pageTitle,
+    description: pageDesc,
+    noindex: true,
+    lang: detectedLang,
+    schema,
+  }}
 >
   <main class="section" role="main">
     <div class="container prose">
       <h1>Términos y Condiciones</h1>
-      <!-- contenido -->
+      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+
+      <h2>Objeto</h2>
+      <p>
+        Estos términos regulan el uso del sitio y la prestación de servicios de {
+          BRAND
+        }.
+      </p>
+
+      <h2>Uso del sitio</h2>
+      <p>
+        Te comprometes a usar el sitio de forma lícita y respetando la normativa
+        aplicable.
+      </p>
+
+      <h2>Servicios</h2>
+      <ul>
+        <li>Implementación de landing pages y hosting gestionado.</li>
+        <li>
+          Integraciones técnicas, soporte y mejoras (según plan contratado).
+        </li>
+      </ul>
+
+      <h2>Pagos y facturación</h2>
+      <p>
+        Los precios se muestran en PEN y <strong>no incluyen IGV (18%)</strong>.
+        La facturación y los plazos de pago se detallan en el acuerdo comercial.
+      </p>
+
+      <h2>Propiedad intelectual</h2>
+      <p>
+        El cliente mantiene derechos sobre sus marcas y contenidos. El código y
+        entregables del proyecto se transfieren para uso comercial del cliente,
+        según lo acordado.
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Para consultas sobre estos términos escríbenos a
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
     </div>
   </main>
 </BaseLayout>

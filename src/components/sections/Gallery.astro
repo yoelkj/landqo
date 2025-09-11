@@ -1,5 +1,12 @@
 ---
-// Gallery.astro — Galería con hover y lightbox accesible
+/**
+ * Gallery.astro — Galería con hover y lightbox accesible
+ * Cambios:
+ * - Línea decorativa en los subtítulos (captions) de cada item.
+ * - UI refinada (hover suave, bordes, sombras).
+ * - titleAccent="underline" para consistencia de sección.
+ * - Lightbox accesible (Esc, flechas, clic en backdrop, swipe).
+ */
 
 import Section from "@/components/ui/Section.astro";
 import type { BaseSectionProps, Variant } from "@/utils/section-types";
@@ -19,7 +26,7 @@ const {
   variant = "default" as Variant,
   className = "",
   images = [],
-  cols = 3, // 3 por fila en desktop
+  cols = 3,
   dense = false,
 } = Astro.props as Props;
 
@@ -52,6 +59,8 @@ const lbCapId = `${id}-lbcap`;
   subtitle={subtitle}
   variant={variant}
   className={className}
+  titleAccent="underline"
+  subtitleMuted={true}
 >
   <div id={rootId} class="container">
     <ul role="list" class={`mt-6 grid gap-6 ${grid}`}>
@@ -63,12 +72,14 @@ const lbCapId = `${id}-lbcap`;
               class={`tile ${pad} w-full cursor-zoom-in text-left`}
               data-index={i}
               aria-label="Ampliar imagen"
+              aria-haspopup="dialog"
             >
               <div class="frame">
                 <img
                   src={img.src}
                   alt={img.alt}
                   loading="lazy"
+                  decoding="async"
                   class="media"
                   onerror="this.style.opacity=0"
                 />
@@ -83,9 +94,11 @@ const lbCapId = `${id}-lbcap`;
                   <span>Ampliar</span>
                 </div>
               </div>
+
               {img.caption && (
-                <div class="mt-3 text-sm text-[color:var(--color-fg-muted)] line-clamp-2">
-                  {img.caption}
+                <div class="cap mt-3">
+                  <i class="cap-line" aria-hidden="true" />
+                  <span class="cap-text line-clamp-2">{img.caption}</span>
                 </div>
               )}
             </button>
@@ -140,6 +153,7 @@ const lbCapId = `${id}-lbcap`;
   .tile {
     outline: none;
   }
+
   .frame {
     position: relative;
     overflow: hidden;
@@ -166,6 +180,7 @@ const lbCapId = `${id}-lbcap`;
       var(--color-border)
     );
   }
+
   .media {
     display: block;
     width: 100%;
@@ -181,6 +196,7 @@ const lbCapId = `${id}-lbcap`;
     transform: scale(1.02);
     filter: saturate(1.03);
   }
+
   .fx {
     position: absolute;
     inset: 0;
@@ -202,6 +218,7 @@ const lbCapId = `${id}-lbcap`;
     opacity: 0.9;
     mix-blend-mode: soft-light;
   }
+
   .hint {
     position: absolute;
     right: 12px;
@@ -228,6 +245,31 @@ const lbCapId = `${id}-lbcap`;
     transform: translateY(0);
   }
 
+  /* Línea en subtítulos (captions) */
+  .cap {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: var(--color-fg-muted);
+  }
+  .cap-line {
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-border);
+    transition: background 0.25s ease;
+  }
+  .group:hover .cap-line {
+    background: color-mix(
+      in oklch,
+      var(--color-primary) 50%,
+      var(--color-border)
+    );
+  }
+
+  /* Lightbox */
   .lb {
     position: fixed;
     inset: 0;
@@ -270,6 +312,7 @@ const lbCapId = `${id}-lbcap`;
     color: var(--color-fg-muted);
     text-align: center;
   }
+
   .lb__close,
   .lb__nav {
     position: absolute;
@@ -307,7 +350,6 @@ const lbCapId = `${id}-lbcap`;
   }
 </style>
 
-<!-- Pasamos los IDs por data-* para evitar interpolaciones dentro del JS -->
 <script
   is:inline
   data-root-id={rootId}
@@ -318,11 +360,7 @@ const lbCapId = `${id}-lbcap`;
   (function () {
     const s = document.currentScript;
     if (!s) return;
-    const ds = s.dataset || {};
-    const rootId = ds.rootId;
-    const lbId = ds.lbId;
-    const lbImgId = ds.lbImgId;
-    const lbCapId = ds.lbCapId;
+    const { rootId, lbId, lbImgId, lbCapId } = s.dataset;
 
     const root = document.getElementById(rootId);
     if (!root) return;
@@ -337,7 +375,7 @@ const lbCapId = `${id}-lbcap`;
     const tiles = Array.from(root.querySelectorAll("[data-index]"));
     const data = tiles.map(function (t) {
       const i = t.querySelector("img");
-      const c = t.querySelector(".line-clamp-2");
+      const c = t.querySelector(".cap-text");
       return {
         src: i?.getAttribute("src") || "",
         alt: i?.getAttribute("alt") || "",
@@ -397,17 +435,11 @@ const lbCapId = `${id}-lbcap`;
       }
     }
     function onBackdrop(e) {
-      // cierra al hacer clic fuera del viewport (fondo)
-      if (
-        e.target === lb ||
-        (e.target &&
-          e.target.classList &&
-          e.target.classList.contains("lb__backdrop"))
-      )
+      if (e.target === lb || e.target?.classList?.contains("lb__backdrop"))
         close();
     }
 
-    // Swipe
+    // Swipe básico
     let sx = 0,
       dx = 0;
     function ts(e) {

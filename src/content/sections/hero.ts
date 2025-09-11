@@ -1,34 +1,35 @@
 export default {
   align: "left",
-  title: "Tu landing lista en días, no en semanas.",
+
+  title: "Landing profesional lista en días\ncon o sin hosting y dominio",
   subtitle:
-    "Creamos landings enfocadas en conversión: copy claro, SEO técnico, velocidad y analítica listas desde el día uno.",
-  ctaPrimary: { label: "Empezar", href: "#pricing" },
-  ctaSecondary: { label: "Ver plantillas en acción", href: "#plantillas" },
+    "Diseñamos, desarrollamos y publicamos tu landing enfocada en conversión. Puedes usar un subdominio de Velcodi o tu propio dominio en nuestro servidor. Incluye SEO técnico, analítica y velocidad 95+ en Lighthouse.",
+
+  // CTA principal: captar lead (WhatsApp en el componente); secundaria: ir a precios
+  ctaPrimary:   { label: "Solicitar propuesta", href: "#contacto" },
+  ctaSecondary: { label: "Ver planes y precios", href: "#pricing" }, // <— corregido
 
   badges: [
-    { text: "Entrega en días", icon: "rocket" },
-    { text: "SEO listo", icon: "zap" },
-    { text: "Garantía 14 días", icon: "shield" },
-    { text: "Velocidad 95+ Lighthouse", icon: "chart" },
-    { text: "Soporte 24–48h", icon: "clock" }
+    { text: "Entrega en días",         icon: "rocket" },
+    { text: "Hosting + SSL incluidos", icon: "shield" },
+    { text: "SEO técnico listo",       icon: "zap"    },
   ],
 
   mediaList: [
-    { src: "/assets/phones/left.svg",  alt: "Vista 1" },
-    { src: "/assets/phones/center.svg", alt: "Vista 2" },
-    { src: "/assets/phones/right.svg",  alt: "Vista 3" }
+    // (Opcional) mockups
+    // { src: "/assets/phones/left.svg",   alt: "Vista móvil izquierda" },
+    // { src: "/assets/phones/center.svg", alt: "Vista móvil central"   },
+    // { src: "/assets/phones/right.svg",  alt: "Vista móvil derecha"   }
   ],
 
-  /* SOLO 8 chips (selección priorizada) */
   messages: [
-    { text: "Cita confirmada",           dot: "blue"   },
-    { text: "Confirmación de pedido",    dot: "green"  },
-    { text: "Lead capturado",            dot: "yellow" },
-    { text: "Descarga completada",       dot: "green"  },
-    { text: "Demo agendada",             dot: "blue"   },
-    { text: "Lead calificado (MQL)",     dot: "green"  },
-    { text: "Pago recibido",             dot: "green"  },
-    { text: "A/B test ganador",          dot: "blue"   }
-  ]
+    { text: "Dominio conectado",      dot: "blue"   },
+    { text: "SSL activo",             dot: "green"  },
+    { text: "Formularios a WhatsApp", dot: "yellow" },
+    { text: "Analytics instalado",    dot: "green"  },
+    { text: "SEO on-page aplicado",   dot: "blue"   },
+    { text: "Píxel Meta/Ads listo",   dot: "green"  },
+    { text: "A/B test preparado",     dot: "blue"   },
+    { text: "Sitio publicado",        dot: "green"  },
+  ],
 };
