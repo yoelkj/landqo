@@ -17,7 +17,6 @@ export type SectionKey =
   | 'timeline'
   | 'resources'
   | 'gallery'
-  | 'contact'
   | 'ctafinal'
   | 'templates';
 
@@ -38,7 +37,6 @@ export const sectionsRegistry = {
   timeline:     { component: () => import('@/components/sections/Timeline.astro') },
   resources:    { component: () => import('@/components/sections/Resources.astro') },
   gallery:      { component: () => import('@/components/sections/Gallery.astro') },
-  contact:      { component: () => import('@/components/sections/Contact.astro') },
   ctafinal:     { component: () => import('@/components/sections/CTAFinal.astro') },
   templates:    { component: () => import('@/components/sections/Templates.astro') },
 } satisfies Record<SectionKey, { component: LazyAstroComponent }>;
