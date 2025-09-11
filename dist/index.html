@@ -1,0 +1,1755 @@
+<!DOCTYPE html><html lang="es" data-theme="light"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Landqo — Tu landing lista en días, no en semanas</title><meta name="description" content="Creamos landings que convierten: copy claro, diseño a medida, SEO técnico, velocidad 95+ en Lighthouse y analítica desde el día uno. Entrega en días."><meta name="robots" content="index, follow"><meta property="og:site_name" content="Landqo"><meta property="og:type" content="website"><meta property="og:title" content="Landqo — Tu landing lista en días, no en semanas"><meta property="og:description" content="Creamos landings que convierten: copy claro, diseño a medida, SEO técnico, velocidad 95+ en Lighthouse y analítica desde el día uno. Entrega en días."><meta property="og:image" content="https://pages.velcodi.com/assets/og-image.png"><meta property="og:image:alt" content="Landqo: tu landing lista en días, no en semanas"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Landqo — Tu landing lista en días, no en semanas"><meta name="twitter:description" content="Creamos landings que convierten: copy claro, diseño a medida, SEO técnico, velocidad 95+ en Lighthouse y analítica desde el día uno. Entrega en días."><meta name="twitter:image" content="https://pages.velcodi.com/assets/og-image.png"><meta name="twitter:image:alt" content="Landqo: tu landing lista en días, no en semanas"><meta name="theme-color" content="#ffffff"><meta property="og:url" content="https://pages.velcodi.com/"><meta http-equiv="content-language" content="es"><link rel="canonical" href="https://pages.velcodi.com/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Landqo","url":"http://localhost:4321/","logo":"/assets/icons/isotype.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"yoel.velasquez.valencia@gmail.com","telephone":"+51 941 493 973","availableLanguage":["es"]}]}</script><link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png"><link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png"><link rel="icon" href="/assets/icons/favicon.ico" sizes="any"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0e13"><script>
+      (() => {
+        const p = new URLSearchParams(location.search);
+        const t = p.get("tenant");
+        const th = p.get("theme");
+        if (t) {
+          if (t === "default")
+            document.documentElement.removeAttribute("data-tenant");
+          else document.documentElement.setAttribute("data-tenant", t);
+        }
+        if (th) document.documentElement.setAttribute("data-theme", th);
+      })();
+    </script><link rel="stylesheet" href="/_astro/index.Cgm8zYg6.css"></head> <body class="min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-fg)] antialiased"> <!-- Wrapper sin landmark para no duplicar <header> --><div class="relative"> <header id="siteHeader" role="banner" class="fixed top-0 inset-x-0 z-[1000] isolate"> <div class="container flex items-center justify-between h-16"> <!-- Brand --> <a href="/" class="flex items-center gap-2.5" aria-label="Landqo — Inicio"> <!-- Isotipo pill con “L” (mismo SVG del footer) --> <svg class="h-7 w-7 md:h-8 md:w-8 shrink-0" viewBox="0 0 64 64" role="img" aria-hidden="true" focusable="false"> <!-- fondo pill con color primario --> <rect x="6" y="6" width="52" height="52" rx="14" fill="var(--color-primary)"></rect> <!-- “L” blanca en negativo --> <path d="M22 18h8v24h20v8H22z" fill="#fff"></path> </svg> <!-- Wordmark: “Land” fuerte + “qo” atenuado (igual al footer) --> <span class="inline-flex items-baseline leading-none tracking-tight select-none"> <span class="text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg)]">Land</span> <span class="ml-[1px] text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg-muted)]">qo</span> </span> </a> <!-- Desktop nav --> <nav class="hidden md:flex items-center gap-1" aria-label="Navegación principal"> <a href="#features" class="nav-link hover:bg-[color:var(--color-bg-elev)]">Características</a> <a href="#templates" class="nav-link hover:bg-[color:var(--color-bg-elev)]">Plantillas</a> <a href="#use-cases" class="nav-link hover:bg-[color:var(--color-bg-elev)]">Casos de uso</a> <a href="#pricing" class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a> <a href="#faq" class="nav-link hover:bg-[color:var(--color-bg-elev)]">FAQ</a> <a href="#cta" class="btn btn-primary h-10 px-4 ml-2">Empezar</a> </nav> <!-- Mobile: CTA + menú --> <div class="md:hidden flex items-center gap-2"> <a href="#cta" class="btn btn-primary h-10 px-4">Empezar</a> <button id="menuBtn" class="inline-flex items-center justify-center rounded-lg h-10 w-10 border border-[color:var(--color-border)] hover:bg-[color:var(--color-bg-elev)]" aria-controls="mobileNav" aria-expanded="false" aria-label="Abrir menú"> <svg id="iconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"> <path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"></path> </svg> <svg id="iconClose" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"> <path stroke-linecap="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12"></path> </svg> <span class="sr-only">Menú</span> </button> </div> </div> </header> <!-- Overlay móvil --> <div id="mobileOverlay" class="md:hidden hidden fixed inset-x-0 bottom-0 bg-black/60" style="top: var(--header-h, 64px); z-index: 998;" role="presentation"></div> <!-- Panel móvil --> <nav id="mobileNav" class="md:hidden hidden fixed inset-x-0 bg-[color:var(--color-surface)] shadow-2xl overflow-y-auto" style="top: var(--header-h, 64px); height: calc(100dvh - var(--header-h, 64px)); z-index: 999;" role="dialog" aria-modal="true" aria-label="Menú principal"> <div class="container py-4"> <ul class="flex flex-col gap-1 text-base"> <li> <a href="#features" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">Características</a> </li> <li> <a href="#templates" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">Plantillas</a> </li> <li> <a href="#pricing" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">Precios</a> </li> <li> <a href="#use-cases" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">Casos de uso</a> </li> <li> <a href="#resources" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">Recursos</a> </li> <li> <a href="#faq" class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]">FAQ</a> </li> </ul> <div class="mt-4 pt-4 [box-shadow:inset_0_1px_0_var(--color-border)]"> <a href="#cta" class="btn btn-primary w-full h-12 rounded-xl">Empezar</a> </div> </div> </nav> <style>
+  :root {
+    --header-h: 64px;
+  }
+
+  /* Fondo sólido desde el inicio (no interfiere con el hero) */
+  #siteHeader {
+    background-color: var(--color-bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-border) 35%, transparent);
+    background-clip: padding-box;
+    transform: translateZ(0);
+    padding-top: env(safe-area-inset-top);
+    transition:
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  /* Scroll / menú abierto → elevación sutil */
+  #siteHeader.header--scrolled,
+  body.menu-open #siteHeader {
+    box-shadow: 0 8px 28px hsl(220 3% 15% / 0.1);
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 75%,
+      transparent
+    );
+  }
+
+  [data-theme="dark"] #siteHeader {
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 50%,
+      transparent
+    );
+  }
+  [data-theme="dark"] #siteHeader.header--scrolled {
+    box-shadow: 0 10px 32px hsl(220 3% 5% / 0.28);
+    border-bottom-color: color-mix(
+      in oklch,
+      var(--color-border) 70%,
+      transparent
+    );
+  }
+
+  #siteHeader .btn {
+    line-height: 1;
+  }
+</style> <script>
+  (function () {
+    const $ = (id) => document.getElementById(id);
+
+    // Stacking correcto
+    (function () {
+      const header = $("siteHeader"),
+        overlay = $("mobileOverlay"),
+        panel = $("mobileNav");
+      if (!header) return;
+      if (header.parentElement !== document.body) {
+        document.body.prepend(header);
+        if (overlay) document.body.appendChild(overlay);
+        if (panel) document.body.appendChild(panel);
+      }
+    })();
+
+    const header = $("siteHeader");
+    const btn = $("menuBtn");
+    const panel = $("mobileNav");
+    const overlay = $("mobileOverlay");
+    const iconOpen = $("iconOpen");
+    const iconClose = $("iconClose");
+
+    function setHeaderH() {
+      const h = (header && header.offsetHeight) || 64;
+      document.documentElement.style.setProperty("--header-h", h + "px");
+    }
+    setHeaderH();
+    addEventListener("resize", setHeaderH, { passive: true });
+
+    // Apertura/cierre móvil + focus trap
+    const roots = Array.from(
+      document.querySelectorAll("main, #pageRoot, #app, [data-app-root]")
+    );
+    let lastFocused = null;
+    const focusableSel =
+      'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+    function trapFocus(container, e) {
+      if (e.key !== "Tab") return;
+      const nodes = Array.from(container.querySelectorAll(focusableSel)).filter(
+        (el) => el.offsetParent !== null
+      );
+      if (!nodes.length) return;
+      const first = nodes[0],
+        last = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+    function onKeydownTrap(e) {
+      trapFocus(panel, e);
+    }
+
+    function scrollbarW() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+    function setOpen(toggle) {
+      const willOpen =
+        typeof toggle === "boolean"
+          ? toggle
+          : panel.classList.contains("hidden");
+      if (willOpen) lastFocused = document.activeElement;
+
+      panel.classList.toggle("hidden", !willOpen);
+      overlay.classList.toggle("hidden", !willOpen);
+      if (btn) btn.setAttribute("aria-expanded", String(willOpen));
+      if (iconOpen) iconOpen.classList.toggle("hidden", willOpen);
+      if (iconClose) iconClose.classList.toggle("hidden", !willOpen);
+      document.body.classList.toggle("overflow-hidden", willOpen);
+      document.body.classList.toggle("menu-open", willOpen);
+      document.body.style.paddingRight = willOpen ? scrollbarW() + "px" : "";
+
+      roots.forEach((el) => el && el.toggleAttribute("inert", willOpen));
+      if (willOpen) {
+        (panel.querySelector(focusableSel) || panel).focus();
+        panel.addEventListener("keydown", onKeydownTrap);
+      } else {
+        panel.removeEventListener("keydown", onKeydownTrap);
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+        else if (btn && btn.focus) btn.focus();
+      }
+    }
+
+    if (btn) btn.addEventListener("click", () => setOpen());
+    if (overlay) overlay.addEventListener("click", () => setOpen(false));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+    (panel ? panel.querySelectorAll("a") : []).forEach((a) =>
+      a.addEventListener("click", () => setOpen(false))
+    );
+    const mq = matchMedia("(min-width: 768px)");
+    if (mq && mq.addEventListener)
+      mq.addEventListener("change", (e) => {
+        if (e.matches) setOpen(false);
+      });
+
+    // Scroll: activa solo la sombra
+    const SCROLL_THRESHOLD = 12;
+    function onScroll() {
+      if (header)
+        header.classList.toggle(
+          "header--scrolled",
+          window.scrollY > SCROLL_THRESHOLD
+        );
+    }
+    requestAnimationFrame(onScroll);
+    addEventListener("scroll", onScroll, { passive: true });
+
+    // Anchors con offset del header
+    function getHashId(href) {
+      if (!href) return "";
+      const i = href.indexOf("#");
+      return i >= 0 ? href.slice(i + 1) : "";
+    }
+    document.addEventListener("click", function (e) {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      const a = t.closest(
+        'a[href^="#"]:not([data-no-offset]), a[href^="/#"]:not([data-no-offset])'
+      );
+      if (!a) return;
+      const id = getHashId(a.getAttribute("href") || "");
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      const h = (header && header.offsetHeight) || 64;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const y = Math.max(
+        0,
+        el.getBoundingClientRect().top + window.scrollY - h - 12
+      );
+      window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+    });
+
+    // Respetar hash al aterrizar
+    function scrollToHashIfNeeded() {
+      if (!location.hash) return;
+      const el = document.getElementById(location.hash.slice(1));
+      if (!el) return;
+      requestAnimationFrame(function () {
+        const h = (header && header.offsetHeight) || 64;
+        const y = Math.max(
+          0,
+          el.getBoundingClientRect().top + window.scrollY - h - 12
+        );
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    }
+    addEventListener("load", scrollToHashIfNeeded);
+    addEventListener("hashchange", scrollToHashIfNeeded);
+  })();
+</script> <!-- Spacer para que el contenido no quede debajo del header fixed --> <div aria-hidden="true" style="height: var(--header-h, 64px)"></div> </div> <main class="min-h-[60vh]" role="main"> <section class="relative overflow-hidden hero-grid bg-grid soft" style="--hero-spotlight:none"> <div class="mx-auto max-w-7xl px-4 pt-20 md:pt-28 pb-12 md:pb-24"> <div class="grid items-center gap-10 md:gap-20 lg:gap-28 md:grid-cols-12"> <!-- COPY --> <div class="md:col-span-6 "> <h1 class="hero-title text-[color:var(--color-fg)]"> <span class="block">Landing profesional lista en días</span><span class="block">con o sin hosting y dominio</span> </h1> <p class="hero-subtitle mt-4 md:mt-5 text-[color:var(--color-fg-muted)]"> Diseñamos, desarrollamos y publicamos tu landing enfocada en conversión. Puedes usar un subdominio de Velcodi o tu propio dominio en nuestro servidor. Incluye SEO técnico, analítica y velocidad 95+ en Lighthouse. </p> <div class="mt-7 md:mt-8 flex flex-wrap items-center gap-3"> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AMe%20gustar%C3%ADa%20hablar%20con%20ventas.%0AOrigen%3A%20Landqo%20%C2%B7%20hero" class="btn btn-primary btn-pill btn-lg"> <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <path d="M5 12h14"></path><path d="M13 5l7 7-7 7"></path> </svg> Solicitar propuesta </a> <a href="#pricing" class="btn btn-soft btn-pill btn-lg"> <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M10 8l6 4-6 4V8z"></path> </svg> Ver planes y precios </a> </div> <div class="mt-6 md:mt-6"> <div class="badges-wrap badge-row"> <div class="badge-chip" style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-fg);"> <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <path d="M5 19c1.5-3.5 5.5-4.5 8-3l6-6a5 5 0 0 0-7-7l-6 6c1.5 2.5.5 6.5-3 8l3 2 2 3Z"></path> <path d="M15 9l-6 6"></path> </svg>     <span>Entrega en días</span> </div><div class="badge-chip" style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-fg);">   <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z"></path> <path d="M9.5 12.5l1.5 1.5 3.5-3.5"></path> </svg>   <span>Hosting + SSL incluidos</span> </div><div class="badge-chip" style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-fg);">  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"></path> </svg>    <span>SEO técnico listo</span> </div> </div> </div> </div> <!-- VISUAL --> <div class="md:col-span-6"> <div id="heroVisual" class="relative mx-auto max-w-[620px] perspective-1000 mt-10 md:mt-0"> <div class="visual-floor" aria-hidden="true" role="presentation"></div> <div class="relative w-full"> <!-- Desktop card --> <div id="desktopCard" class="relative rounded-[24px] overflow-hidden ring-1 translate-y-2 md:translate-y-0 scale-[.98] md:scale-100" style="
+                background: var(--color-surface);
+                border-color: color-mix(in oklch, var(--color-border) 80%, transparent);
+                box-shadow: 0 28px 64px var(--hero-shadow-color);
+              "> <div class="h-14 px-5 flex items-center gap-3" style="background: hsl(0 0% 100% / .85);"> <div class="h-3.5 w-28 rounded ui-muted"></div> <div class="h-3 w-16 rounded ui-muted"></div> </div> <div class="p-6 ui-skeleton"> <div class="ui-line w-48 h-4 mb-3"></div> <div class="ui-line w-2/3 h-3 mb-6"></div> <div class="grid grid-cols-3 gap-4 mb-6"> <div class="ui-card h-24"></div><div class="ui-card h-24"></div><div class="ui-card h-24"></div> </div> <div class="space-y-3"> <div class="ui-line h-3 w-[92%]"></div> <div class="ui-line h-3 w-[78%]"></div> <div class="ui-line h-3 w-[65%]"></div> </div> <div class="mt-7 h-12 w-full rounded-xl ui-cta" style="background: var(--color-primary); box-shadow: 0 12px 28px color-mix(in oklch, var(--color-primary) 32%, transparent);"></div> </div> </div> <!-- Phone (SIN sombra propia) --> <div id="phone" class="absolute z-10 md:left-[-6%] md:bottom-0 left-1/2 -translate-x-1/2 -bottom-10 md:translate-x-0 w-[250px] sm:w-[300px] md:w-[320px] rotate-[-3deg]" style="box-shadow:none;"> <div class="relative rounded-[32px] bg-[hsl(222_20%_10%)] p-2 ring-1 ring-black/5"> <div class="absolute left-1/2 -translate-x-1/2 top-3 h-5 w-24 rounded-full bg-black/70"></div> <div class="rounded-[28px] overflow-hidden bg-white"> <div class="p-4 ui-skeleton"> <div class="ui-line h-3.5 w-40 mb-2"></div> <div class="ui-line h-3 w-44 mb-5"></div> <div class="grid grid-cols-3 gap-3 mb-5"> <div class="ui-card h-16"></div><div class="ui-card h-16"></div><div class="ui-card h-16"></div> <div class="ui-card h-16"></div><div class="ui-card h-16"></div><div class="ui-card h-16"></div> </div> <div class="ui-line h-3 w-[86%] mb-2"></div> <div class="ui-line h-3 w-[72%] mb-2"></div> <div class="ui-line h-3 w-[58%] mb-5"></div> <div class="h-10 w-full rounded-xl ui-cta" style="background: var(--color-primary); box-shadow: 0 8px 18px color-mix(in oklch, var(--color-primary) 28%, transparent);"></div> <div class="mx-auto mt-4 h-1.5 w-14 rounded-full ui-muted"></div> </div> </div> </div> </div> </div> <!-- Chips desktop --> <div class="chip-anchor hidden md:block"> <div class="chip-wrap" style="
+                top:-6%;
+                left:46%;
+                --tx:-50%;
+              "> <div class="chip blue"> Dominio conectado </div> </div><div class="chip-wrap" style="
+                top:-2%;
+                left:72%;
+                
+              "> <div class="chip green"> SSL activo </div> </div><div class="chip-wrap" style="
+                top:10%;
+                right:2%;
+                
+              "> <div class="chip amber"> Formularios a WhatsApp </div> </div><div class="chip-wrap" style="
+                top:18%;
+                left:2%;
+                
+              "> <div class="chip green"> Analytics instalado </div> </div><div class="chip-wrap" style="
+                top:26%;
+                right:12%;
+                
+              "> <div class="chip blue"> SEO on-page aplicado </div> </div><div class="chip-wrap" style="
+                top:34%;
+                left:6%;
+                
+              "> <div class="chip green"> Píxel Meta/Ads listo </div> </div><div class="chip-wrap" style="
+                top:42%;
+                right:5%;
+                
+              "> <div class="chip blue"> A/B test preparado </div> </div><div class="chip-wrap" style="
+                bottom:6%;
+                right:10%;
+                
+              "> <div class="chip green"> Sitio publicado </div> </div> </div> <!-- Chips móvil --> <div class="chip-anchor md:hidden"> <div class="chip-wrap" style="
+                top:-8%;
+                left:50%;
+                --tx:-50%;
+              "> <div class="chip chip--sm blue"> Dominio conectado </div> </div><div class="chip-wrap" style="
+                top:10%;
+                right:4%;
+                
+              "> <div class="chip chip--sm green"> SSL activo </div> </div><div class="chip-wrap" style="
+                top:22%;
+                left:4%;
+                
+              "> <div class="chip chip--sm amber"> Formularios a WhatsApp </div> </div><div class="chip-wrap" style="
+                top:36%;
+                right:6%;
+                
+              "> <div class="chip chip--sm green"> Analytics instalado </div> </div><div class="chip-wrap" style="
+                top:50%;
+                left:6%;
+                
+              "> <div class="chip chip--sm blue"> SEO on-page aplicado </div> </div><div class="chip-wrap" style="
+                bottom:24%;
+                left:8%;
+                
+              "> <div class="chip chip--sm green"> Píxel Meta/Ads listo </div> </div><div class="chip-wrap" style="
+                bottom:16%;
+                right:10%;
+                
+              "> <div class="chip chip--sm blue"> A/B test preparado </div> </div><div class="chip-wrap" style="
+                bottom:0%;
+                left:20%;
+                
+              "> <div class="chip chip--sm green"> Sitio publicado </div> </div> </div> </div> </div> </div> </div> <!-- Fade inferior --> <div class="hero-fade" aria-hidden="true"></div> <style>
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .ui-skeleton {
+      --ui-muted: hsl(220 14% 95%);
+      --ui-card: hsl(220 16% 97%);
+    }
+    [data-theme="dark"] .ui-skeleton {
+      --ui-muted: hsl(220 12% 18%);
+      --ui-card: hsl(220 14% 16%);
+    }
+    .ui-line {
+      border-radius: 8px;
+      background: var(--ui-muted);
+    }
+    .ui-card {
+      border-radius: 14px;
+      background: var(--ui-card);
+      box-shadow: inset 0 0 0 1px hsl(220 14% 40%/0.06);
+    }
+    .ui-muted {
+      background: var(--ui-muted);
+    }
+    .ui-cta {
+      transform: translateZ(0);
+    }
+
+    .chip-anchor {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 40;
+    }
+    .chip-wrap {
+      position: absolute;
+      opacity: 0;
+      --tx: 0;
+      --bump: 0px;
+      transform: translate(var(--tx), var(--bump));
+    }
+    .chip-wrap .chip {
+      pointer-events: auto;
+    }
+    .chip-anchor .chip-wrap:nth-child(even) {
+      --bump: 6px;
+    }
+    @media (max-width: 767px) {
+      .chip-anchor .chip-wrap:nth-child(6) {
+        --bump: -10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .chip-wrap {
+        animation: chip-in 0.6s ease forwards;
+      }
+      .chip {
+        animation: chip-float 6s ease-in-out infinite;
+      }
+      #desktopCard {
+        animation: desk-pop 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.02s both;
+      }
+      #phone {
+        animation:
+          phone-pop 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.08s both,
+          phone-float 7.5s ease-in-out infinite;
+      }
+    }
+    @keyframes chip-in {
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes chip-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-3px);
+      }
+    }
+    @keyframes phone-pop {
+      from {
+        opacity: 0;
+        transform: translateY(10px) rotate(-3deg) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(-3deg) scale(1);
+      }
+    }
+    @keyframes phone-float {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+      50% {
+        transform: translateY(-6px) rotate(-3deg);
+      }
+    }
+    @keyframes desk-pop {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style> <script>
+    (function () {
+      const mm = (q) =>
+        typeof matchMedia !== "undefined" ? matchMedia(q) : { matches: false };
+      const rmo = mm("(prefers-reduced-motion: reduce)").matches;
+      const visual = document.getElementById("heroVisual");
+      const phone = document.getElementById("phone");
+      const desk = document.getElementById("desktopCard");
+      const isDesktop = () => mm("(min-width: 768px)").matches;
+
+      function onScroll() {
+        if (rmo || !isDesktop()) return;
+        const rect = visual.getBoundingClientRect();
+        const vh = innerHeight || 1;
+        const p = Math.max(
+          -0.85,
+          Math.min(0.85, (vh / 2 - rect.top) / (vh / 2))
+        );
+        if (desk) desk.style.transform = `translate3d(0, ${p * -8}px, 0)`;
+        if (phone)
+          phone.style.transform = `translate3d(0, ${p * -14}px, 0) rotate(-3deg)`;
+      }
+      onScroll();
+      addEventListener("scroll", onScroll, { passive: true });
+
+      let raf = 0;
+      function onMove(e) {
+        if (rmo || !isDesktop()) return;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const b = visual.getBoundingClientRect();
+          const x = (e.clientX - b.left) / b.width - 0.5;
+          const y = (e.clientY - b.top) / b.height - 0.5;
+          visual.style.transform = `rotateX(${(y * -5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`;
+        });
+      }
+      function resetTilt() {
+        if (isDesktop()) visual.style.transform = "";
+      }
+      visual.addEventListener("mousemove", onMove);
+      visual.addEventListener("mouseleave", resetTilt);
+      addEventListener("resize", () => {
+        if (!isDesktop()) {
+          visual.style.transform = "";
+          if (desk) desk.style.transform = "";
+          if (phone) phone.style.transform = "rotate(-3deg)";
+        }
+      });
+    })();
+  </script> </section><section id="benefits" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]" aria-labelledby="benefits-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="benefits-title" class="h2"> ¿Por qué elegir Landqo? </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> No solo diseñamos tu landing: la publicamos, la alojamos y la dejamos lista para captar clientes desde el primer día. </p> </div> <div class="container"> <ul role="list" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"> <li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M13 3a9 9 0 1 1-6.36 2.64L9 8H4V3l2.12 2.12A9 9 0 0 1 13 3Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Listo en días </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Olvídate de semanas de espera. Entregamos tu landing personalizada y publicada en cuestión de días. </p> </div> </li><li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8Z"/><path fill="currentColor" d="M12 6a6 6 0 1 0 6 6 6.006 6.006 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4 4.005 4.005 0 0 1-4 4Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Dominio y hosting incluidos </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Puedes lanzar en un subdominio de Velcodi o usar tu dominio propio con hosting y SSL configurados en nuestro servidor. </p> </div> </li><li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M3 13h8v8H3v-8Zm10-10h8v18h-8V3ZM5 15v4h4v-4H5Zm10-10v14h4V5h-4Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Optimizada para convertir </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Estructura clara, CTA visibles y velocidad superior a 95 en Lighthouse: todo pensado para generar leads. </p> </div> </li><li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v8H5V5a2 2 0 0 1 2-2Zm-2 12h14v2H5v-2Zm4 3h6v2H9v-2Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Diseño adaptable </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Tu landing luce impecable en móviles, tablets y desktops, manteniendo consistencia y estilo profesional. </p> </div> </li><li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m4 14 4-4 4 4 8-8 2 2-10 10-4-4-4 4-2-2Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Escalable y flexible </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Podrás añadir nuevas secciones, integrar herramientas o crecer a una web completa sin rehacer todo. </p> </div> </li><li> <div class="group relative h-full overflow-hidden rounded-3xl transition-all duration-300 will-change-transform border border-[var(--color-border)]/50 bg-[var(--color-surface,transparent)]/90 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.18)] hover:-translate-y-[4px] hover:shadow-[0_18px_48px_-16px_rgba(0,0,0,0.28)] hover:bg-[var(--color-primary)] p-6"> <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:border-white/70 group-hover:text-white group-hover:bg-white/10" aria-hidden="true"> <span class="icon [&>svg]:h-6 [&>svg]:w-6 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M3 3h2v18H3V3Zm4 10h2v8H7v-8Zm4-6h2v14h-2V7Zm4 4h2v10h-2V11Zm4-8h2v18h-2V3Z"/></svg></span> </div> <h3 class="font-semibold tracking-tight text-[color:var(--color-fg)] text-[1.05rem] leading-tight group-hover:text-white"> Medición y soporte </h3> <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-fg-muted)] group-hover:text-white/85"> Incluimos Google Analytics y conversiones configuradas. Además, soporte técnico en 24–48h. </p> </div> </li> </ul> </div>  </section><section id="features" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)] text-center" aria-labelledby="features-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="features-title" class="h2"> Características clave </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> En Landqo no solo diseñamos: entregamos tu landing lista para vender, con todo lo que necesitas desde el día uno. </p> </div> <div class="container"> <ul role="list" class="grid gap-14 sm:grid-cols-2 lg:grid-cols-3 mt-10"> <li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 -rotate-2 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Diseño a medida </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Creamos un diseño único para tu negocio, alineado a tu identidad y pensado para generar confianza. </p> </article> </li><li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 -rotate-1 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Copywriting persuasivo </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Redactamos textos claros y directos que guían a tus visitantes hacia la acción que importa. </p> </article> </li><li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 rotate-1 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Visuales profesionales </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Seleccionamos imágenes e ilustraciones que refuercen tu mensaje y transmitan credibilidad. </p> </article> </li><li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 rotate-2 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Proceso ágil y colaborativo </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Trabajamos contigo paso a paso, ajustando rápido hasta que tu landing esté lista para salir online. </p> </article> </li><li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 -rotate-1 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" stroke-width="2"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Hosting y dominio incluidos </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Lanza en un subdominio de Velcodi o conecta tu dominio propio con SSL y hosting configurados. </p> </article> </li><li> <article class="group relative py-7 px-4 h-full rounded-3xl
+                    transition-transform duration-300
+                    hover:-translate-y-[5px]"> <div class="mx-auto mb-6 relative h-[88px] w-[106px]"> <svg viewBox="0 0 106 88" class="absolute inset-0 rotate-1 transition-transform duration-300 group-hover:scale-[1.03]" aria-hidden="true"> <path d="M74 12c10 3.7 21 11 23.4 23.5 2.5 12.8-4.1 26.9-15.6 34.3C70 77.9 52.8 78.8 38 76.8 22.4 74.6 12 68.8 7 59 1.9 49 -0.3 34.3 8.6 24.1 16.9 14.6 33 9.1 47 9.3 56 9.4 63.3 11.3 74 12Z" fill="hsl(var(--primary-500,210_100%_52%))" fill-opacity=".09" stroke="hsl(var(--primary-500,210_100%_52%))" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center
+                       text-[var(--color-primary)] transition-transform duration-300 group-hover:-translate-y-[1px]" aria-hidden="true"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16h.01M12 8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0
+                       transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.2rem] md:text-[1.28rem] tracking-tight text-[color:var(--color-fg)]"> Soporte post-lanzamiento </h3> <p class="mx-auto mt-3 max-w-[46ch] text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Estamos contigo después de publicar: ajustes menores, mejoras y asesoría sin costos ocultos. </p> </article> </li> </ul> </div>  </section><section id="templates" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]" aria-labelledby="templates-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="templates-title" class="h2"> Plantillas reales </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Estos proyectos ya están online y muestran cómo podemos lanzar tu landing con diseño profesional, dominio propio y todo listo para convertir. </p> </div> <div class="container">  <div class="mb-8 mt-2 flex flex-wrap items-center justify-center gap-2" aria-label="Filtros de plantillas"> <button class="h-10 rounded-full border border-[color:var(--color-border)]/60 bg-[color:var(--color-surface)]/70 px-4 text-sm transition-colors hover:bg-[color:var(--color-primary)]/10 data-[active=true]:bg-[color:var(--color-primary)]/12 data-[active=true]:border-[color:var(--color-primary)]/30" data-filter="Todos" data-active="true" aria-pressed="true" type="button"> Todos </button><button class="h-10 rounded-full border border-[color:var(--color-border)]/60 bg-[color:var(--color-surface)]/70 px-4 text-sm transition-colors hover:bg-[color:var(--color-primary)]/10 data-[active=true]:bg-[color:var(--color-primary)]/12 data-[active=true]:border-[color:var(--color-primary)]/30" data-filter="SaaS" data-active="false" aria-pressed="false" type="button"> SaaS </button><button class="h-10 rounded-full border border-[color:var(--color-border)]/60 bg-[color:var(--color-surface)]/70 px-4 text-sm transition-colors hover:bg-[color:var(--color-primary)]/10 data-[active=true]:bg-[color:var(--color-primary)]/12 data-[active=true]:border-[color:var(--color-primary)]/30" data-filter="Servicios" data-active="false" aria-pressed="false" type="button"> Servicios </button><button class="h-10 rounded-full border border-[color:var(--color-border)]/60 bg-[color:var(--color-surface)]/70 px-4 text-sm transition-colors hover:bg-[color:var(--color-primary)]/10 data-[active=true]:bg-[color:var(--color-primary)]/12 data-[active=true]:border-[color:var(--color-primary)]/30" data-filter="Micrositio" data-active="false" aria-pressed="false" type="button"> Micrositio </button> </div> <div id="tplGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"> <article class="tpl group" data-item data-industry="Servicios" style="--accent:#6366F1;"> <!-- Preview (sin CTA overlay) --> <a href="https://pages.velcodi.com" target="_blank" rel="noopener noreferrer" class="shot block focus:outline-none"> <img src="/assets/templates/landqo-cover.png" alt="Landqo" loading="lazy" class="shot__img" onerror="this.style.display='none'; this.parentElement.classList.add('shot--fallback');"> <!-- Fade inferior sutil para cohesionar capturas --> <span class="shot__fade" aria-hidden="true"></span> <!-- Badge sobre imagen (vidrioso) --> <span class="shot__badge">Servicios</span> </a> <!-- Meta --> <div class="meta"> <div class="meta__head"> <h3 class="meta__title">Landqo</h3> <span class="chip" style="--chip:#6366F1;">Servicios</span> </div> <ul class="meta__list"> <li class="meta__li"> <span class="dot"></span> <span>Diseño moderno y flexible</span> </li><li class="meta__li"> <span class="dot"></span> <span>Entrega rápida en días</span> </li><li class="meta__li"> <span class="dot"></span> <span>SEO técnico desde el inicio</span> </li> </ul> <div class="meta__actions"> <a href="https://pages.velcodi.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline h-10 px-3 rounded-xl">
+Ver demo
+</a> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0AOrigen%3A%20Landqo%20%C2%B7%20templates%0APlantilla%20de%20inter%C3%A9s%3A%20Landqo%20%C2%B7%20Servicios" class="btn btn-primary h-10 px-3 rounded-xl" target="_blank" rel="noopener noreferrer"> Quiero una así </a> </div> </div> </article><article class="tpl group" data-item data-industry="SaaS" style="--accent:#22C55E;"> <!-- Preview (sin CTA overlay) --> <a href="https://conten.velcodi.com" target="_blank" rel="noopener noreferrer" class="shot block focus:outline-none"> <img src="/assets/templates/frevvo-cover.png" alt="Frevvo" loading="lazy" class="shot__img" onerror="this.style.display='none'; this.parentElement.classList.add('shot--fallback');"> <!-- Fade inferior sutil para cohesionar capturas --> <span class="shot__fade" aria-hidden="true"></span> <!-- Badge sobre imagen (vidrioso) --> <span class="shot__badge">SaaS</span> </a> <!-- Meta --> <div class="meta"> <div class="meta__head"> <h3 class="meta__title">Frevvo</h3> <span class="chip" style="--chip:#22C55E;">SaaS</span> </div> <ul class="meta__list"> <li class="meta__li"> <span class="dot"></span> <span>Hero enfocado en captar leads</span> </li><li class="meta__li"> <span class="dot"></span> <span>Sección de planes y precios</span> </li><li class="meta__li"> <span class="dot"></span> <span>Analítica lista para medir</span> </li> </ul> <div class="meta__actions"> <a href="https://conten.velcodi.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline h-10 px-3 rounded-xl">
+Ver demo
+</a> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0AOrigen%3A%20Landqo%20%C2%B7%20templates%0APlantilla%20de%20inter%C3%A9s%3A%20Frevvo%20%C2%B7%20SaaS" class="btn btn-primary h-10 px-3 rounded-xl" target="_blank" rel="noopener noreferrer"> Quiero una así </a> </div> </div> </article><article class="tpl group" data-item data-industry="SaaS" style="--accent:#A855F7;"> <!-- Preview (sin CTA overlay) --> <a href="https://tareas.velcodi.com" target="_blank" rel="noopener noreferrer" class="shot block focus:outline-none"> <img src="/assets/templates/tazqo-cover.png" alt="Tasqo" loading="lazy" class="shot__img" onerror="this.style.display='none'; this.parentElement.classList.add('shot--fallback');"> <!-- Fade inferior sutil para cohesionar capturas --> <span class="shot__fade" aria-hidden="true"></span> <!-- Badge sobre imagen (vidrioso) --> <span class="shot__badge">SaaS</span> </a> <!-- Meta --> <div class="meta"> <div class="meta__head"> <h3 class="meta__title">Tasqo</h3> <span class="chip" style="--chip:#A855F7;">SaaS</span> </div> <ul class="meta__list"> <li class="meta__li"> <span class="dot"></span> <span>Beneficios claros y directos</span> </li><li class="meta__li"> <span class="dot"></span> <span>Componentes reusables</span> </li><li class="meta__li"> <span class="dot"></span> <span>CTA visible en todo momento</span> </li> </ul> <div class="meta__actions"> <a href="https://tareas.velcodi.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline h-10 px-3 rounded-xl">
+Ver demo
+</a> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0AOrigen%3A%20Landqo%20%C2%B7%20templates%0APlantilla%20de%20inter%C3%A9s%3A%20Tasqo%20%C2%B7%20SaaS" class="btn btn-primary h-10 px-3 rounded-xl" target="_blank" rel="noopener noreferrer"> Quiero una así </a> </div> </div> </article><article class="tpl group" data-item data-industry="Micrositio" style="--accent:#0EA5E9;"> <!-- Preview (sin CTA overlay) --> <a href="https://velcodi.com" target="_blank" rel="noopener noreferrer" class="shot block focus:outline-none"> <img src="/assets/templates/velcodi-cover.png" alt="Velcodi" loading="lazy" class="shot__img" onerror="this.style.display='none'; this.parentElement.classList.add('shot--fallback');"> <!-- Fade inferior sutil para cohesionar capturas --> <span class="shot__fade" aria-hidden="true"></span> <!-- Badge sobre imagen (vidrioso) --> <span class="shot__badge">Micrositio</span> </a> <!-- Meta --> <div class="meta"> <div class="meta__head"> <h3 class="meta__title">Velcodi</h3> <span class="chip" style="--chip:#0EA5E9;">Micrositio</span> </div> <ul class="meta__list"> <li class="meta__li"> <span class="dot"></span> <span>Estructura corporativa limpia</span> </li><li class="meta__li"> <span class="dot"></span> <span>Secciones informativas clave</span> </li><li class="meta__li"> <span class="dot"></span> <span>Accesibilidad cuidada</span> </li> </ul> <div class="meta__actions"> <a href="https://velcodi.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline h-10 px-3 rounded-xl">
+Ver demo
+</a> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0AOrigen%3A%20Landqo%20%C2%B7%20templates%0APlantilla%20de%20inter%C3%A9s%3A%20Velcodi%20%C2%B7%20Micrositio" class="btn btn-primary h-10 px-3 rounded-xl" target="_blank" rel="noopener noreferrer"> Quiero una así </a> </div> </div> </article> </div> </div> <script>
+      (function () {
+        var grid = document.getElementById("tplGrid");
+        if (!grid) return;
+        var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-filter]"));
+        var cards = Array.prototype.slice.call(grid.querySelectorAll("[data-item]"));
+
+        function setActive(btn) {
+          buttons.forEach(function (b) {
+            b.dataset.active = "false";
+            b.setAttribute("aria-pressed", "false");
+          });
+          if (btn) { btn.dataset.active = "true"; btn.setAttribute("aria-pressed", "true"); }
+        }
+        function applyFilter(val) {
+          cards.forEach(function (c) {
+            var cat = c.getAttribute("data-industry") || "";
+            c.style.display = (val === "Todos" || val === cat) ? "" : "none";
+          });
+        }
+        buttons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var val = btn.getAttribute("data-filter") || "Todos";
+            setActive(btn);
+            applyFilter(val);
+          });
+        });
+        var first = buttons[0];
+        if (first) { setActive(first); applyFilter(first.getAttribute("data-filter") || "Todos"); }
+      })();
+    </script><style>
+    /* ===== Card coherente con la UI global ===== */
+    .tpl{
+      position:relative;
+      border-radius:22px;
+      background: var(--color-surface);
+      border:1px solid color-mix(in oklch, var(--color-border) 85%, transparent);
+      box-shadow:
+        0 1px 2px hsl(220 3% 15% / .06),
+        0 12px 34px hsl(220 8% 10% / .08);
+      overflow:hidden;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .tpl:hover{
+      transform: translateY(-2px);
+      border-color: color-mix(in oklch, var(--accent, var(--color-primary)) 26%, var(--color-border));
+      box-shadow:
+        0 4px 18px hsl(220 10% 10% / .10),
+        0 26px 66px hsl(220 10% 10% / .12);
+    }
+
+    /* ===== Preview minimal ===== */
+    .shot{
+      position:relative;
+      margin:12px 12px 0;
+      border-radius:16px;
+      overflow:hidden;
+      aspect-ratio:16/10;
+      background: var(--color-bg-elev);
+      box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-border) 70%, transparent);
+    }
+    .shot__img{
+      width:100%; height:100%; object-fit:cover;
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .group:hover .shot__img{ transform: scale(1.015); filter:saturate(1.02); }
+
+    /* Fade inferior sutil para cohesionar capturas */
+    .shot__fade{
+      position:absolute; inset-inline:0; bottom:0; height:36%;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.02) 30%, rgba(0,0,0,.06) 100%);
+      pointer-events:none;
+    }
+
+    /* Badge sobre imagen */
+    .shot__badge{
+      position:absolute; top:10px; right:10px;
+      padding:.28rem .55rem; font-size:.72rem; font-weight:700;
+      border-radius:999px;
+      color: var(--color-fg);
+      background: color-mix(in oklch, var(--color-bg-elev) 86%, transparent);
+      border:1px solid color-mix(in oklch, var(--color-border) 60%, transparent);
+      backdrop-filter:saturate(1.4) blur(4px);
+    }
+
+    .shot--fallback{ background: var(--color-bg-elev); }
+
+    /* ===== Meta ===== */
+    .meta{ padding:16px 16px 18px; }
+    .meta__head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .meta__title{ font-weight:600; letter-spacing:-.01em; font-size:clamp(1rem, .96rem + .3vw, 1.1rem); }
+
+    .chip{
+      display:inline-flex; align-items:center; height:24px; padding:0 .5rem; border-radius:8px;
+      font-size:.68rem; font-weight:700;
+      background: var(--color-bg-elev); color: var(--color-fg);
+      box-shadow: inset 0 0 0 1px var(--color-border);
+    }
+    .chip[style*="--chip"]{
+      color: color-mix(in oklch, var(--chip) 64%, var(--color-fg));
+      background: color-mix(in oklch, var(--chip) 12%, var(--color-bg-elev));
+      box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--chip) 38%, var(--color-border));
+    }
+
+    .meta__list{ margin-top:.45rem; color: var(--color-fg-muted); display:grid; gap:.38rem; font-size:.93rem; }
+    .meta__li{ display:flex; align-items:flex-start; gap:.5rem; }
+    .dot{ margin-top:.5rem; width:.35rem; height:.35rem; border-radius:999px; background: color-mix(in oklch, var(--accent, var(--color-primary)) 70%, var(--color-primary)); }
+
+    .meta__actions{ margin-top:.75rem; display:flex; gap:.5rem; }
+  </style>  </section><section id="gallery" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]" aria-labelledby="gallery-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="gallery-title" class="h2"> Galería de ejemplos </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Explora algunas de las landings y secciones que hemos diseñado y publicado. Cada proyecto es único, pero todos comparten velocidad, claridad y enfoque en conversión. </p> </div> <div id="gallery-root" class="container"> <ul role="list" class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"> <li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="0" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/landqo-01.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="1" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/landqo-02.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="2" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/frevvo-01.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="3" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/frevvo-02.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="4" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/tazqo-01.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="5" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/tazqo-02.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="6" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/velcodi-01.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li><li class="group"> <button type="button" class="tile p-5 w-full cursor-zoom-in text-left" data-index="7" aria-label="Ampliar imagen" aria-haspopup="dialog"> <div class="frame"> <img src="/assets/gallery/velcodi-02.png" alt="Imagen de galería" loading="lazy" decoding="async" class="media" onerror="this.style.opacity=0"> <div class="fx"></div> <div class="hint"> <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"> <path fill="currentColor" d="M21 15v6h-6v-2h3.59L13 13.41l1.41-1.41L20 17.59V15h1ZM9 22H3v-6h2v3.59L10.59 11l1.41 1.41L6.41 20H9v2Z"></path> </svg> <span>Ampliar</span> </div> </div>  </button> </li> </ul> </div>  <div id="gallery-lightbox" class="lb hidden" aria-hidden="true"> <div class="lb__backdrop"></div> <div class="lb__viewport" role="dialog" aria-modal="true" aria-label="Visor de imágenes"> <button class="lb__close" aria-label="Cerrar (Esc)"> <svg viewBox="0 0 24 24" class="h-6 w-6"> <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </button> <button class="lb__nav lb__prev" aria-label="Anterior (←)"> <svg viewBox="0 0 24 24" class="h-6 w-6"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg> </button> <button class="lb__nav lb__next" aria-label="Siguiente (→)"> <svg viewBox="0 0 24 24" class="h-6 w-6"><path fill="currentColor" d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z"></path></svg> </button> <figure class="lb__figure"> <img id="gallery-lbimg" alt=""> <figcaption id="gallery-lbcap" class="lb__caption"></figcaption> </figure> </div> </div>  </section> <style>
+  .tile {
+    outline: none;
+  }
+
+  .frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--color-bg-elev);
+    border: 1px solid color-mix(in oklch, var(--color-border) 80%, transparent);
+    box-shadow:
+      0 1px 2px hsl(220 3% 15%/0.06),
+      0 20px 60px hsl(220 8% 10%/0.06);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .group:hover .frame,
+  .tile:focus-visible .frame {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 20px hsl(220 8% 10%/0.1),
+      0 40px 80px hsl(220 8% 10%/0.1);
+    border-color: color-mix(
+      in oklch,
+      var(--color-primary) 32%,
+      var(--color-border)
+    );
+  }
+
+  .media {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    border-radius: 18px;
+    transition:
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+  .group:hover .media {
+    transform: scale(1.02);
+    filter: saturate(1.03);
+  }
+
+  .fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(
+        60% 70% at 85% 20%,
+        color-mix(in oklch, var(--color-primary) 14%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 55% at 10% 90%,
+        color-mix(in oklch, var(--color-primary) 9%, transparent),
+        transparent 65%
+      );
+  }
+  .group:hover .fx {
+    opacity: 0.9;
+    mix-blend-mode: soft-light;
+  }
+
+  .hint {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 999px;
+    color: var(--color-on-primary);
+    background: color-mix(in oklch, var(--color-primary) 90%, black);
+    box-shadow: 0 10px 30px
+      color-mix(in oklch, var(--color-primary) 25%, transparent);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+  .group:hover .hint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Línea en subtítulos (captions) */
+  .cap {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: var(--color-fg-muted);
+  }
+  .cap-line {
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-border);
+    transition: background 0.25s ease;
+  }
+  .group:hover .cap-line {
+    background: color-mix(
+      in oklch,
+      var(--color-primary) 50%,
+      var(--color-border)
+    );
+  }
+
+  /* Lightbox */
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+  }
+  .lb.hidden {
+    display: none;
+  }
+  .lb__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in oklch, var(--color-bg) 40%, black);
+    backdrop-filter: blur(6px);
+  }
+  .lb__viewport {
+    position: relative;
+    width: min(1200px, 92vw);
+    max-height: 88vh;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    border-radius: 20px;
+    background: var(--color-surface);
+    box-shadow: 0 30px 100px hsl(220 5% 10%/0.35);
+  }
+  .lb__figure {
+    margin: 0;
+  }
+  .lb__figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 76vh;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .lb__caption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-fg-muted);
+    text-align: center;
+  }
+
+  .lb__close,
+  .lb__nav {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    height: 44px;
+    width: 44px;
+    border-radius: 12px;
+    color: var(--color-fg);
+    background: color-mix(in oklch, var(--color-bg-elev) 80%, transparent);
+    border: 1px solid var(--color-border);
+  }
+  .lb__close {
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+  .lb__prev {
+    top: 50%;
+    left: 0.6rem;
+    transform: translateY(-50%);
+  }
+  .lb__next {
+    top: 50%;
+    right: 3.2rem;
+    transform: translateY(-50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frame,
+    .media,
+    .fx,
+    .hint {
+      transition: none !important;
+    }
+  }
+</style> <script data-root-id="gallery-root" data-lb-id="gallery-lightbox" data-lb-img-id="gallery-lbimg" data-lb-cap-id="gallery-lbcap">
+  (function () {
+    const s = document.currentScript;
+    if (!s) return;
+    const { rootId, lbId, lbImgId, lbCapId } = s.dataset;
+
+    const root = document.getElementById(rootId);
+    if (!root) return;
+
+    const lb = document.getElementById(lbId);
+    const imgEl = document.getElementById(lbImgId);
+    const capEl = document.getElementById(lbCapId);
+    const btnClose = lb.querySelector(".lb__close");
+    const btnPrev = lb.querySelector(".lb__prev");
+    const btnNext = lb.querySelector(".lb__next");
+
+    const tiles = Array.from(root.querySelectorAll("[data-index]"));
+    const data = tiles.map(function (t) {
+      const i = t.querySelector("img");
+      const c = t.querySelector(".cap-text");
+      return {
+        src: i?.getAttribute("src") || "",
+        alt: i?.getAttribute("alt") || "",
+        caption: c?.textContent?.trim() || "",
+      };
+    });
+
+    let idx = 0,
+      focusBefore = null;
+
+    function render(i) {
+      if (!data.length) return;
+      idx = (i + data.length) % data.length;
+      const d = data[idx];
+      if (imgEl) {
+        imgEl.src = d.src;
+        imgEl.alt = d.alt || "Imagen";
+      }
+      if (capEl) {
+        capEl.textContent = d.caption;
+        capEl.style.display = d.caption ? "" : "none";
+      }
+    }
+    function open(i) {
+      focusBefore = document.activeElement;
+      lb.classList.remove("hidden");
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      render(i);
+      (btnClose || lb).focus();
+      addEvents();
+    }
+    function close() {
+      lb.classList.add("hidden");
+      lb.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      removeEvents();
+      if (focusBefore && focusBefore.focus) focusBefore.focus();
+    }
+    function next() {
+      render(idx + 1);
+    }
+    function prev() {
+      render(idx - 1);
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev();
+      }
+    }
+    function onBackdrop(e) {
+      if (e.target === lb || e.target?.classList?.contains("lb__backdrop"))
+        close();
+    }
+
+    // Swipe básico
+    let sx = 0,
+      dx = 0;
+    function ts(e) {
+      sx = e.touches[0].clientX;
+    }
+    function tm(e) {
+      dx = e.touches[0].clientX - sx;
+    }
+    function te() {
+      if (dx > 60) prev();
+      else if (dx < -60) next();
+      sx = dx = 0;
+    }
+
+    function addEvents() {
+      document.addEventListener("keydown", onKey);
+      lb.addEventListener("click", onBackdrop);
+      lb.addEventListener("touchstart", ts, { passive: true });
+      lb.addEventListener("touchmove", tm, { passive: true });
+      lb.addEventListener("touchend", te, { passive: true });
+    }
+    function removeEvents() {
+      document.removeEventListener("keydown", onKey);
+      lb.removeEventListener("click", onBackdrop);
+      lb.removeEventListener("touchstart", ts);
+      lb.removeEventListener("touchmove", tm);
+      lb.removeEventListener("touchend", te);
+    }
+
+    root.addEventListener("click", function (ev) {
+      const btn = ev.target.closest("[data-index]");
+      if (!btn) return;
+      const i = Number(btn.getAttribute("data-index") || "0") || 0;
+      open(i);
+    });
+    btnClose && btnClose.addEventListener("click", close);
+    btnPrev && btnPrev.addEventListener("click", prev);
+    btnNext && btnNext.addEventListener("click", next);
+  })();
+</script><section id="use-cases" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]  text-center" aria-labelledby="use-cases-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="use-cases-title" class="h2"> Casos de uso </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Así es como una landing bien hecha potencia distintos modelos de negocio y ayuda a vender más. </p> </div> <div class="container"> <ul role="list" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"> <li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M8 16h8M7 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> SaaS y productos digitales </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Muestra tu propuesta de valor, explica cómo funciona y facilita el registro o prueba gratis para captar usuarios. </p> </article> </li><li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> Servicios locales </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Convierte visitas en clientes con botones a WhatsApp, formularios rápidos y testimonios. Ideal para clínicas, talleres o consultorías. </p> </article> </li><li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> Eventos y webinars </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Página de registro con agenda clara, speakers y recordatorios automáticos por email o WhatsApp. </p> </article> </li><li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4-9 4-9-4Zm0 5l9 4 9-4M3 7v10l9 4 9-4V7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> Cursos e infoproductos </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Expón beneficios y módulos de tu programa, ofrece un lead magnet y facilita la compra con un checkout externo. </p> </article> </li><li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V8a2 2 0 0 1 2-2h5v14H6a2 2 0 0 1-2-2Zm9-10h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5V10Z" stroke="currentColor" stroke-width="2"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> Consultoría B2B </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Refuerza credibilidad con casos de éxito, explica tu propuesta y permite agendar reuniones sin fricciones. </p> </article> </li><li> <article class="group relative card p-6 h-full overflow-hidden
+                    rounded-3xl border border-[color:var(--color-border)]/60
+                    bg-[color:var(--color-surface,transparent)]/80
+                    shadow-[0_8px_28px_-16px_rgba(0,0,0,0.25)]
+                    transition-transform duration-300 hover:-translate-y-[4px]">  <div class="mx-auto mb-5 relative h-[84px] w-[96px] text-[var(--color-primary)]"> <svg viewBox="0 0 96 84" class="absolute inset-0 drop-shadow-[0_8px_16px_rgba(0,0,0,0.06)]" aria-hidden="true"> <path d="M67.7 10.5c8.6 3 18.2 8.9 20.4 19.1 2.3 10.8-3.6 22.8-13.6 29.1-10.1 6.4-24.4 7.2-36.7 5.5C25.4 62.5 16 57.9 11.3 49.7 6.5 41.3 6.7 29 14 20.4 21 12.3 34 7.8 45.6 8c7.5.1 14.3 1.6 22.1 2.5Z" fill="currentColor" fill-opacity=".09" stroke="currentColor" stroke-opacity=".22" stroke-width="1"></path> </svg> <div class="relative z-[1] flex h-full w-full items-center justify-center"> <span class="icon [&>svg]:h-7 [&>svg]:w-7 [&>svg]:stroke-current [&>svg]:fill-none [&>svg]:stroke-[1.8]"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="3" stroke="currentColor" stroke-width="2"/><path d="M9 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> </div> <span class="pointer-events-none absolute -bottom-1 left-1/2 h-[14px] w-[68px] -translate-x-1/2 rounded-full
+                       bg-[var(--color-primary)]/22 blur-[12px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span> </div> <h3 class="font-semibold text-[1.15rem] md:text-[1.25rem] tracking-tight text-[color:var(--color-fg)]"> Apps móviles </h3> <p class="mt-3 text-[0.98rem] md:text-[1rem] leading-relaxed text-[color:var(--color-fg-muted)]"> Presenta capturas de pantalla, reseñas y enlaces directos a App Store o Google Play para aumentar descargas. </p> </article> </li> </ul> </div>  </section><section id="pricing" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]" aria-labelledby="pricing-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="pricing-title" class="h2"> Precios claros </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Implementación única y hosting gestionado por nuestro equipo. Descuento por lanzamiento. </p> </div>  <div id="pricing-root" class="container" data-billing="monthly" data-init="monthly"> <div class="toggle-bar" role="region" aria-label="Selector de facturación"> <div role="group" aria-label="Intervalo de facturación" class="billing-toggle" aria-describedby="pricing-discount"> <span class="seg-slider" aria-hidden="true"></span> <button type="button" class="seg-btn" data-mode="monthly" aria-pressed="true">Mensual</button> <button type="button" class="seg-btn" data-mode="yearly" aria-pressed="false">Anual</button> </div> <div class="toggle-aux"> <span class="mode mode-monthly" aria-live="polite">Mostrando precios mensuales</span> <span class="mode mode-yearly" aria-live="polite">Mostrando precios anuales</span> <span id="pricing-discount" class="discount-pill">2 meses gratis con pago anual</span> </div> </div> <!-- Grid de planes --> <ul class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" role="list"> <li data-popular="false" class="pricing-card h-full card ">  <span class="badge">Oferta</span> <div class="head"> <h3 class="plan-title">Starter</h3> <p class="plan-desc">Lanza en días en un subdominio Velcodi: perfecto para validar sin trámites.</p> </div> <!-- Precio principal (toggle mensual/anual) --> <div class="price-hero" aria-live="polite"> <!-- Mensual --> <div class="hero-line" data-price="monthly" aria-hidden="false"> <span class="big">S/ 59.00</span> <span class="per">/mes</span> <span class="save-chip">Ahorra S/ 20.00 (25%)</span> <span class="before">Antes S/ 79.00</span> </div> <!-- Anual --> <div class="hero-line" data-price="yearly" hidden aria-hidden="true"> <span class="big">S/ 590.00</span> <span class="per">/año</span> <span class="save-chip">Ahorra S/ 200.00 (25%)</span> <span class="before">Antes S/ 790.00</span> <span class="eq">≈ S/ 49.17 /mes</span> </div> </div> <div class="divider" aria-hidden="true"></div> <div class="impl-line"> <span class="impl-title">Implementación (pago único)</span> <span class="impl-now">S/ 490.00</span> <span class="impl-before">Antes S/ 690.00</span> <span class="impl-save">Ahorra S/ 200.00 (29%)</span> </div>  <div class="sub-divider" aria-hidden="true"></div> <ul class="features" role="list"> <li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Publicado en subdominio Velcodi (listo para compartir)</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Sección de contacto con email/WhatsApp integrados</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>SSL y pequeñas actualizaciones incluidas</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>SEO y analítica básica desde el día uno</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Opción de dominio propio (se cotiza aparte)</span> </li> </ul>  <div class="cta-wrap"> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0APlan%20de%20inter%C3%A9s%3A%20Starter%0AOrigen%3A%20Landqo%20%C2%B7%20pricing" class="btn w-full rounded-[var(--radius-lg)] transition-none btn-outline btn-md" target="_blank" rel="noopener noreferrer"> Empezar con Starter </a> </div> </li><li data-popular="true" class="pricing-card h-full card is-popular"> <span class="popular-badge" aria-hidden="true">Popular</span>  <div class="head"> <h3 class="plan-title">Pro</h3> <p class="plan-desc">Para marcas que quieren escalar: dominio propio, más secciones y soporte prioritario.</p> </div> <!-- Precio principal (toggle mensual/anual) --> <div class="price-hero" aria-live="polite"> <!-- Mensual --> <div class="hero-line" data-price="monthly" aria-hidden="false"> <span class="big">S/ 109.00</span> <span class="per">/mes</span> <span class="save-chip">Ahorra S/ 20.00 (16%)</span> <span class="before">Antes S/ 129.00</span> </div> <!-- Anual --> <div class="hero-line" data-price="yearly" hidden aria-hidden="true"> <span class="big">S/ 1,090.00</span> <span class="per">/año</span> <span class="save-chip">Ahorra S/ 200.00 (16%)</span> <span class="before">Antes S/ 1,290.00</span> <span class="eq">≈ S/ 90.83 /mes</span> </div> </div> <div class="divider" aria-hidden="true"></div> <div class="impl-line"> <span class="impl-title">Implementación (pago único)</span> <span class="impl-now">S/ 1,290.00</span> <span class="impl-before">Antes S/ 1,690.00</span> <span class="impl-save">Ahorra S/ 400.00 (24%)</span> </div>  <div class="sub-divider" aria-hidden="true"></div> <ul class="features" role="list"> <li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Dominio propio con SSL gestionado</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Hasta 8 secciones clave (beneficios, casos, FAQ, etc.)</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Instalación de píxeles y conversiones (Meta/Ads)</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Backups y soporte prioritario 24–48 h</span> </li> </ul>  <div class="cta-wrap"> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AQuiero%20avanzar%20con%20la%20contrataci%C3%B3n.%0APlan%20de%20inter%C3%A9s%3A%20Pro%0AOrigen%3A%20Landqo%20%C2%B7%20pricing" class="btn w-full rounded-[var(--radius-lg)] transition-none btn-primary btn-lg" target="_blank" rel="noopener noreferrer"> Elegir Pro </a> </div> </li><li data-popular="false" class="pricing-card h-full card ">  <span class="badge">Oferta</span> <div class="head"> <h3 class="plan-title">Empresa</h3> <p class="plan-desc">A medida para requisitos avanzados y equipos exigentes.</p> </div> <!-- Precio principal (toggle mensual/anual) --> <div class="price-hero" aria-live="polite"> <!-- Mensual --> <div class="hero-line" data-price="monthly" aria-hidden="false"> <span class="big">S/ 159.00</span> <span class="per">/mes</span> <span class="save-chip">Ahorra S/ 40.00 (20%)</span> <span class="before">Antes S/ 199.00</span> </div> <!-- Anual --> <div class="hero-line" data-price="yearly" hidden aria-hidden="true"> <span class="big">S/ 1,590.00</span> <span class="per">/año</span> <span class="save-chip">Ahorra S/ 400.00 (20%)</span> <span class="before">Antes S/ 1,990.00</span> <span class="eq">≈ S/ 132.50 /mes</span> </div> </div> <div class="divider" aria-hidden="true"></div> <div class="impl-line"> <span class="impl-title">Implementación (pago único)</span> <span class="impl-now">S/ 2,490.00</span> <span class="impl-before">Antes S/ 3,490.00</span> <span class="impl-save">Ahorra S/ 1,000.00 (29%)</span> </div>  <div class="sub-divider" aria-hidden="true"></div> <ul class="features" role="list"> <li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Dominio propio y subdominios según tus iniciativas</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>DNS avanzada y certificados SSL administrados</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>Secciones ilimitadas y componentes a medida</span> </li><li class="feat"> <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.5 16.2l-3.7-3.7 1.4-1.4 2.3 2.3 6-6 1.4 1.4z"></path></svg> <span>SLA, entornos de staging y pruebas A/B</span> </li> </ul>  <div class="cta-wrap"> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AMe%20gustar%C3%ADa%20hablar%20con%20ventas.%0APlan%20de%20inter%C3%A9s%3A%20Empresa%0AOrigen%3A%20Landqo%20%C2%B7%20pricing" class="btn w-full rounded-[var(--radius-lg)] transition-none btn-outline btn-md" target="_blank" rel="noopener noreferrer"> Hablar con ventas </a> </div> </li> </ul> <div class="mt-8 space-y-3"> <div class="value-summary">No competimos con plantillas autogestionables baratas. Ofrecemos un servicio llave en mano: diseño y copy a medida, SEO técnico, velocidad alta, hosting gestionado y soporte real. La oferta baja la barrera de entrada sin devaluar el valor.</div> <div class="promo-note">Oferta de lanzamiento 2025: válida para contrataciones hasta el 31 de octubre.</div> </div> <p class="legal-note">Los precios no incluyen IGV (18%).</p> <ul class="footnotes" role="list"> <li>Starter se publica en un subdominio de Velcodi. Si deseas dominio propio, la compra y configuración se cotizan por separado.</li><li>En Pro y Empresa configuramos tu dominio propio y SSL. La compra/renovación del dominio se paga directamente al registrador que elijas.</li><li>La migración desde otro hosting o CMS se cotiza por separado.</li><li>Tiempos de soporte: 24–48 h hábiles.</li> </ul> </div>  </section> <style>
+  [hidden]{display:none!important}
+
+  /* Toggle bar */
+  .toggle-bar{
+    display:grid; gap:.5rem; justify-items:center; margin-top:.5rem;
+    isolation:isolate; /* crea stacking context local, evita fugas */
+  }
+  .billing-toggle{
+    position:sticky; top:10px; z-index:1; /* bajo, solo ≥768px */
+    display:grid; grid-template-columns:1fr 1fr; padding:2px;
+    border-radius:999px; background:var(--color-surface);
+    box-shadow:inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+    contain:layout paint; /* no pinta fuera del bloque */
+  }
+  /* Desactivar sticky en móvil y tablet para evitar superposición */
+  @media (max-width: 767px){
+    .billing-toggle{ position:static; top:auto; }
+  }
+
+  .seg-slider{
+    position:absolute; inset:2px auto 2px 2px; width:calc(50% - 2px);
+    border-radius:999px; background:var(--color-bg-elev);
+    box-shadow:inset 0 0 0 1px var(--color-border);
+    transition:transform .22s cubic-bezier(.22,.61,.36,1);
+    pointer-events:none; /* nunca captura eventos */
+  }
+  [data-billing="yearly"] .seg-slider{ transform: translateX(100%); }
+
+  .seg-btn{
+    position:relative; z-index:2; padding:.65rem 1.2rem;
+    font-weight:800; font-size:.95rem; border-radius:999px;
+    color:color-mix(in oklch,var(--color-fg) 92%, transparent);
+  }
+  .seg-btn[aria-pressed="true"]{ color:var(--color-fg); }
+  .seg-btn:focus-visible{ outline:2px solid var(--color-ring); outline-offset:2px; border-radius:999px; }
+
+  .toggle-aux{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .75rem; font-size:.88rem; }
+  .mode{ color:var(--color-fg-muted); }
+  [data-billing="monthly"] .mode-yearly{ display:none; }
+  [data-billing="yearly"]  .mode-monthly{ display:none; }
+  .discount-pill{
+    padding:.25rem .6rem; border-radius:999px; font-weight:700; font-size:.78rem;
+    background:color-mix(in oklch, var(--color-primary) 12%, var(--color-bg));
+    color:color-mix(in oklch, var(--color-primary) 92%, var(--color-fg));
+    box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--color-primary) 50%, var(--color-border));
+  }
+
+  /* Cards */
+  .pricing-card{ position:relative; overflow:hidden; isolation:isolate;
+    border:1px solid var(--color-border); border-radius:var(--radius-2xl);
+    background:var(--color-surface); box-shadow:var(--shadow-sm); padding:1.25rem; }
+  @media (min-width:1024px){ .pricing-card{ padding:1.5rem; } }
+  .popular-badge,.badge{ position:absolute; top:.6rem; right:.6rem; padding:.3rem .55rem;
+    font-size:.72rem; font-weight:800; border-radius:999px; }
+  .popular-badge{ color:var(--color-on-primary); background:var(--color-primary); box-shadow:var(--shadow-sm); }
+  .badge{ background:var(--color-bg-elev); color:var(--color-fg); box-shadow:inset 0 0 0 1px var(--color-border); }
+  .pricing-card.is-popular{
+    border-color:color-mix(in oklch, var(--color-primary) 40%, var(--color-border));
+    box-shadow:0 1px 2px hsl(220 3% 15%/.08), 0 12px 34px color-mix(in oklch, var(--color-primary) 18%, transparent);
+  }
+  .pricing-card.is-popular::after{
+    content:""; position:absolute; inset-inline:-1px; top:-1px; height:6px;
+    background:linear-gradient(90deg, color-mix(in oklch, var(--color-primary) 85%, white), var(--color-primary));
+  }
+
+  .head{ padding-top:.25rem; }
+  .plan-title{ font-weight:800; letter-spacing:-.01em; font-size:1.125rem; }
+  .plan-desc{ margin-top:.25rem; font-size:.95rem; color:var(--color-fg-muted); }
+
+  .price-hero{ display:grid; gap:.35rem; margin-top:.75rem; }
+  .hero-line{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .75rem; }
+  .big{ font-weight:900; font-size:clamp(2rem,3.2vw,2.6rem); line-height:1.08; letter-spacing:-.01em; }
+  .per{ color:var(--color-fg-muted); font-weight:600; font-size:.95rem; }
+  .before{ font-size:.92rem; color:color-mix(in oklch, var(--color-fg-muted) 85%, transparent); text-decoration:line-through; }
+  .eq{ font-size:.88rem; color:var(--color-fg-muted); }
+  .save-chip{ display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:700; padding:.2rem .5rem; border-radius:999px;
+    background:color-mix(in oklch, var(--color-primary) 12%, var(--color-bg));
+    color:color-mix(in oklch, var(--color-primary) 90%, var(--color-fg));
+    box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--color-primary) 50%, var(--color-border)); }
+
+  .divider{ margin:1rem 0; height:1px; background:var(--color-border); opacity:.5 }
+  .sub-divider{ margin:.9rem 0; height:1px; background:var(--color-border); opacity:.35 }
+
+  .impl-line{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .75rem; padding:.6rem .75rem; border-radius:var(--radius-lg);
+    background:color-mix(in oklch, var(--color-bg) 84%, var(--color-surface));
+    box-shadow:inset 0 0 0 1px var(--color-border); }
+  .impl-title{ font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; color:var(--color-fg-muted) }
+  .impl-now{ font-weight:800 }
+  .impl-before{ font-size:.9rem; color:color-mix(in oklch, var(--color-fg-muted) 85%, transparent); text-decoration:line-through }
+  .impl-save{ font-size:.75rem; font-weight:700; color:color-mix(in oklch, var(--color-primary) 90%, var(--color-fg)) }
+
+  .features{ display:grid; gap:.5rem }
+  .feat{ display:grid; grid-template-columns:18px 1fr; gap:.5rem; align-items:start; font-size:.95rem }
+  .tick{ width:18px; height:18px; margin-top:.1rem; color:var(--color-primary); flex:none }
+
+  .cta-wrap{ margin-top:.9rem }
+
+  .value-summary{ font-size:.96rem; line-height:1.6; padding:.85rem 1rem; border-radius:var(--radius-xl);
+    background:color-mix(in oklch, var(--color-bg) 80%, var(--color-surface)); box-shadow:inset 0 0 0 1px var(--color-border) }
+  .promo-note{ font-size:.9rem; color:var(--color-fg-muted) }
+
+  .legal-note{ margin-top:1rem; text-align:center; font-size:.8rem; color:var(--color-fg-muted) }
+  .footnotes{ margin-top:.5rem; max-width:44rem; margin-left:auto; margin-right:auto; font-size:.8rem; color:var(--color-fg-muted);
+    list-style:disc; padding-left:1.25rem; display:grid; gap:.25rem }
+</style> <script data-root-id="pricing-root">
+  (function () {
+    var s = document.currentScript;
+    var rootId = s && s.dataset ? s.dataset.rootId : "";
+    if (!rootId) return;
+    var root = document.getElementById(rootId);
+    if (!root) return;
+
+    function setHidden(el, hide) {
+      if (!el) return;
+      if (hide) { el.setAttribute("hidden",""); el.setAttribute("aria-hidden","true"); }
+      else { el.removeAttribute("hidden"); el.setAttribute("aria-hidden","false"); }
+    }
+
+    function setMode(mode) {
+      if (mode !== "monthly" && mode !== "yearly") mode = "monthly";
+      root.setAttribute("data-billing", mode);
+
+      root.querySelectorAll('[data-mode]').forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-mode") === mode ? "true" : "false");
+      });
+
+      var showYearly = mode === "yearly";
+      root.querySelectorAll('[data-price="monthly"]').forEach(function (el) { setHidden(el, showYearly); });
+      root.querySelectorAll('[data-price="yearly"]').forEach(function (el) { setHidden(el, !showYearly); });
+
+      try { localStorage.setItem("pricing:mode", mode); } catch {}
+      try {
+        var url = new URL(window.location.href);
+        url.searchParams.set("billing", mode);
+        window.history.replaceState({}, "", url.toString());
+      } catch {}
+    }
+
+    function prepare() {
+      var mode = root.getAttribute("data-init") || "monthly";
+      try {
+        var qs = new URL(window.location.href).searchParams.get("billing");
+        if (!qs) {
+          var stored = localStorage.getItem("pricing:mode");
+          if (stored === "monthly" || stored === "yearly") mode = stored;
+        }
+      } catch {}
+      setMode(mode);
+    }
+
+    root.querySelectorAll('[data-mode]').forEach(function (b) {
+      function activate() { setMode(b.getAttribute("data-mode")); }
+      b.addEventListener("click", activate);
+      b.addEventListener("keydown", function (ev) {
+        var key = ev.key;
+        if (key === " " || key === "Enter") { ev.preventDefault(); activate(); }
+        else if (key === "ArrowLeft" || key === "ArrowRight") {
+          ev.preventDefault();
+          var next = (key === "ArrowRight") ? "yearly" : "monthly";
+          setMode(next);
+          var target = root.querySelector('[data-mode="' + next + '"]');
+          if (target) target.focus();
+        }
+      });
+    });
+
+    prepare();
+  })();
+</script><section id="process" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)] text-left" aria-labelledby="process-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="process-title" class="h2"> Cómo trabajamos </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> De idea a landing online en días: diseño, implementación, dominio/hosting y métricas listas. </p> </div> <div class="container"> <div class="grid gap-10 lg:grid-cols-12"> <!-- Pasos --> <div class="lg:col-span-7"> <ol class="space-y-10"> <li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 01 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> Kick-off &amp; Brief (30–45 min) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Alineamos objetivos, audiencia y oferta. Recolectamos logos, imágenes y referencias. Definimos KPIs y el alcance exacto. </p> </div> </li><li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 02 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> UX + Copy (1–2 días) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Arquitectura de secciones y mensajes que guían a la acción. CTAs claros, manejo de objeciones y wireframe de baja fidelidad. </p> </div> </li><li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 03 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> Diseño visual (≈1 día) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Paleta, tipografías e iconografía. Componentes consistentes y variantes responsive listas para producción. </p> </div> </li><li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 04 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> Implementación técnica (1–2 días) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Montaje en Astro para máxima velocidad y estabilidad (sitio estático, sin CMS). SEO técnico (metadatos, OG, sitemap/robots), analítica (GA4) y píxeles de Ads. </p> </div> </li><li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 05 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> Dominio y hosting (mismo día) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Publicamos en subdominio Velcodi o configuramos tu dominio propio con SSL, DNS y backups. Monitorización básica incluida. </p> </div> </li><li class="flex items-start"> <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full
+                         bg-white text-[color:var(--color-fg)] text-xl font-semibold
+                         ring-1 ring-[color:var(--color-border)]/60
+                         shadow-[0_12px_30px_-14px_rgba(0,0,0,0.35)]"> 06 </div> <div class="ml-5 flex-1"> <h3 class="text-xl font-semibold tracking-tight text-[color:var(--color-fg)]"> Publicación, QA y soporte (24–48h) </h3> <div class="my-3 h-px w-full bg-[color:var(--color-border)]/60"></div> <p class="text-[color:var(--color-fg-muted)] leading-relaxed"> Pruebas en móvil/desktop y navegadores. Ajustes finales y go-live. Soporte 24–48h y garantía de 14 días para pequeños changes. </p> </div> </li> </ol> </div> <!-- Media / Ilustración --> <aside class="lg:col-span-5"> <div class="relative overflow-hidden rounded-3xl border border-[color:var(--color-border)]/60
+                 bg-[color:var(--color-bg-elev)] shadow-[0_20px_60px_-24px_rgba(0,0,0,0.25)]"> <!-- Deco punteada arriba-izquierda --> <i aria-hidden="true" class="absolute -top-3 -left-3 h-14 w-24 text-[color:var(--color-primary)]/70
+                   [background:radial-gradient(currentColor_2px,transparent_2px)]
+                   [background-size:12px_12px]"></i> <img src="/assets/process-illustration-tall.svg" alt="Vista del flujo de trabajo para lanzar tu landing" loading="lazy" class="block h-full w-full object-cover"> </div> </aside> </div> </div>  </section><section id="faq" class="section bg-[color:var(--color-bg)] text-[color:var(--color-fg)]" aria-labelledby="faq-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="faq-title" class="h2"> Preguntas frecuentes </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Resolvemos las dudas más comunes antes de empezar. </p> </div> <div class="container max-w-3xl"> <div class="grid gap-4"> <details id="que-incluye-exactamente-la-implementacion" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Qué incluye exactamente la implementación?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        <ul>
+          <li><strong>Diseño y copy base a medida</strong> (no plantillas genéricas).</li>
+          <li><strong>Arquitectura de secciones</strong> enfocada en conversión (CTAs, objeciones, prueba social).</li>
+          <li><strong>SEO técnico</strong>: metadatos, OG/Twitter cards, sitemap y robots.</li>
+          <li><strong>Performance</strong> con Astro (carga rápida y puntajes Lighthouse altos).</li>
+          <li><strong>Analítica</strong>: GA4 y eventos clave; integración de píxeles (Meta/Ads) si aplica.</li>
+          <li><strong>QA multi-dispositivo</strong> y publicación.</li>
+        </ul>
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="como-funcionan-el-dominio-y-el-hosting" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Cómo funcionan el dominio y el hosting?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        <ul>
+          <li><strong>Starter:</strong> se publica en un <em>subdominio de Velcodi</em>.</li>
+          <li><strong>Pro/Empresa:</strong> configuramos tu <strong>dominio propio con SSL</strong> y DNS. La compra/renovación del dominio se paga al registrador elegido por ti.</li>
+          <li><strong>Hosting gestionado</strong> por nosotros (backups y seguridad). Si ya tienes infraestructura, podemos adaptarnos o migrar (se cotiza aparte).</li>
+        </ul>
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="en-cuanto-tiempo-puedo-tener-mi-landing-publicada" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿En cuánto tiempo puedo tener mi landing publicada?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Con assets y objetivos claros, el ciclo normal es de <strong>3–7 días</strong>. Si el alcance crece o falta material, puede ir a <strong>5–10 días</strong>.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="puedo-editar-contenidos-luego-sin-tocar-codigo" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Puedo editar contenidos luego sin tocar código?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Por defecto <strong>no es autogestionable</strong> (modelo estable y rápido). Incluimos un <strong>pack de cambios</strong> post-lanzamiento para ajustes menores.
+        Si necesitas autoedición, ofrecemos <strong>upgrade a micrositio autogestionable</strong> (CMS) como servicio adicional.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="incluye-seo-y-performance" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Incluye SEO y performance?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Sí. Entregamos estructura semántica, metadatos, OG/Twitter, sitemap/robots e <strong>imágenes optimizadas</strong>, buscando un rendimiento alto sin hacks.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="la-analitica-y-las-conversiones-quedan-listas" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿La analítica y las conversiones quedan listas?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Sí. Dejamos <strong>Google Analytics 4</strong> con eventos clave (leads, clics críticos, formularios) y agregamos <strong>píxeles</strong> publicitarios si los utilizas.
+        Te damos acceso al panel para que puedas ver resultados.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="cuantas-rondas-de-revision-estan-incluidas" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Cuántas rondas de revisión están incluidas?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        <strong>Dos rondas</strong> de diseño/copy y <strong>una ronda de QA</strong>. Cambios extra se cotizan por horas o como bloque de soporte mensual.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="que-no-incluye-el-precio" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Qué no incluye el precio?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        <ul>
+          <li>Compra/renovación de dominio.</li>
+          <li>Ilustraciones/fotografía premium, sesiones de fotos o branding desde cero.</li>
+          <li>Integraciones complejas, migraciones grandes o multi-idioma (se cotiza).</li>
+          <li>CMS/autoedición (eso va en el upgrade a micrositio).</li>
+        </ul>
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="los-precios-incluyen-igv" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Los precios incluyen IGV?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        No. <strong>Los precios no incluyen IGV (18%)</strong> y se facturan en <strong>soles (PEN)</strong>. Las ofertas tienen vigencia indicada en la sección de precios.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="como-funcionan-los-pagos-y-la-facturacion" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Cómo funcionan los pagos y la facturación?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        <strong>50% al inicio</strong> y <strong>50% al entregar</strong>. El hosting/soporte es mensual o anual (con descuento).
+        Emitimos factura y aceptamos <strong>transferencia/Stripe</strong>.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="ofrecen-soporte-post-lanzamiento" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Ofrecen soporte post-lanzamiento?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Sí. Soporte en <strong>24–48h</strong> hábiles y <strong>garantía de 14 días</strong> para hotfixes. Los planes Pro/Empresa incluyen atención prioritaria.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="quien-es-dueno-del-codigo-y-los-contenidos" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">¿Quién es dueño del código y los contenidos?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        El proyecto es tuyo para uso comercial. Entregamos repositorio y archivos de contenido. Los terceros (por ejemplo, fotos premium) respetan sus licencias.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details><details id="ya-tengo-dominio-hosting-pueden-usarlo" class="group relative overflow-hidden rounded-2xl border
+                                     border-[color:var(--color-border)]/80 bg-[color:var(--color-surface)]/70
+                                     backdrop-blur-[2px] p-0 open:border-[color:var(--color-primary)]/40"> <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4
+                       px-5 py-4 md:px-6 md:py-5 font-semibold tracking-tight
+                       text-[color:var(--color-fg)] focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] rounded-2xl"> <span class="pr-8">Ya tengo dominio/hosting, ¿pueden usarlo?</span>  <span class="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             text-[color:var(--color-fg-muted)] ring-1 ring-[color:var(--color-border)]/70"> <svg class="h-4 w-4 group-open:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <svg class="hidden h-4 w-4 group-open:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> </span> </summary> <div class="px-5 pb-5 md:px-6 md:pb-6 -mt-1"> <div class="prose-faq text-sm leading-relaxed text-[color:var(--color-fg-muted)]"> <div>
+        Sí. Podemos apuntar al dominio que ya tienes o migrar desde tu hosting/CMS. La <strong>migración</strong> se evalúa caso a caso y puede tener costo adicional.
+      </div> </div> </div>  <span class="pointer-events-none absolute inset-y-0 left-0 w-1 rounded-r
+                       bg-[color:var(--color-primary)]/0 group-open:bg-[color:var(--color-primary)]/60" aria-hidden="true"></span> </details> </div> </div> <script type="application/ld+json">
+    {JSON.stringify(faqJsonLd)}
+  </script>  </section> <style>
+  details summary::-webkit-details-marker { display: none; }
+
+  /* Tipografía del cuerpo dentro de la respuesta (sin saturar estilos globales) */
+  .prose-faq :where(p, ul, ol) { margin: .5rem 0; }
+  .prose-faq ul { list-style: disc; padding-left: 1.125rem; }
+  .prose-faq ol { list-style: decimal; padding-left: 1.125rem; }
+
+  /* Hover/focus state sutil */
+  details:hover {
+    box-shadow: 0 10px 24px -18px rgba(0,0,0,.25);
+  }
+</style><section id="cta" class="section bg-[color:var(--color-fg)] text-[color:var(--color-bg)] [&#38;_:where(a):not(.btn):not(.nav-link)]:text-[color:var(--color-bg)] [&#38;_:where(a):not(.btn):not(.nav-link)]:hover:text-[color:var(--color-bg)] [&#38;_.card]:bg-[color:var(--color-bg)] [&#38;_.card]:text-[color:var(--color-fg)] [&#38;_.card]:border-[color:var(--color-border)] [&#38;_*]:caret-[color:var(--color-bg)] pt-8 pb-0" aria-labelledby="cta-title"><div class="container mb-6 text-center"> <div class="relative inline-block">   <h2 id="cta-title" class="h2"> ¿Listo para lanzar tu landing con Landqo? </h2> <i aria-hidden="true" class="mt-2 block h-1 w-24 sm:w-28 mx-auto rounded
+                   bg-[var(--color-primary)] opacity-60"></i> </div> <p class="lead mt-2 text-[color:var(--color-fg-muted)]"> Implementación única + hosting gestionado en soles. Publicamos en subdominio Velcodi o en tu dominio propio. Precios promocionales (no incluyen IGV). </p> </div> <div class="container"> <div class="mx-auto max-w-3xl text-center"> <p class="eyebrow">Oferta de lanzamiento</p>  <ul class="trust" role="list"> <li class="chip">Implementación desde S/490</li><li class="chip">Publicación en días</li><li class="chip">Soporte 24–48h</li> </ul> <div class="actions"> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AMe%20gustar%C3%ADa%20hablar%20con%20ventas.%0AOrigen%3A%20Landqo%20%C2%B7%20cta-final" class="btn btn-primary btn-lg rounded-2xl px-5" target="_blank" rel="noopener noreferrer"> Hablar ahora </a>  </div> </div> </div>  </section> <style>
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--color-primary) 95%, var(--color-fg));
+    background: color-mix(in oklch, var(--color-primary) 14%, var(--color-bg));
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px
+      color-mix(in oklch, var(--color-primary) 42%, var(--color-border));
+  }
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.6rem;
+    justify-content: center;
+    margin: 0.75rem 0 1.25rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    background: var(--color-bg-elev);
+    color: var(--color-fg);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+  .actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+</style> </main> <footer class="ft mt-0 bg-[color:var(--color-surface)] text-[color:var(--color-fg)]"> <div class="ft-sep-top"></div> <div class="container py-10 md:py-12 grid gap-10 md:gap-12 md:grid-cols-12"> <!-- Marca --> <div class="md:col-span-4"> <a href="/#" class="brand" aria-label="Landqo — ir al inicio"> <svg class="brand-iso" viewBox="0 0 64 64" role="img" aria-hidden="true"> <rect x="6" y="6" width="52" height="52" rx="14" fill="var(--color-primary)"></rect> <path d="M22 18h8v24h20v8H22z" fill="#fff"></path> </svg> <span class="brand-word"> <span class="strong">Land</span> <span class="muted">qo</span> </span> </a> <p class="mt-3 text-sm text-[color:var(--color-fg-muted)]">
+Landings a medida con rendimiento, SEO y medición listos desde el día
+        uno.
+</p> <ul class="chips"> <li class="chip">Entrega en días</li> <li class="chip">Soporte post-lanzamiento</li> </ul> </div> <!-- Secciones --> <nav class="md:col-span-4" aria-labelledby="ft-sec"> <div class="ft-head"> <h3 id="ft-sec" class="ft-title">Secciones</h3> <i class="ft-line" aria-hidden="true"></i> </div> <ul class="ft-links grid grid-cols-2 gap-y-2"> <li> <a class="ft-link" href="/#"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Inicio</span> </a> </li><li> <a class="ft-link" href="/#benefits"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Beneficios</span> </a> </li><li> <a class="ft-link" href="/#features"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Características</span> </a> </li><li> <a class="ft-link" href="/#templates"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Plantillas</span> </a> </li><li> <a class="ft-link" href="/#gallery"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Galería</span> </a> </li><li> <a class="ft-link" href="/#use-cases"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Casos de uso</span> </a> </li><li> <a class="ft-link" href="/#process"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Proceso</span> </a> </li><li> <a class="ft-link" href="/#pricing"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Precios</span> </a> </li><li> <a class="ft-link" href="/#faq"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>FAQ</span> </a> </li><li> <a class="ft-link" href="/#cta"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Contacto</span> </a> </li> </ul> </nav> <!-- Legal + contacto --> <div class="md:col-span-4 grid gap-8 sm:grid-cols-2"> <nav aria-labelledby="ft-legal"> <div class="ft-head"> <h3 id="ft-legal" class="ft-title">Legal</h3> <i class="ft-line" aria-hidden="true"></i> </div> <ul class="ft-links"> <li> <a class="ft-link" href="/legales/privacidad/"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Privacidad</span> </a> </li><li> <a class="ft-link" href="/legales/terminos/"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Términos</span> </a> </li><li> <a class="ft-link" href="/legales/cookies/"> <svg viewBox="0 0 24 24" class="ft-bullet" aria-hidden="true"> <path fill="currentColor" d="M9 6l6 6-6 6-1.4-1.4L12.2 12 7.6 7.4 9 6z"></path> </svg> <span>Cookies</span> </a> </li> </ul> </nav> <div aria-labelledby="ft-contact"> <div class="ft-head"> <h3 id="ft-contact" class="ft-title">Contacto</h3> <i class="ft-line" aria-hidden="true"></i> </div> <ul class="ft-links"> <li> <a class="ft-link ft-icon" href="mailto:yoel.velasquez.valencia@gmail.com"> <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"> <path fill="currentColor" d="M4 6h16v12H4V6Zm8 5L5 7h14l-7 4Z"></path> </svg> <span>yoel.velasquez.valencia@gmail.com</span> </a> </li> <li class="text-sm text-[color:var(--color-fg-muted)]">
+Tel. +51 941 493 973 </li> <li class="text-sm text-[color:var(--color-fg-muted)]">
+Lun–Vie · 09:00–18:00
+</li> </ul> <!-- CTA único --> <a href="https://wa.me/51941493473?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%0AOrigen%3A%20Landqo%20%C2%B7%20footer" class="btn btn-primary btn-pill w-full sm:w-auto justify-center gap-2 mt-3" aria-label="Contactar" target="_blank" rel="noopener noreferrer">
+Contactar
+</a> </div> </div> </div> <div class="ft-sep-bottom"> <div class="container py-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-[color:var(--color-fg-muted)]"> <p>© 2025 Landqo. Todos los derechos reservados.</p> <p class="opacity-90">
+Desarrollado por
+<a href="https://velcodi.com" target="_blank" rel="noopener noreferrer" class="devby">Velcodi</a>.
+</p> </div> </div> </footer> <style>
+  .ft-sep-top,
+  .ft-sep-bottom {
+    box-shadow: inset 0 1px 0 var(--color-border);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .brand-iso {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+  .brand-word {
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .brand-word .strong {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+  }
+  .brand-word .muted {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+    color: color-mix(in oklch, var(--color-fg) 60%, transparent);
+  }
+
+  .chips {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    color: var(--color-fg-muted);
+  }
+  .chip {
+    border-radius: 999px;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--color-bg-elev);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+
+  .ft-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .ft-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .ft-line {
+    height: 2px;
+    flex: 1;
+    border-radius: 2px;
+    background: color-mix(in oklch, var(--color-border) 70%, transparent);
+  }
+
+  .ft-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ft-bullet {
+    width: 14px;
+    height: 14px;
+    opacity: 0.45;
+    transform: translateX(0);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+  }
+  .ft-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: inherit;
+    text-decoration: none;
+  }
+  .ft-link:hover .ft-bullet,
+  .ft-link:focus-visible .ft-bullet {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+  .ft-link:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .ft-icon .ico {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* CTA: asegura pill */
+  .btn.btn-pill {
+    border-radius: 999px;
+  }
+
+  /* “Desarrollado por …” sin subrayado, acento al hover */
+  .devby {
+    color: inherit;
+    text-decoration: none;
+    transition:
+      color 0.18s ease,
+      opacity 0.18s ease;
+    opacity: 0.92;
+  }
+  .devby:hover,
+  .devby:focus-visible {
+    color: var(--color-primary);
+    opacity: 1;
+    outline: 0;
+  }
+
+  /* Dark tweaks */
+  [data-theme="dark"] .ft-line {
+    background: color-mix(in oklch, var(--color-border) 85%, transparent);
+  }
+  [data-theme="dark"] .chip {
+    background: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
+  }
+</style> <!-- Config embebida en data-* (el script del cliente lee aquí) --><div id="scrollUiCfg" hidden data-show-bar="true" data-show-go-top="true" data-spy="true" data-bar-after="8" data-top-after="300" data-offset-extra="12"></div> <!-- Barra de progreso (full width) -->
+  <div id="progressWrap" class="hidden fixed left-0 right-0 pointer-events-none z-[1100]" style="top: calc(var(--header-h, 64px));"> <div class="h-[3px] overflow-hidden" style="background-color: var(--color-border, #e5e7eb); opacity:.6;"> <div id="progressBar" class="h-full" style="width:0%; background-color: var(--color-primary, #6366f1);"></div> </div> </div> <!-- Go to top — ICON-ONLY (primary/glass) -->
+  <button id="goTop" aria-label="Volver arriba" class="hidden fixed z-[1100] goTopBtn" data-style="primary"> <span class="inner" aria-hidden="true"> <svg viewBox="0 0 24 24" class="icon"> <path fill="currentColor" d="M12 7l-5.2 5.2a1 1 0 0 0 1.4 1.4L11 11.8V17a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-5.2l2.8 2.8a1 1 0 1 0 1.4-1.4L12 7z"></path> </svg> </span> </button> <style>
+  /* Hover + activo en nav */
+  #siteHeader nav a{transition:color .18s ease,background-color .18s ease;text-decoration:none!important}
+  #siteHeader nav a:hover, #mobileNav a:hover{color:var(--color-primary)!important}
+  #siteHeader nav a.nav-active, #mobileNav a.nav-active{color:var(--color-primary)!important;font-weight:600}
+
+  /* Oculta goTop si menú móvil está abierto */
+  body.menu-open #goTop{display:none}
+
+  /* Barra de progreso */
+  #progressBar{transition:width 80ms linear}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto!important}
+    #progressBar{transition:none!important}
+  }
+
+  /* Posición con safe-area */
+  #goTop{
+    bottom:calc(env(safe-area-inset-bottom,0px) + 1.1rem);
+    right: calc(env(safe-area-inset-right, 0px) + 1.1rem);
+  }
+  @media (min-width:768px){
+    #goTop{
+      bottom:calc(env(safe-area-inset-bottom,0px) + 1.5rem);
+      right: calc(env(safe-area-inset-right, 0px) + 1.5rem);
+    }
+  }
+
+  /* Base del botón circular */
+  .goTopBtn{
+    border:0; outline:0; border-radius:9999px;
+    -webkit-tap-highlight-color: transparent;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .goTopBtn .inner{
+    display:grid; place-items:center;
+    width:3rem; height:3rem; border-radius:inherit;
+  }
+  @media (min-width:768px){
+    .goTopBtn .inner{ width:3.25rem; height:3.25rem }
+  }
+  .goTopBtn .icon{ width:1.15rem; height:1.15rem }
+  @media (min-width:768px){ .goTopBtn .icon{ width:1.25rem; height:1.25rem } }
+
+  /* ===== Variant: PRIMARY (match Empezar/WhatsApp) ===== */
+  .goTopBtn[data-style="primary"]{
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow:
+      0 22px 60px -22px color-mix(in oklch, var(--color-primary) 45%, transparent),
+      0 10px 28px -14px hsl(220 8% 10% / .25);
+  }
+  .goTopBtn[data-style="primary"] .inner{
+    box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-primary) 20%, white);
+  }
+  .goTopBtn[data-style="primary"]:hover{ transform:translateY(-2px); filter:saturate(1.02) }
+  .goTopBtn[data-style="primary"]:focus-visible{ outline:2px solid color-mix(in oklch, var(--color-primary) 70%, white); outline-offset:3px }
+
+  /* ===== Variant: GLASS (look anterior) ===== */
+  .goTopBtn[data-style="glass"]{
+    background: color-mix(in oklch, var(--color-bg-elev) 92%, transparent);
+    color: color-mix(in oklch, var(--color-fg) 88%, transparent);
+    border: 1px solid color-mix(in oklch, var(--color-border) 90%, transparent);
+    backdrop-filter: saturate(1.2) blur(6px);
+    box-shadow: 0 6px 24px -10px rgba(0,0,0,.35);
+  }
+  .goTopBtn[data-style="glass"]:hover{
+    transform:translateY(-2px);
+    color: var(--color-primary);
+    border-color: color-mix(in oklch, var(--color-primary) 45%, var(--color-border));
+    box-shadow: 0 16px 40px -18px rgba(0,0,0,.5);
+  }
+  .goTopBtn[data-style="glass"]::after{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+    box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent);
+  }
+
+  /* Dark ajustes para glass */
+  [data-theme="dark"] .goTopBtn[data-style="glass"]{
+    background: color-mix(in oklch, var(--color-surface) 88%, transparent);
+    color: color-mix(in oklch, var(--color-fg) 92%, transparent);
+  }
+</style> <script>
+  (function () {
+    var cfgEl = document.getElementById('scrollUiCfg');
+    if (!cfgEl) return;
+    var ds = cfgEl.dataset;
+    var SHOW_BAR   = ds.showBar === 'true';
+    var SHOW_TOP   = ds.showGoTop === 'true';
+    var SPY_ON     = ds.spy === 'true';
+    var BAR_AFTER  = Number(ds.barAfter || 8);
+    var TOP_AFTER  = Number(ds.topAfter || 300);
+    var OFFSET_X   = Number(ds.offsetExtra || 12);
+
+    var wrap = document.getElementById("progressWrap");
+    var bar  = document.getElementById("progressBar");
+    var btn  = document.getElementById("goTop");
+
+    // Porta al <body>
+    if (SHOW_BAR && wrap && wrap.parentElement !== document.body) document.body.appendChild(wrap);
+    if (SHOW_TOP && btn  && btn.parentElement  !== document.body) document.body.appendChild(btn);
+
+    function getScrollTop(){ var d=document.documentElement,b=document.body; return window.pageYOffset||d.scrollTop||b.scrollTop||0 }
+    function getMaxScroll(){
+      var d=document.documentElement,b=document.body;
+      var H=Math.max(b.scrollHeight,d.scrollHeight,b.offsetHeight,d.offsetHeight,b.clientHeight,d.clientHeight);
+      return Math.max(1, H - d.clientHeight);
+    }
+
+    function updateUI(){
+      var y=getScrollTop();
+      if (SHOW_BAR && wrap && bar){
+        var pct=Math.min(100, Math.max(0, (y/getMaxScroll())*100));
+        bar.style.width=pct+"%";
+        if (y>BAR_AFTER) wrap.classList.remove("hidden"); else {wrap.classList.add("hidden"); bar.style.width="0%";}
+      }
+      if (SHOW_TOP && btn){ if (y>TOP_AFTER) btn.classList.remove("hidden"); else btn.classList.add("hidden"); }
+    }
+
+    var ticking=false;
+    addEventListener("scroll", function(){
+      if (!ticking){ requestAnimationFrame(function(){ updateUI(); ticking=false }); ticking=true }
+    }, {passive:true});
+    addEventListener("resize", updateUI, {passive:true});
+    updateUI();
+
+    if (SHOW_TOP && btn){
+      btn.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+    }
+
+    // ===== Scroll-Spy =====
+    if (!SPY_ON) return;
+
+    var headerEl=document.getElementById("siteHeader");
+    function headerH(){ var h=headerEl&&headerEl.offsetHeight; if(h) return h;
+      var cssVar=getComputedStyle(document.documentElement).getPropertyValue("--header-h"); var parsed=parseFloat(cssVar);
+      return isFinite(parsed)?parsed:64;
+    }
+    function getHashId(href){ if(!href) return ""; var i=href.indexOf("#"); return i>=0?href.slice(i+1):"" }
+
+    var linkNodes=Array.prototype.slice.call(document.querySelectorAll(
+      'a[data-spy="true"][href*="#"], '+
+      '#siteHeader nav a[href^="#"], #siteHeader nav a[href^="/#"], '+
+      '#mobileNav  a[href^="#"],     #mobileNav  a[href^="/#"]'
+    ));
+
+    var spyMap=(function(){
+      var map=new Map();
+      linkNodes.forEach(function(a){
+        var id=getHashId(a.getAttribute("href")||""); if(!id) return;
+        if(!map.has(id)) map.set(id,{anchors:[],section:null}); map.get(id).anchors.push(a);
+      });
+      Array.from(map.keys()).forEach(function(id){
+        var v=map.get(id); v.section=document.getElementById(id); if(!v.section) map.delete(id);
+      });
+      return map;
+    })();
+
+    if (spyMap.size){
+      var ids=Array.from(spyMap.keys());
+      var sections=ids.map(function(id){ return spyMap.get(id).section });
+
+      function setActive(id){
+        ids.forEach(function(key){
+          var on=key===id; var rec=spyMap.get(key); if(!rec) return;
+          rec.anchors.forEach(function(a){ a.classList.toggle("nav-active", on); a.setAttribute("aria-current", on?"page":"false"); });
+        });
+      }
+
+      var io;
+      function buildIO(){
+        if (io) io.disconnect();
+        var topMargin=headerH()+Number(ds.offsetExtra||12)+12;
+        io=new IntersectionObserver(function(entries){
+          entries.forEach(function(ent){ if(ent.isIntersecting) setActive(ent.target.id) });
+        }, {rootMargin:"-"+topMargin+"px 0px -55% 0px", threshold:0.01});
+        sections.forEach(function(s){ if(s) io.observe(s) });
+      }
+      buildIO();
+      addEventListener("resize", buildIO, {passive:true});
+
+      function spyFallback(){
+        if(!sections.length) return;
+        var y=window.scrollY+headerH()+Number(ds.offsetExtra||12);
+        var currentId=sections[0].id;
+        for (var i=0;i<sections.length;i++){
+          var s=sections[i]; if(!s) continue;
+          var top=s.getBoundingClientRect().top+window.scrollY;
+          if(top-1<=y) currentId=s.id; else break;
+        }
+        var atBottom=Math.abs(innerHeight+window.scrollY-document.documentElement.scrollHeight)<2;
+        if(atBottom) currentId=sections[sections.length-1].id;
+        setActive(currentId);
+      }
+      addEventListener("scroll", spyFallback, {passive:true});
+
+      if (location.hash && spyMap.has(location.hash.slice(1))) setActive(location.hash.slice(1)); else spyFallback();
+      document.addEventListener("click", function(e){
+        var t=e.target; if(!(t instanceof Element)) return;
+        var a=t.closest('a[href^="#"], a[href^="/#"]'); if(!a) return;
+        var id=getHashId(a.getAttribute("href")||""); if(id && spyMap.has(id)) setActive(id);
+      });
+      addEventListener("hashchange", function(){
+        var id=location.hash.slice(1); if(id && spyMap.has(id)) setActive(id);
+      });
+    }
+  })();
+</script> <div id="cookieConsent" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden class="fixed left-1/2 -translate-x-1/2 z-[var(--z-overlay)]
+         w-[min(92vw,840px)]
+         bg-[color:var(--color-surface)] text-[color:var(--color-fg)]
+         border border-[color:var(--color-border)]
+         rounded-[var(--radius-lg)]
+         shadow-[var(--shadow-md)]
+         transition-none will-change-auto" style="bottom: calc(env(safe-area-inset-bottom) + 1rem);"> <div class="p-4 md:p-5"> <div class="flex flex-col gap-3 md:flex-row md:items-center md:gap-4"> <p class="text-sm text-[color:var(--color-fg-muted)]"> Usamos cookies para mejorar tu experiencia.  <a href="/legales/cookies/" class="underline">
+Más info
+</a>
+.
+ </p> <div class="md:ml-auto flex gap-3"> <!-- Rechazar (sin animaciones) --> <button id="cookieReject" class="h-10 px-4 rounded-[var(--radius-lg)]
+                 border border-[color:var(--color-border)]
+                 bg-[color:var(--color-bg-elev)] text-[color:var(--color-fg)]
+                 transform-none transition-none"> Rechazar </button> <!-- Aceptar (sin animaciones) --> <button id="cookieAccept" class="btn btn-primary h-10 px-4 rounded-[var(--radius-lg)]
+                 transform-none transition-none"> Aceptar </button> </div> </div> </div> </div> <!-- Kill-switch: desactiva cualquier animación o transición heredada --> <style>
+  #cookieConsent,
+  #cookieConsent * {
+    transition: none !important;
+    animation: none !important;
+  }
+</style> <script>
+  (function () {
+    var KEY = "cookie:consent";
+    var $wrap = document.getElementById("cookieConsent");
+    if (!$wrap) return;
+
+    // Mostrar solo si no hay consentimiento guardado
+    var saved = "";
+    try {
+      saved = localStorage.getItem(KEY) || "";
+    } catch (_) {}
+    if (!saved) $wrap.hidden = false;
+
+    function setConsent(value) {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch (_) {}
+      window.dispatchEvent(
+        new CustomEvent("cookie:consent-changed", { detail: { value: value } })
+      );
+    }
+    function close() {
+      $wrap.hidden = true;
+    }
+
+    var $accept = document.getElementById("cookieAccept");
+    var $reject = document.getElementById("cookieReject");
+
+    if ($accept)
+      $accept.addEventListener("click", function () {
+        setConsent("all");
+        close();
+      });
+    if ($reject)
+      $reject.addEventListener("click", function () {
+        setConsent("essentials");
+        close();
+      });
+  })();
+</script> </body></html>

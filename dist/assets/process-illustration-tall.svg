@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración del proceso (barras + donut)</title>
+  <desc id="desc">Gráfico de barras en la mitad superior y donut en la inferior, sin bordes ni sombras.</desc>
+
+  <!-- ========== Tokens por defecto (heredan si se incrusta inline) ========== -->
+  <defs>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--color-primary, #3E63DD)"/>
+      <stop offset="1" stop-color="var(--color-secondary, #00C2A8)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ========== Deco punteada (arriba-izquierda) ========== -->
+  <g transform="translate(58,62)" fill="var(--color-primary, #3E63DD)" fill-opacity=".7">
+    <circle cx="0" cy="0" r="4"/><circle cx="22" cy="0" r="4"/><circle cx="44" cy="0" r="4"/><circle cx="66" cy="0" r="4"/><circle cx="88" cy="0" r="4"/><circle cx="110" cy="0" r="4"/>
+    <circle cx="0" cy="22" r="4"/><circle cx="22" cy="22" r="4"/><circle cx="44" cy="22" r="4"/><circle cx="66" cy="22" r="4"/><circle cx="88" cy="22" r="4"/><circle cx="110" cy="22" r="4"/>
+    <circle cx="0" cy="44" r="4"/><circle cx="22" cy="44" r="4"/><circle cx="44" cy="44" r="4"/><circle cx="66" cy="44" r="4"/><circle cx="88" cy="44" r="4"/><circle cx="110" cy="44" r="4"/>
+  </g>
+
+  <!-- =================== BARRAS (superior) =================== -->
+  <g transform="translate(120,120)">
+    <!-- Título mini -->
+    <text x="0" y="-8" font-family="ui-sans-serif, system-ui, -apple-system" font-size="20" fill="var(--color-fg-muted, #6B7280)">
+      Weekly Performance
+    </text>
+
+    <!-- grid -->
+    <g stroke="var(--color-border, #E6EAF2)" stroke-opacity=".95" stroke-width="1">
+      <line x1="0" y1="500" x2="960" y2="500"/>
+      <line x1="0" y1="420" x2="960" y2="420"/>
+      <line x1="0" y1="340" x2="960" y2="340"/>
+      <line x1="0" y1="260" x2="960" y2="260"/>
+      <line x1="0" y1="180" x2="960" y2="180"/>
+      <line x1="0" y1="100" x2="960" y2="100"/>
+      <line x1="0" y1="20"  x2="960" y2="20"/>
+    </g>
+
+    <!-- series -->
+    <g>
+      <!-- Azul primario -->
+      <g fill="var(--color-primary, #3E63DD)">
+        <rect x="30"  y="300" width="28" height="200" rx="6"/>
+        <rect x="166" y="110" width="28" height="390" rx="6"/>
+        <rect x="302" y="220" width="28" height="280" rx="6"/>
+        <rect x="438" y="70"  width="28" height="430" rx="6"/>
+        <rect x="574" y="200" width="28" height="300" rx="6"/>
+        <rect x="710" y="130" width="28" height="370" rx="6"/>
+        <rect x="846" y="250" width="28" height="250" rx="6"/>
+      </g>
+      <!-- Turquesa secundaria -->
+      <g fill="var(--color-secondary, #00C2A8)">
+        <rect x="66"  y="380" width="28" height="120" rx="6"/>
+        <rect x="202" y="230" width="28" height="270" rx="6"/>
+        <rect x="338" y="330" width="28" height="170" rx="6"/>
+        <rect x="474" y="200" width="28" height="300" rx="6"/>
+        <rect x="610" y="300" width="28" height="200" rx="6"/>
+        <rect x="746" y="360" width="28" height="140" rx="6"/>
+        <rect x="882" y="320" width="28" height="180" rx="6"/>
+      </g>
+    </g>
+
+    <!-- etiquetas días -->
+    <g fill="var(--color-fg-muted, #6B7280)" font-family="ui-sans-serif, system-ui, -apple-system" font-size="14">
+      <text x="28"  y="530">Sat</text>
+      <text x="164" y="530">Sun</text>
+      <text x="300" y="530">Mon</text>
+      <text x="436" y="530">Tue</text>
+      <text x="572" y="530">Wed</text>
+      <text x="708" y="530">Thu</text>
+      <text x="844" y="530">Fri</text>
+    </g>
+
+    <!-- leyenda -->
+    <g transform="translate(0,565)" font-family="ui-sans-serif, system-ui, -apple-system" font-size="15">
+      <rect x="0" y="-10" width="12" height="12" rx="2" fill="var(--color-primary, #3E63DD)"/><text x="18" y="0" fill="var(--color-fg, #111827)">Deposit</text>
+      <rect x="110" y="-10" width="12" height="12" rx="2" fill="var(--color-secondary, #00C2A8)"/><text x="128" y="0" fill="var(--color-fg, #111827)">Withdraw</text>
+    </g>
+  </g>
+
+  <!-- =================== DONUT (inferior) =================== -->
+  <g transform="translate(120,690)">
+    <text x="0" y="-18" font-family="ui-sans-serif, system-ui, -apple-system" font-size="20" fill="var(--color-fg-muted, #6B7280)">
+      Expense Statistics
+    </text>
+
+    <!-- Donut centrado -->
+    <g transform="translate(480,220)">
+      <!-- base tenue -->
+      <circle cx="0" cy="0" r="150" fill="none" stroke="var(--color-border, #E6EAF2)" stroke-width="34"/>
+      <!-- perímetro ≈ 942 -->
+      <g fill="none" stroke-linecap="round" transform="rotate(-90)">
+        <!-- A -->
+        <circle cx="0" cy="0" r="150" stroke="var(--color-primary, #3E63DD)" stroke-width="34" stroke-dasharray="282 660"/>
+        <!-- B -->
+        <circle cx="0" cy="0" r="150" stroke="var(--color-accent, #FF6B9A)" stroke-width="34" stroke-dasharray="424 518" stroke-dashoffset="-305"/>
+        <!-- C -->
+        <circle cx="0" cy="0" r="150" stroke="var(--color-secondary, #00C2A8)" stroke-width="34" stroke-dasharray="236 706" stroke-dashoffset="-770"/>
+      </g>
+
+      <!-- etiquetas porcentuales dentro -->
+      <g font-family="ui-sans-serif, system-ui, -apple-system" font-size="16" text-anchor="middle" fill="var(--color-fg, #111827)">
+        <text x="0" y="8">Gasto mensual</text>
+      </g>
+    </g>
+
+    <!-- leyenda -->
+    <g transform="translate(860,110)" font-family="ui-sans-serif, system-ui, -apple-system" font-size="15" fill="var(--color-fg, #111827)">
+      <rect x="0"  y="-10" width="12" height="12" rx="2" fill="var(--color-primary, #3E63DD)"/>
+      <text x="18" y="0">Entretenimiento 30%</text>
+
+      <rect x="0"  y="26" width="12" height="12" rx="2" fill="var(--color-accent, #FF6B9A)"/>
+      <text x="18" y="36">Suscripciones 45%</text>
+
+      <rect x="0"  y="62" width="12" height="12" rx="2" fill="var(--color-secondary, #00C2A8)"/>
+      <text x="18" y="72">Otros 25%</text>
+    </g>
+  </g>
+</svg>
