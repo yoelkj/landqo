@@ -4,13 +4,24 @@
  * - Fondo inicial sólido (var(--color-bg)) para no interferir con el hero.
  * - Scroll (>12px) o menú móvil abierto: sombra sutil; SIN blur.
  * - Logo: isotipo + wordmark iguales al footer (consistencia de marca).
+ * - CTA “Empezar” → WhatsApp (mismo comportamiento que footer).
  */
+import { CONTACT } from "@/utils/contact";
+
 const isHome =
   Astro.url.pathname === "/" ||
   Astro.url.pathname === "/index" ||
   Astro.url.pathname === "/index.html";
 
+const BRAND = (import.meta.env.PUBLIC_BRAND_NAME || "Landqo").trim();
 const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
+
+// CTA a WhatsApp (igual que footer)
+const ctaLink = CONTACT.ctaLink({
+  intent: "contacto",
+  source: "navbar",
+  fallback: "#cta",
+});
 ---
 
 <header
@@ -20,16 +31,8 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
 >
   <div class="container flex items-center justify-between h-16">
     <!-- Brand -->
-    <a href="/" class="flex items-center gap-2.5" aria-label="Landqo — Inicio">
-      <!-- Isotipo pill con “L” (mismo SVG del footer) -->
-      <svg
-        class="h-7 w-7 md:h-8 md:w-8 shrink-0"
-        viewBox="0 0 64 64"
-        role="img"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <!-- fondo pill con color primario -->
+    <a href="/#" class="brand" aria-label={`${BRAND} — ir al inicio`}>
+      <svg class="brand-iso" viewBox="0 0 64 64" role="img" aria-hidden="true">
         <rect
           x="6"
           y="6"
@@ -37,22 +40,11 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
           height="52"
           rx="14"
           fill="var(--color-primary)"></rect>
-        <!-- “L” blanca en negativo -->
         <path d="M22 18h8v24h20v8H22z" fill="#fff"></path>
       </svg>
-
-      <!-- Wordmark: “Land” fuerte + “qo” atenuado (igual al footer) -->
-      <span
-        class="inline-flex items-baseline leading-none tracking-tight select-none"
-      >
-        <span
-          class="text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg)]"
-          >Land</span
-        >
-        <span
-          class="ml-[1px] text-[1.15rem] sm:text-[1.25rem] font-semibold text-[color:var(--color-fg-muted)]"
-          >qo</span
-        >
+      <span class="brand-word">
+        <span class="strong">{BRAND.slice(0, 4) || "Land"}</span>
+        <span class="muted">{BRAND.slice(4) || "qo"}</span>
       </span>
     </a>
 
@@ -76,7 +68,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">Casos de uso</a
       >
       <a
-        href={homeHash("pricing")}
+        href={homeHash("pricingOnePay")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">Precios</a
       >
 
@@ -84,12 +76,32 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         href={homeHash("faq")}
         class="nav-link hover:bg-[color:var(--color-bg-elev)]">FAQ</a
       >
-      <a href="#cta" class="btn btn-primary h-10 px-4 ml-2">Empezar</a>
+
+      <!-- CTA a WhatsApp (igual que footer) -->
+      <a
+        href={ctaLink.href}
+        class="btn btn-primary h-10 px-4 ml-2"
+        target={ctaLink.target}
+        rel={ctaLink.rel}
+        aria-label="Empezar"
+      >
+        Empezar
+      </a>
     </nav>
 
     <!-- Mobile: CTA + menú -->
     <div class="md:hidden flex items-center gap-2">
-      <a href="#cta" class="btn btn-primary h-10 px-4">Empezar</a>
+      <!-- CTA a WhatsApp (igual que footer) -->
+      <a
+        href={ctaLink.href}
+        class="btn btn-primary h-10 px-4"
+        target={ctaLink.target}
+        rel={ctaLink.rel}
+        aria-label="Empezar"
+      >
+        Empezar
+      </a>
+
       <button
         id="menuBtn"
         class="inline-flex items-center justify-center rounded-lg h-10 w-10 border border-[color:var(--color-border)] hover:bg-[color:var(--color-bg-elev)]"
@@ -163,7 +175,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       </li>
       <li>
         <a
-          href={homeHash("pricing")}
+          href={homeHash("pricingOnePay")}
           class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
           >Precios</a
         >
@@ -175,13 +187,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
           >Casos de uso</a
         >
       </li>
-      <li>
-        <a
-          href={homeHash("resources")}
-          class="nav-link w-full h-12 px-3 rounded-lg hover:bg-[color:var(--color-bg-elev)]"
-          >Recursos</a
-        >
-      </li>
+
       <li>
         <a
           href={homeHash("faq")}
@@ -191,7 +197,16 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       </li>
     </ul>
     <div class="mt-4 pt-4 [box-shadow:inset_0_1px_0_var(--color-border)]">
-      <a href="#cta" class="btn btn-primary w-full h-12 rounded-xl">Empezar</a>
+      <!-- CTA a WhatsApp (igual que footer) -->
+      <a
+        href={ctaLink.href}
+        class="btn btn-primary w-full h-12 rounded-xl"
+        target={ctaLink.target}
+        rel={ctaLink.rel}
+        aria-label="Empezar"
+      >
+        Empezar
+      </a>
     </div>
   </div>
 </nav>
@@ -211,7 +226,6 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       color-mix(in oklch, var(--color-border) 35%, transparent);
     background-clip: padding-box;
     transform: translateZ(0);
-    padding-top: env(safe-area-inset-top);
     transition:
       box-shadow 0.25s ease,
       border-color 0.25s ease;
@@ -246,6 +260,34 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
 
   #siteHeader .btn {
     line-height: 1;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .brand-iso {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+  .brand-word {
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .brand-word .strong {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+  }
+  .brand-word .muted {
+    font-weight: 800;
+    font-size: clamp(1.15rem, 1.2rem + 0.3vw, 1.35rem);
+    color: color-mix(in oklch, var(--color-fg) 60%, transparent);
   }
 </style>
 
@@ -282,7 +324,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
 
     // Apertura/cierre móvil + focus trap
     const roots = Array.from(
-      document.querySelectorAll("main, #pageRoot, #app, [data-app-root]")
+      document.querySelectorAll("main, #pageRoot, #app, [data-app-root]"),
     );
     let lastFocused = null;
     const focusableSel =
@@ -291,7 +333,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
     function trapFocus(container, e) {
       if (e.key !== "Tab") return;
       const nodes = Array.from(container.querySelectorAll(focusableSel)).filter(
-        (el) => el.offsetParent !== null
+        (el) => el.offsetParent !== null,
       );
       if (!nodes.length) return;
       const first = nodes[0],
@@ -344,7 +386,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       if (e.key === "Escape") setOpen(false);
     });
     (panel ? panel.querySelectorAll("a") : []).forEach((a) =>
-      a.addEventListener("click", () => setOpen(false))
+      a.addEventListener("click", () => setOpen(false)),
     );
     const mq = matchMedia("(min-width: 768px)");
     if (mq && mq.addEventListener)
@@ -358,7 +400,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       if (header)
         header.classList.toggle(
           "header--scrolled",
-          window.scrollY > SCROLL_THRESHOLD
+          window.scrollY > SCROLL_THRESHOLD,
         );
     }
     requestAnimationFrame(onScroll);
@@ -374,7 +416,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       const t = e.target;
       if (!(t instanceof Element)) return;
       const a = t.closest(
-        'a[href^="#"]:not([data-no-offset]), a[href^="/#"]:not([data-no-offset])'
+        'a[href^="#"]:not([data-no-offset]), a[href^="/#"]:not([data-no-offset])',
       );
       if (!a) return;
       const id = getHashId(a.getAttribute("href") || "");
@@ -385,7 +427,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const y = Math.max(
         0,
-        el.getBoundingClientRect().top + window.scrollY - h - 12
+        el.getBoundingClientRect().top + window.scrollY - h - 12,
       );
       window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
     });
@@ -399,7 +441,7 @@ const homeHash = (id: string): string => (isHome ? `#${id}` : `/#${id}`);
         const h = (header && header.offsetHeight) || 64;
         const y = Math.max(
           0,
-          el.getBoundingClientRect().top + window.scrollY - h - 12
+          el.getBoundingClientRect().top + window.scrollY - h - 12,
         );
         window.scrollTo({ top: y, behavior: "smooth" });
       });

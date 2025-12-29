@@ -27,7 +27,7 @@ const colAlign = data.align === "center" ? "text-center md:text-left" : "";
 // - Primario: WhatsApp con intención "propuesta" y source "hero"
 // - Secundario: ancla a sección de precios (#pricing)
 const hrefPrimary = CONTACT.ctaHref({ intent: "ventas", source: "hero" });
-const hrefSecondary = "#pricing";
+const hrefSecondary = "#pricingOnePay";
 
 /* ── POSICIONES DE CHIPS (8) ──────────────────────────────────────────── */
 const posDesktop = [
@@ -455,7 +455,7 @@ const posMobile = [
         const vh = innerHeight || 1;
         const p = Math.max(
           -0.85,
-          Math.min(0.85, (vh / 2 - rect.top) / (vh / 2))
+          Math.min(0.85, (vh / 2 - rect.top) / (vh / 2)),
         );
         if (desk) desk.style.transform = `translate3d(0, ${p * -8}px, 0)`;
         if (phone)

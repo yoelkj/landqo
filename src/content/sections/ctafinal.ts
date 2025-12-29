@@ -1,14 +1,18 @@
 const content = {
   id: "cta",
-  title: "¿Listo para lanzar tu landing con Landqo?",
+  title: "Tu web profesional en 5 días",
   subtitle:
-    "Implementación única + hosting gestionado en soles. Publicamos en subdominio Velcodi o en tu dominio propio. Precios promocionales (no incluyen IGV).",
-  ctaLabel: "Hablar ahora",
+    "Pago único en soles · Dominio y hosting 12 meses incluidos · Sin cuotas mensuales",
+  ctaLabel: "Empezar ahora",
   ctaHref: "#contacto",
 
   // Opcionales
-  eyebrow: "Oferta de lanzamiento",
-  trust: ["Implementación desde S/490", "Publicación en días", "Soporte 24–48h"],
+  eyebrow: "Oferta de lanzamiento 2025",
+  trust: [
+    "Pago único desde S/590",
+    "Publicada en 5 días",
+    "Renovación año 2: S/249/año (todo incluido)"
+  ],
 
   // Look & layout
   variant: "inverted",

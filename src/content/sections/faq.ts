@@ -1,4 +1,4 @@
-const a = (html: string) => html; // helper para poder escribir HTML legible
+const a = (html: string) => html;
 
 export default {
   id: "faq",
@@ -6,100 +6,91 @@ export default {
   subtitle: "Resolvemos las dudas más comunes antes de empezar.",
   items: [
     {
-      q: "¿Qué incluye exactamente la implementación?",
+      q: "¿Qué incluye exactamente el pago único?",
       a: a(`
         <ul>
-          <li><strong>Diseño y copy base a medida</strong> (no plantillas genéricas).</li>
-          <li><strong>Arquitectura de secciones</strong> enfocada en conversión (CTAs, objeciones, prueba social).</li>
-          <li><strong>SEO técnico</strong>: metadatos, OG/Twitter cards, sitemap y robots.</li>
-          <li><strong>Performance</strong> con Astro (carga rápida y puntajes Lighthouse altos).</li>
-          <li><strong>Analítica</strong>: GA4 y eventos clave; integración de píxeles (Meta/Ads) si aplica.</li>
-          <li><strong>QA multi-dispositivo</strong> y publicación.</li>
+          <li><strong>Diseño y copy a medida</strong> (por rubro, no plantillas).</li>
+          <li><strong>Dominio .pe o .com + SSL + hosting</strong> por 12 meses.</li>
+          <li><strong>5 a 10 páginas</strong> según plan (blog, servicios, etc.).</li>
+          <li><strong>Copy persuasivo</strong>, formularios, WhatsApp, píxeles.</li>
+          <li><strong>SEO técnico</strong>, Analytics, informes de tráfico.</li>
+          <li><strong>Artículos de blog</strong> y horas de cambios mensuales (Pro/Scale).</li>
+          <li><strong>Soporte humano</strong> 12-24 h según plan.</li>
         </ul>
       `),
     },
     {
-      q: "¿Cómo funcionan el dominio y el hosting?",
+      q: "¿Cómo funciona el dominio y el hosting?",
       a: a(`
         <ul>
-          <li><strong>Starter:</strong> se publica en un <em>subdominio de Velcodi</em>.</li>
-          <li><strong>Pro/Empresa:</strong> configuramos tu <strong>dominio propio con SSL</strong> y DNS. La compra/renovación del dominio se paga al registrador elegido por ti.</li>
-          <li><strong>Hosting gestionado</strong> por nosotros (backups y seguridad). Si ya tienes infraestructura, podemos adaptarnos o migrar (se cotiza aparte).</li>
+          <li><strong>Año 1:</strong> dominio, hosting, SSL y backups <strong>incluidos</strong> (sin pagos mensuales).</li>
+          <li><strong>Año 2:</strong> eliges renovar <strong>todo por S/ 249/año</strong> (hosting + dominio + SSL) o descargar tu web y usarla donde quieras <strong>sin penalidad</strong>.</li>
+          <li>Te avisamos 30 días antes; <strong>sin cobros automáticos</strong>.</li>
         </ul>
       `),
     },
     {
-      q: "¿En cuánto tiempo puedo tener mi landing publicada?",
+      q: "¿En cuánto tiempo está mi web en línea?",
       a: a(`
-        Con assets y objetivos claros, el ciclo normal es de <strong>3–7 días</strong>. Si el alcance crece o falta material, puede ir a <strong>5–10 días</strong>.
+        Entrega garantizada en <strong>5 días hábiles</strong> desde que nos envíes textos e imágenes.  
+        Si faltan materiales o el alcance crece, puede ir a 7-10 días (te avisamos).
       `),
     },
     {
-      q: "¿Puedo editar contenidos luego sin tocar código?",
+      q: "¿Puedo editar contenido después?",
       a: a(`
-        Por defecto <strong>no es autogestionable</strong> (modelo estable y rápido). Incluimos un <strong>pack de cambios</strong> post-lanzamiento para ajustes menores.
-        Si necesitas autoedición, ofrecemos <strong>upgrade a micrositio autogestionable</strong> (CMS) como servicio adicional.
+        El sitio <strong>no es autogestionable</strong> (modelo rápido y estable).  
+        Incluimos <strong>cambios menores mensuales</strong> (Pro/Scale) y dos rondas post-lanzamiento.  
+        Si quieres CMS, cotizamos el upgrade.
       `),
     },
     {
       q: "¿Incluye SEO y performance?",
       a: a(`
-        Sí. Entregamos estructura semántica, metadatos, OG/Twitter, sitemap/robots e <strong>imágenes optimizadas</strong>, buscando un rendimiento alto sin hacks.
+        Sí: metadatos, OG/Twitter, sitemap, robots, imágenes optimizadas y estructura semántica.  
+        Buscamos alto puntaje Lighthouse sin trucos.
       `),
     },
     {
-      q: "¿La analítica y las conversiones quedan listas?",
+      q: "¿Qué pasa si no me gusta cómo quedó?",
       a: a(`
-        Sí. Dejamos <strong>Google Analytics 4</strong> con eventos clave (leads, clics críticos, formularios) y agregamos <strong>píxeles</strong> publicitarios si los utilizas.
-        Te damos acceso al panel para que puedas ver resultados.
-      `),
-    },
-    {
-      q: "¿Cuántas rondas de revisión están incluidas?",
-      a: a(`
-        <strong>Dos rondas</strong> de diseño/copy y <strong>una ronda de QA</strong>. Cambios extra se cotizan por horas o como bloque de soporte mensual.
-      `),
-    },
-    {
-      q: "¿Qué no incluye el precio?",
-      a: a(`
-        <ul>
-          <li>Compra/renovación de dominio.</li>
-          <li>Ilustraciones/fotografía premium, sesiones de fotos o branding desde cero.</li>
-          <li>Integraciones complejas, migraciones grandes o multi-idioma (se cotiza).</li>
-          <li>CMS/autoedición (eso va en el upgrade a micrositio).</li>
-        </ul>
+        Revisamos <strong>dos veces</strong> antes de publicar.  
+        Si algo no cuadra, lo ajustamos <strong>sin costo</strong> dentro de los 5 días posteriores a la entrega.
       `),
     },
     {
       q: "¿Los precios incluyen IGV?",
       a: a(`
-        No. <strong>Los precios no incluyen IGV (18%)</strong> y se facturan en <strong>soles (PEN)</strong>. Las ofertas tienen vigencia indicada en la sección de precios.
+        <strong>IGV (18 %) se suma al final del checkout.</strong>  
+        Precios en soles (PEN) y ofertas con vigencia visible.
       `),
     },
     {
-      q: "¿Cómo funcionan los pagos y la facturación?",
+      q: "¿Cómo se paga?",
       a: a(`
-        <strong>50% al inicio</strong> y <strong>50% al entregar</strong>. El hosting/soporte es mensual o anual (con descuento).
-        Emitimos factura y aceptamos <strong>transferencia/Stripe</strong>.
+        <strong>Un solo pago</strong> con tarjeta o transferencia (IGV incluido).  
+        No hay cuotas mensuales ni permanencia.
       `),
     },
     {
-      q: "¿Ofrecen soporte post-lanzamiento?",
+      q: "¿Soporte post-lanzamiento?",
       a: a(`
-        Sí. Soporte en <strong>24–48h</strong> hábiles y <strong>garantía de 14 días</strong> para hotfixes. Los planes Pro/Empresa incluyen atención prioritaria.
+        Sí: soporte por email/WhatsApp en <strong>12-24 h hábiles</strong> según plan.  
+        Incluimos hotfixes y ajustes menores durante el año.
       `),
     },
     {
-      q: "¿Quién es dueño del código y los contenidos?",
+      q: "¿Quién es dueño del proyecto?",
       a: a(`
-        El proyecto es tuyo para uso comercial. Entregamos repositorio y archivos de contenido. Los terceros (por ejemplo, fotos premium) respetan sus licencias.
+        El código y los contenidos son tuyos para uso comercial.  
+        Te entregamos repositorio y archivos. Fotos/íconos respetan licencias de terceros.
       `),
     },
     {
       q: "Ya tengo dominio/hosting, ¿pueden usarlo?",
       a: a(`
-        Sí. Podemos apuntar al dominio que ya tienes o migrar desde tu hosting/CMS. La <strong>migración</strong> se evalúa caso a caso y puede tener costo adicional.
+        Sí. Podemos apuntar tu dominio o migrar desde tu hosting/CMS.  
+        La <strong>migración</strong> se evalúa caso a caso y puede tener costo adicional.
       `),
     },
   ],

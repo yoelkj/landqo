@@ -19,10 +19,10 @@ const SECCIONES: Array<{ label: string; href: string }> = [
   { label: "Beneficios", href: "/#benefits" },
   { label: "Características", href: "/#features" },
   { label: "Plantillas", href: "/#templates" },
-  { label: "Galería", href: "/#gallery" },
+  //{ label: "Galería", href: "/#gallery" },
   { label: "Casos de uso", href: "/#use-cases" },
   { label: "Proceso", href: "/#process" },
-  { label: "Precios", href: "/#pricing" },
+  { label: "Precios", href: "/#pricingOnePay" },
   { label: "FAQ", href: "/#faq" },
   { label: "Contacto", href: "/#cta" },
 ];
@@ -33,7 +33,7 @@ const RECURSOS: Array<{ label: string; href: string }> = [
   { label: "Cookies", href: "/legales/cookies/" },
 ];
 
-// CTA a WhatsApp (target _blank si aplica)
+// CTA actualizado al modelo “pago único año”
 const contactLink = CONTACT.ctaLink({
   intent: "contacto",
   source: "footer",
@@ -160,7 +160,7 @@ const contactLink = CONTACT.ctaLink({
           </li>
         </ul>
 
-        <!-- CTA único -->
+        <!-- CTA actualizado -->
         <a
           href={contactLink.href}
           class="btn btn-primary btn-pill w-full sm:w-auto justify-center gap-2 mt-3"

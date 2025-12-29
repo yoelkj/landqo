@@ -20,12 +20,12 @@ export default {
   id: "features",
   title: "Características clave",
   subtitle:
-    "En Landqo no solo diseñamos: entregamos tu landing lista para vender, con todo lo que necesitas desde el día uno.",
+    "Diseño, copy, hosting y soporte por 12 meses. Un solo pago en soles y tu web lista para vender.",
   cols: 3,
   features: [
     {
-      title: "Diseño a medida",
-      desc: "Creamos un diseño único para tu negocio, alineado a tu identidad y pensado para generar confianza.",
+      title: "Diseño a medida (Full/Scale)",
+      desc: "Piezas, colores y tipografías únicas para tu marca. Revisamos contigo hasta que ames el resultado.",
       icon: icoDesign,
     },
     {
@@ -44,13 +44,13 @@ export default {
       icon: icoProcess,
     },
     {
-      title: "Hosting y dominio incluidos",
-      desc: "Lanza en un subdominio de Velcodi o conecta tu dominio propio con SSL y hosting configurados.",
+      title: "Dominio + hosting 12 meses",
+      desc: "Dominio .pe o .com, hosting rápido, SSL y backups incluidos por un año. Sin pagos mensuales.",
       icon: icoHosting,
     },
     {
-      title: "Soporte post-lanzamiento",
-      desc: "Estamos contigo después de publicar: ajustes menores, mejoras y asesoría sin costos ocultos.",
+      title: "Soporte real en 24 h",
+      desc: "Dudas, cambios menores o nuevos eventos: responde un humano en menos de un día hábil.",
       icon: icoSupport,
     },
   ],

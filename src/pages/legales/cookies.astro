@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
 
 // ── ENV & Lang
 const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
@@ -13,17 +14,15 @@ const CONTACT_EMAIL = (
   import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@landqo.com"
 ).trim();
 
-// Detectar lang por prefijo en la URL
 const path = Astro.url?.pathname || "/";
 const parts = path.replace(/^\/+/, "").split("/");
 const maybeLang = parts[0] || "";
 const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
 
-// Fecha de última actualización (puedes exponerla por env)
-const UPDATED = (import.meta.env.PUBLIC_COOKIES_UPDATED || "2025-09-01").trim();
+const UPDATED = (import.meta.env.PUBLIC_COOKIES_UPDATED || "2025-12-28").trim();
 
 const pageTitle = `Política de Cookies · ${BRAND}`;
-const pageDesc = `Información sobre el uso de cookies, finalidades y cómo gestionar tus preferencias en ${BRAND}.`;
+const pageDesc = `Información detallada sobre el uso de cookies, finalidades y cómo gestionar tus preferencias en ${BRAND}.`;
 const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
 
 const schema = {
@@ -46,49 +45,330 @@ const schema = {
   }}
 >
   <main class="section" role="main">
-    <div class="container prose">
-      <h1>Política de Cookies</h1>
-      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+    <!-- Hero fluido -->
+    <Section
+      id="cookies-hero"
+      title="Política de Cookies"
+      subtitle="Transparencia total sobre qué información guardamos en tu navegador y por qué."
+      variant="default"
+      titleAccent="underline"
+    >
+      <div class="container">
+        <p class="text-sm text-[color:var(--color-fg-muted)] mt-2 text-center">
+          Última actualización: <strong>{UPDATED}</strong>
+        </p>
+      </div>
+    </Section>
 
-      <h2>¿Qué son las cookies?</h2>
-      <p>
-        Las cookies son pequeños archivos que un sitio web almacena en tu
-        dispositivo para recordar información sobre tu visita (por ejemplo, tu
-        preferencia de consentimiento).
-      </p>
+    <!-- Contenido -->
+    <Section variant="muted" className="py-12">
+      <div class="container prose prose-lg max-w-3xl">
+        <h2>¿Qué son las cookies?</h2>
+        <p>
+          Las cookies son pequeños archivos de texto que los sitios web guardan
+          en tu dispositivo (computadora, móvil, tablet) cuando los visitas.
+          Sirven para recordar tus preferencias, mejorar tu experiencia y
+          analizar cómo usas el sitio.
+        </p>
 
-      <h2>¿Qué cookies usamos?</h2>
-      <ul>
-        <li>
-          <strong>Esenciales</strong>: necesarias para el funcionamiento básico
-          del sitio y para recordar tu preferencia de cookies.
-        </li>
-        <li>
-          <strong>Analíticas</strong> (opcionales): nos ayudan a entender el uso
-          del sitio para mejorar la experiencia. Solo se activan si das tu consentimiento
-          en el banner de cookies.
-        </li>
-      </ul>
+        <h2>¿Qué cookies usamos en {BRAND}?</h2>
 
-      <h3>Google Analytics</h3>
-      <p>
-        Si aceptas cookies analíticas, usamos Google Analytics 4 para medir
-        tráfico y eventos clave. Puedes retirar tu consentimiento cuando
-        quieras.
-      </p>
+        <h3>1. Cookies esenciales (siempre activas)</h3>
+        <p>
+          Estas cookies son necesarias para que el sitio funcione correctamente.
+          <strong>No se pueden desactivar</strong> porque sin ellas no podríamos ofrecerte
+          el servicio.
+        </p>
 
-      <h2>Gestión de preferencias</h2>
-      <p>
-        Puedes cambiar tu preferencia en cualquier momento desde el banner o
-        borrando cookies en tu navegador. Si rechazas las analíticas, el sitio
-        seguirá funcionando.
-      </p>
+        <div class="cookie-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Cookie</th>
+                <th>Propósito</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>cookies_consent</code></td>
+                <td>Guarda tu preferencia sobre cookies analíticas</td>
+                <td>1 año</td>
+              </tr>
+              <tr>
+                <td><code>lang_preference</code></td>
+                <td>Recuerda tu idioma seleccionado</td>
+                <td>6 meses</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <h2>Contacto</h2>
-      <p>
-        Si tienes preguntas sobre esta política, escríbenos a
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-      </p>
-    </div>
+        <h3>2. Cookies analíticas (opcionales)</h3>
+        <p>
+          Estas cookies nos ayudan a entender cómo los visitantes usan el sitio:
+          qué páginas visitan, cuánto tiempo permanecen, desde dónde llegan. <strong
+            >Solo se activan si aceptas</strong
+          >.
+        </p>
+
+        <div class="cookie-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Cookie</th>
+                <th>Proveedor</th>
+                <th>Propósito</th>
+                <th>Duración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>_ga</code></td>
+                <td>Google Analytics 4</td>
+                <td>Identifica usuarios únicos</td>
+                <td>2 años</td>
+              </tr>
+              <tr>
+                <td><code>_ga_*</code></td>
+                <td>Google Analytics 4</td>
+                <td>Mantiene el estado de la sesión</td>
+                <td>2 años</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="callout">
+          <strong>Nota sobre transferencias internacionales:</strong>
+          Google Analytics procesa datos en servidores ubicados en Estados Unidos
+          y otros países. Google cumple con las cláusulas contractuales tipo de la
+          UE para garantizar la protección de datos.
+        </p>
+
+        <h2>¿Usamos cookies de publicidad?</h2>
+        <p>
+          <strong>No.</strong>
+          {BRAND} no utiliza cookies de publicidad dirigida, remarketing ni seguimiento
+          de terceros con fines comerciales. Solo usamos analítica para mejorar el
+          sitio.
+        </p>
+
+        <h2>Cómo gestionar tus preferencias</h2>
+
+        <h3>Desde nuestro sitio</h3>
+        <p>Puedes cambiar tus preferencias en cualquier momento:</p>
+        <ul>
+          <li>
+            <strong>Banner de cookies:</strong> Al entrar al sitio, verás un banner
+            donde puedes aceptar o rechazar cookies analíticas.
+          </li>
+          <li>
+            <strong>Cambiar después:</strong> Puedes abrir de nuevo el banner haciendo
+            clic en el enlace "Gestionar cookies" en el footer.
+          </li>
+        </ul>
+
+        <h3>Desde tu navegador</h3>
+        <p>
+          También puedes bloquear o eliminar cookies directamente desde la
+          configuración de tu navegador:
+        </p>
+        <ul>
+          <li>
+            <strong>Chrome:</strong>
+            Configuración → Privacidad y seguridad → Cookies y otros datos de sitios
+            →
+            <a
+              href="https://support.google.com/chrome/answer/95647"
+              target="_blank"
+              rel="noopener">Ver instrucciones</a
+            >
+          </li>
+          <li>
+            <strong>Firefox:</strong>
+            Ajustes → Privacidad y seguridad → Cookies y datos del sitio →
+            <a
+              href="https://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-"
+              target="_blank"
+              rel="noopener">Ver instrucciones</a
+            >
+          </li>
+          <li>
+            <strong>Safari:</strong>
+            Preferencias → Privacidad → Gestionar datos de sitios web →
+            <a
+              href="https://support.apple.com/es-es/guide/safari/sfri11471/mac"
+              target="_blank"
+              rel="noopener">Ver instrucciones</a
+            >
+          </li>
+          <li>
+            <strong>Edge:</strong>
+            Configuración → Privacidad, búsqueda y servicios → Cookies →
+            <a
+              href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
+              target="_blank"
+              rel="noopener">Ver instrucciones</a
+            >
+          </li>
+        </ul>
+
+        <p class="callout">
+          <strong>Importante:</strong> Si bloqueas o eliminas todas las cookies, algunas
+          funciones del sitio podrían no funcionar correctamente (por ejemplo, recordar
+          tu idioma).
+        </p>
+
+        <h2>Más información sobre privacidad</h2>
+        <p>
+          Para información detallada sobre cómo tratamos tus datos personales,
+          consulta nuestra
+          <a href="/legales/privacidad">Política de Privacidad</a>.
+        </p>
+
+        <h2>Actualizaciones de esta política</h2>
+        <p>
+          Podemos actualizar esta política de cookies ocasionalmente. Cuando lo
+          hagamos, cambiaremos la fecha de "última actualización" en la parte
+          superior. Te recomendamos revisar esta página periódicamente.
+        </p>
+
+        <h2>Contacto</h2>
+        <p>
+          Si tienes preguntas sobre esta política o sobre el uso de cookies en {
+            BRAND
+          }, contáctanos en <a href={`mailto:${CONTACT_EMAIL}`}
+            >{CONTACT_EMAIL}</a
+          >. Respondemos en menos de 24 horas hábiles.
+        </p>
+      </div>
+    </Section>
   </main>
 </BaseLayout>
+
+<style>
+  /* Ajustes visuales */
+  .prose.prose-lg {
+    --tw-prose-body: var(--color-fg);
+    --tw-prose-headings: var(--color-fg);
+    --tw-prose-links: var(--color-primary);
+    --tw-prose-bold: var(--color-fg);
+    --tw-prose-counters: var(--color-fg-muted);
+    --tw-prose-bullets: var(--color-fg-muted);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-fg);
+    --tw-prose-quote-borders: var(--color-primary);
+    --tw-prose-captions: var(--color-fg-muted);
+    --tw-prose-code: var(--color-fg);
+    --tw-prose-pre-bg: var(--color-bg-elev);
+    --tw-prose-pre-border: var(--color-border);
+    line-height: 1.65;
+  }
+
+  .prose.prose-lg h2 {
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .prose.prose-lg h3 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg p {
+    margin-bottom: var(--space-4);
+  }
+
+  .prose.prose-lg ul {
+    margin-bottom: var(--space-4);
+  }
+
+  .prose.prose-lg li {
+    margin-bottom: var(--space-2);
+  }
+
+  .prose.prose-lg a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose.prose-lg a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .prose.prose-lg code {
+    background: var(--color-bg-elev);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Callout boxes */
+  .prose.prose-lg .callout {
+    background: color-mix(in oklch, var(--color-primary) 8%, var(--color-bg));
+    border-left: 3px solid var(--color-primary);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    margin: var(--space-6) 0;
+  }
+
+  /* Cookie tables */
+  .cookie-table {
+    overflow-x: auto;
+    margin: var(--space-6) 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .cookie-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .cookie-table thead {
+    background: var(--color-bg-elev);
+  }
+
+  .cookie-table th {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .cookie-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-border) 50%, transparent);
+  }
+
+  .cookie-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cookie-table tbody tr:hover {
+    background: color-mix(in oklch, var(--color-bg-elev) 40%, transparent);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .cookie-table {
+      font-size: 0.85rem;
+    }
+
+    .cookie-table th,
+    .cookie-table td {
+      padding: var(--space-2) var(--space-3);
+    }
+  }
+</style>

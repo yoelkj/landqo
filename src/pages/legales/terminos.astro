@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
 
 // ── ENV & Lang
 const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
@@ -18,10 +19,10 @@ const parts = path.replace(/^\/+/, "").split("/");
 const maybeLang = parts[0] || "";
 const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
 
-const UPDATED = (import.meta.env.PUBLIC_TOS_UPDATED || "2025-09-01").trim();
+const UPDATED = (import.meta.env.PUBLIC_TOS_UPDATED || "2025-12-28").trim();
 
 const pageTitle = `Términos y Condiciones · ${BRAND}`;
-const pageDesc = `Condiciones de uso de los servicios y del sitio web de ${BRAND}.`;
+const pageDesc = `Condiciones legales que regulan el uso del sitio web y la contratación de servicios de ${BRAND}.`;
 const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
 
 const schema = {
@@ -44,49 +45,619 @@ const schema = {
   }}
 >
   <main class="section" role="main">
-    <div class="container prose">
-      <h1>Términos y Condiciones</h1>
-      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+    <!-- Hero section -->
+    <Section
+      id="tos-hero"
+      title="Términos y Condiciones"
+      subtitle="Condiciones legales que regulan el uso de nuestro sitio web y la contratación de servicios."
+      variant="default"
+      titleAccent="underline"
+    >
+      <div class="container">
+        <p class="text-sm text-[color:var(--color-fg-muted)] mt-2 text-center">
+          Última actualización: <strong>{UPDATED}</strong>
+        </p>
+      </div>
+    </Section>
 
-      <h2>Objeto</h2>
-      <p>
-        Estos términos regulan el uso del sitio y la prestación de servicios de {
-          BRAND
-        }.
-      </p>
+    <!-- Contenido principal -->
+    <Section variant="muted" className="py-12">
+      <div class="container prose prose-lg max-w-3xl">
+        <h2>1. Aceptación de los términos</h2>
+        <p>
+          Al acceder y utilizar el sitio web de <strong>{BRAND}</strong> o contratar
+          nuestros servicios, aceptas estos Términos y Condiciones en su totalidad.
+          Si no estás de acuerdo con alguna parte, no debes utilizar nuestro sitio
+          ni servicios.
+        </p>
 
-      <h2>Uso del sitio</h2>
-      <p>
-        Te comprometes a usar el sitio de forma lícita y respetando la normativa
-        aplicable.
-      </p>
+        <div class="callout">
+          <p>
+            <strong>Importante:</strong> Estos términos complementan nuestro
+            <a href="/privacidad"> Aviso de Privacidad</a> y
+            <a href="/cookies"> Política de Cookies</a>. Te recomendamos leerlos
+            también.
+          </p>
+        </div>
 
-      <h2>Servicios</h2>
-      <ul>
-        <li>Implementación de landing pages y hosting gestionado.</li>
-        <li>
-          Integraciones técnicas, soporte y mejoras (según plan contratado).
-        </li>
-      </ul>
+        <h2>2. Definiciones clave</h2>
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Término</th>
+                <th>Definición</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>"El Sitio"</strong></td>
+                <td>Sitio web de {BRAND} y todos sus subdominios</td>
+              </tr>
+              <tr>
+                <td><strong>"Servicios"</strong></td>
+                <td
+                  >Servicios de desarrollo web y marketing digital ofrecidos</td
+                >
+              </tr>
+              <tr>
+                <td><strong>"Cliente"</strong></td>
+                <td>Persona o empresa que contrata nuestros servicios</td>
+              </tr>
+              <tr>
+                <td><strong>"Contenido"</strong></td>
+                <td>Texto, imágenes, código, y cualquier material publicado</td>
+              </tr>
+              <tr>
+                <td><strong>"Acuerdo"</strong></td>
+                <td>Contrato comercial firmado entre {BRAND} y el Cliente</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <h2>Pagos y facturación</h2>
-      <p>
-        Los precios se muestran en PEN y <strong>no incluyen IGV (18%)</strong>.
-        La facturación y los plazos de pago se detallan en el acuerdo comercial.
-      </p>
+        <h2>3. Descripción de servicios</h2>
+        <p>
+          {BRAND} ofrece servicios especializados en desarrollo web y marketing digital:
+        </p>
 
-      <h2>Propiedad intelectual</h2>
-      <p>
-        El cliente mantiene derechos sobre sus marcas y contenidos. El código y
-        entregables del proyecto se transfieren para uso comercial del cliente,
-        según lo acordado.
-      </p>
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Servicio</th>
+                <th>Descripción</th>
+                <th>Entrega</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Landing Pages</strong></td>
+                <td>Diseño y desarrollo de páginas de aterrizaje optimizadas</td
+                >
+                <td>Según cronograma del proyecto</td>
+              </tr>
+              <tr>
+                <td><strong>Hosting Gestionado</strong></td>
+                <td>Alojamiento web con mantenimiento, backups y seguridad</td>
+                <td>Continuo durante contrato</td>
+              </tr>
+              <tr>
+                <td><strong>Integraciones Técnicas</strong></td>
+                <td>Conexión con CRM, APIs, herramientas de marketing</td>
+                <td>Por hitos definidos</td>
+              </tr>
+              <tr>
+                <td><strong>Soporte Técnico</strong></td>
+                <td>Asistencia por email y chat según plan contratado</td>
+                <td>Horario comercial</td>
+              </tr>
+              <tr>
+                <td><strong>Optimización y Mejoras</strong></td>
+                <td>Actualizaciones, mejoras de rendimiento y SEO</td>
+                <td>Según acuerdo de mantenimiento</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <h2>Contacto</h2>
-      <p>
-        Para consultas sobre estos términos escríbenos a
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-      </p>
-    </div>
+        <h2>4. Uso aceptable del sitio</h2>
+        <p>Al utilizar nuestro sitio, te comprometes a:</p>
+        <ul>
+          <li>Usarlo solo para fines legales y legítimos</li>
+          <li>No realizar actividades fraudulentas o engañosas</li>
+          <li>No interferir con la seguridad o funcionamiento del sitio</li>
+          <li>No recopilar datos de otros usuarios sin consentimiento</li>
+          <li>
+            No utilizar bots, scrapers o herramientas automatizadas sin
+            autorización
+          </li>
+          <li>Respetar todos los derechos de propiedad intelectual</li>
+        </ul>
+
+        <div class="callout">
+          <p>
+            <strong>Prohibiciones:</strong> Nos reservamos el derecho de suspender
+            o cancelar el acceso al sitio si detectamos violaciones a estos términos.
+          </p>
+        </div>
+
+        <h2>5. Condiciones de contratación</h2>
+        <h3>5.1 Proceso de contratación</h3>
+        <p>La contratación de servicios requiere:</p>
+        <ol>
+          <li>Propuesta comercial aceptada</li>
+          <li>Contrato firmado</li>
+          <li>Pago inicial según términos acordados</li>
+          <li>Entrega de materiales necesarios para el proyecto</li>
+        </ol>
+
+        <h3>5.2 Precios y facturación</h3>
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                <th>Detalles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Moneda</strong></td>
+                <td>Soles Peruanos (PEN)</td>
+              </tr>
+              <tr>
+                <td><strong>IGV</strong></td>
+                <td>No incluido en precios mostrados (+18%)</td>
+              </tr>
+              <tr>
+                <td><strong>Facturación</strong></td>
+                <td>Emitida según cronograma de pagos del contrato</td>
+              </tr>
+              <tr>
+                <td><strong>Plazos de pago</strong></td>
+                <td>Neto 30 días, salvo acuerdo diferente</td>
+              </tr>
+              <tr>
+                <td><strong>Mora</strong></td>
+                <td>Intereses según tasa legal vigente</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>5.3 Modificaciones al alcance</h3>
+        <p>
+          Cualquier cambio en el alcance del proyecto ("scope creep") deberá ser
+          aprobado por ambas partes y puede generar ajustes en:
+        </p>
+        <ul>
+          <li>Cronograma de entrega</li>
+          <li>Costo del proyecto</li>
+          <li>Entregables finales</li>
+        </ul>
+
+        <h2>6. Propiedad intelectual</h2>
+        <h3>6.1 Derechos del Cliente</h3>
+        <p>El Cliente mantiene todos los derechos sobre:</p>
+        <ul>
+          <li>Marcas registradas y logotipos proporcionados</li>
+          <li>Contenido textual y visual entregado para el proyecto</li>
+          <li>Datos comerciales y de clientes</li>
+        </ul>
+
+        <h3>6.2 Derechos de {BRAND}</h3>
+        <p>
+          {BRAND} retiene derechos sobre:
+        </p>
+        <ul>
+          <li>Código fuente, librerías y frameworks propietarios</li>
+          <li>Metodologías, procesos y know-how interno</li>
+          <li>Herramientas de desarrollo internas</li>
+        </ul>
+
+        <h3>6.3 Licencia de uso</h3>
+        <div class="callout">
+          <p>
+            <strong>Transferencia de derechos:</strong> Una vez completado el pago
+            total del proyecto, {BRAND} otorga al Cliente una licencia perpetua, no
+            exclusiva y mundial para usar, modificar y distribuir los entregables
+            del proyecto para fines comerciales.
+          </p>
+        </div>
+
+        <h2>7. Responsabilidades y limitaciones</h2>
+        <h3>7.1 Responsabilidades del Cliente</h3>
+        <ul>
+          <li>Proporcionar contenido y materiales en los plazos acordados</li>
+          <li>Revisar entregables y proporcionar feedback oportuno</li>
+          <li>Designar un punto de contacto autorizado</li>
+          <li>Cumplir con plazos de pago establecidos</li>
+        </ul>
+
+        <h3>7.2 Responsabilidades de {BRAND}</h3>
+        <ul>
+          <li>Entregar servicios según especificaciones acordadas</li>
+          <li>Cumplir con cronogramas establecidos</li>
+          <li>Mantener comunicación regular sobre avances</li>
+          <li>Respetar confidencialidad de información del Cliente</li>
+        </ul>
+
+        <h3>7.3 Limitación de responsabilidad</h3>
+        <div class="callout">
+          <p>
+            <strong>Exclusión de daños indirectos:</strong> En ningún caso {
+              BRAND
+            } será responsable por daños indirectos, incidentales, especiales o consecuentes,
+            incluyendo pero no limitado a pérdida de beneficios, datos o oportunidades
+            comerciales.
+          </p>
+        </div>
+
+        <h2>8. Confidencialidad</h2>
+        <p>Ambas partes se comprometen a:</p>
+        <ul>
+          <li>
+            Mantener confidencialidad sobre información comercial sensible
+          </li>
+          <li>No divulgar términos económicos del contrato</li>
+          <li>Usar información confidencial solo para fines del proyecto</li>
+          <li>Proteger datos de acceso no autorizado</li>
+        </ul>
+
+        <h2>9. Plazos y terminación</h2>
+        <h3>9.1 Duración</h3>
+        <p>
+          Los servicios se prestan por el plazo establecido en el contrato. Los
+          servicios recurrentes (hosting, mantenimiento) se renuevan
+          automáticamente cada año, salvo notificación de cancelación con 30
+          días de anticipación.
+        </p>
+
+        <h3>9.2 Terminación por incumplimiento</h3>
+        <p>Cualquiera de las partes puede terminar el contrato si la otra:</p>
+        <ul>
+          <li>Incumple obligaciones esenciales</li>
+          <li>Declara quiebra o insolvencia</li>
+          <li>Realiza actividades ilegales</li>
+        </ul>
+
+        <h3>9.3 Efectos de la terminación</h3>
+        <ul>
+          <li>Pago de servicios prestados hasta la fecha</li>
+          <li>Devolución de materiales confidenciales</li>
+          <li>Entrega de entregables completados</li>
+          <li>Mantenimiento de obligaciones de confidencialidad</li>
+        </ul>
+
+        <h2>10. Garantías</h2>
+        <p>
+          {BRAND} garantiza que:
+        </p>
+        <ul>
+          <li>Los servicios se prestarán con diligencia profesional</li>
+          <li>Los entregables funcionarán según especificaciones acordadas</li>
+          <li>
+            Corregirá defectos identificados dentro de los 30 días posteriores a
+            la entrega
+          </li>
+        </ul>
+
+        <div class="callout">
+          <p>
+            <strong>Garantía limitada:</strong> Esta garantía no cubre problemas causados
+            por: (1) modificaciones del Cliente, (2) uso no autorizado, (3) fuerza
+            mayor, (4) componentes de terceros no controlados por {BRAND}.
+          </p>
+        </div>
+
+        <h2>11. Ley aplicable y resolución de disputas</h2>
+        <h3>11.1 Ley aplicable</h3>
+        <p>
+          Estos términos se rigen por las leyes de Perú. Cualquier disputa
+          estará sujeta a la jurisdicción de los tribunales de Lima, Perú.
+        </p>
+
+        <h3>11.2 Resolución de conflictos</h3>
+        <p>Antes de iniciar acciones legales, las partes se comprometen a:</p>
+        <ol>
+          <li>Notificar por escrito la disputa</li>
+          <li>Negociar de buena fe por 30 días</li>
+          <li>Considerar mediación si las negociaciones fallan</li>
+        </ol>
+
+        <h2>12. Modificaciones a los términos</h2>
+        <p>
+          Nos reservamos el derecho de modificar estos términos en cualquier
+          momento. Los cambios:
+        </p>
+        <ul>
+          <li>Se publicarán en esta página con fecha de actualización</li>
+          <li>Serán efectivos inmediatamente para nuevos usuarios</li>
+          <li>
+            Para usuarios existentes, serán efectivos 30 días después de la
+            publicación
+          </li>
+          <li>
+            El uso continuado constituye aceptación de los nuevos términos
+          </li>
+        </ul>
+
+        <h2>13. Contacto y notificaciones</h2>
+        <p>Para cualquier consulta sobre estos términos:</p>
+        <div class="callout">
+          <p class="!mb-2">
+            <strong>Email:</strong>
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </p>
+          <p class="!mt-2">
+            <strong>Notificaciones legales:</strong> Se considerarán efectivas 48
+            horas después del envío al email registrado.
+          </p>
+        </div>
+
+        <h2>14. Disposiciones generales</h2>
+        <ul>
+          <li>
+            <strong>Integridad del acuerdo:</strong> Estos términos constituyen el
+            acuerdo completo entre las partes
+          </li>
+          <li>
+            <strong>Divisibilidad:</strong> Si alguna cláusula es inválida, las demás
+            mantienen su vigencia
+          </li>
+          <li>
+            <strong>Tolerancia:</strong> El no ejercicio de un derecho no constituye
+            renuncia al mismo
+          </li>
+          <li>
+            <strong>Cesibilidad:</strong> Estos términos no son transferibles sin
+            consentimiento por escrito
+          </li>
+          <li>
+            <strong>Fuerza mayor:</strong> No seremos responsables por retrasos debido
+            a causas fuera de nuestro control
+          </li>
+        </ul>
+
+        <div class="callout">
+          <p>
+            <strong>Recomendación:</strong> Imprime o guarda una copia de estos términos
+            para tus registros. Para consultas específicas sobre tu contrato, refiérete
+            al documento firmado.
+          </p>
+        </div>
+      </div>
+    </Section>
   </main>
 </BaseLayout>
+
+<style>
+  /* Estilos consistentes con las demás páginas legales */
+  .prose.prose-lg {
+    --tw-prose-body: var(--color-fg);
+    --tw-prose-headings: var(--color-fg);
+    --tw-prose-links: var(--color-primary);
+    --tw-prose-bold: var(--color-fg);
+    --tw-prose-counters: var(--color-fg-muted);
+    --tw-prose-bullets: var(--color-fg-muted);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-fg);
+    --tw-prose-quote-borders: var(--color-primary);
+    --tw-prose-captions: var(--color-fg-muted);
+    --tw-prose-code: var(--color-fg);
+    --tw-prose-pre-bg: var(--color-bg-elev);
+    --tw-prose-pre-border: var(--color-border);
+    line-height: 1.65;
+  }
+
+  .prose.prose-lg h2 {
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-5);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    scroll-margin-top: var(--space-8);
+  }
+
+  .prose.prose-lg h3 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+
+  .prose.prose-lg p {
+    margin-bottom: var(--space-5);
+  }
+
+  .prose.prose-lg ul,
+  .prose.prose-lg ol {
+    margin-bottom: var(--space-5);
+  }
+
+  .prose.prose-lg li {
+    margin-bottom: var(--space-2);
+  }
+
+  .prose.prose-lg li::marker {
+    color: var(--color-primary);
+  }
+
+  .prose.prose-lg a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose.prose-lg a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Tablas */
+  .privacy-table {
+    overflow-x: auto;
+    margin: var(--space-8) 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .privacy-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .privacy-table thead {
+    background: var(--color-bg-elev);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .privacy-table th {
+    padding: var(--space-4) var(--space-5);
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-fg);
+    white-space: nowrap;
+  }
+
+  .privacy-table td {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-border) 40%, transparent);
+    vertical-align: top;
+  }
+
+  .privacy-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .privacy-table tbody tr:hover {
+    background: color-mix(in oklch, var(--color-primary) 6%, transparent);
+  }
+
+  .privacy-table td strong {
+    color: var(--color-primary);
+  }
+
+  /* Callout boxes */
+  .prose.prose-lg .callout {
+    background: color-mix(in oklch, var(--color-primary) 8%, var(--color-bg));
+    border-left: 3px solid var(--color-primary);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-lg);
+    margin: var(--space-8) 0;
+  }
+
+  .prose.prose-lg .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Números de sección */
+  .prose.prose-lg h2::before {
+    content: counter(section) ". ";
+    counter-increment: section;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg {
+    counter-reset: section;
+  }
+
+  /* Subsecciones con contador secundario */
+  .prose.prose-lg h3 {
+    counter-increment: subsection;
+  }
+
+  .prose.prose-lg h3::before {
+    content: counter(section) "." counter(subsection) " ";
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .prose.prose-lg {
+    counter-reset: section subsection;
+  }
+
+  /* Mejoras para listas dentro de callouts */
+  .callout ul,
+  .callout ol {
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .privacy-table {
+      font-size: 0.85rem;
+      margin: var(--space-6) -1rem;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+
+    .privacy-table th,
+    .privacy-table td {
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .prose.prose-lg h2 {
+      margin-top: var(--space-10);
+      font-size: var(--text-lg);
+    }
+
+    .prose.prose-lg h3 {
+      font-size: var(--text-base);
+    }
+
+    .callout {
+      padding: var(--space-4) var(--space-5) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .privacy-table table {
+      display: block;
+    }
+
+    .privacy-table th,
+    .privacy-table td {
+      min-width: 140px;
+    }
+
+    .prose.prose-lg h3::before {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  /* Mejoras de legibilidad */
+  .prose.prose-lg strong {
+    color: var(--color-fg);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg > *:first-child {
+    margin-top: 0;
+  }
+
+  /* Estilos específicos para Términos */
+  .prose.prose-lg h3 {
+    font-weight: 600;
+    margin-top: var(--space-6);
+  }
+
+  .prose.prose-lg ol {
+    list-style-type: decimal;
+    padding-left: 1.5em;
+  }
+
+  .prose.prose-lg ol li::marker {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
 
 // ── ENV & Lang
 const SUPPORTED = (import.meta.env.PUBLIC_SUPPORTED_LANGS || "es")
@@ -18,10 +19,10 @@ const parts = path.replace(/^\/+/, "").split("/");
 const maybeLang = parts[0] || "";
 const detectedLang = SUPPORTED.includes(maybeLang) ? maybeLang : DEFAULT_LANG;
 
-const UPDATED = (import.meta.env.PUBLIC_PRIV_UPDATED || "2025-09-01").trim();
+const UPDATED = (import.meta.env.PUBLIC_PRIV_UPDATED || "2025-12-28").trim();
 
 const pageTitle = `Política de Privacidad · ${BRAND}`;
-const pageDesc = `Cómo recopilamos, usamos y protegemos tus datos personales en ${BRAND}.`;
+const pageDesc = `Cómo recopilamos, usamos, protegemos y gestionamos tus datos personales en ${BRAND}. Información completa sobre tus derechos bajo el RGPD.`;
 const pageUrl = SITE_URL ? new URL(path, SITE_URL).toString() : undefined;
 
 const schema = {
@@ -44,42 +45,518 @@ const schema = {
   }}
 >
   <main class="section" role="main">
-    <div class="container prose">
-      <h1>Política de Privacidad</h1>
-      <p class="text-sm">Última actualización: <strong>{UPDATED}</strong></p>
+    <!-- Hero section -->
+    <Section
+      id="privacy-hero"
+      title="Política de Privacidad"
+      subtitle="Transparencia total sobre cómo protegemos y gestionamos tus datos personales."
+      variant="default"
+      titleAccent="underline"
+    >
+      <div class="container">
+        <p class="text-sm text-[color:var(--color-fg-muted)] mt-2 text-center">
+          Última actualización: <strong>{UPDATED}</strong>
+        </p>
+      </div>
+    </Section>
 
-      <h2>Datos que recopilamos</h2>
-      <ul>
-        <li>
-          Datos de contacto (por ejemplo, nombre y correo) cuando nos escribes.
-        </li>
-        <li>Métricas de uso del sitio (si aceptas cookies analíticas).</li>
-      </ul>
+    <!-- Contenido principal -->
+    <Section variant="muted" className="py-12">
+      <div class="container prose prose-lg max-w-3xl">
+        <h2>1. Responsable del tratamiento</h2>
+        <p>
+          <strong>{BRAND}</strong> es el responsable del tratamiento de tus datos
+          personales.
+        </p>
 
-      <h2>Finalidades</h2>
-      <ul>
-        <li>Responder consultas y gestionar solicitudes comerciales.</li>
-        <li>Mejorar el sitio y nuestros servicios.</li>
-      </ul>
+        <h2>2. Datos que recopilamos</h2>
+        <p>
+          Recopilamos diferentes tipos de datos según cómo interactúas con
+          nosotros:
+        </p>
 
-      <h2>Bases legales y retención</h2>
-      <p>
-        Tratamos datos con base en tu consentimiento o interés legítimo para
-        comunicaciones comerciales. Conservamos la información el tiempo
-        necesario para las finalidades indicadas.
-      </p>
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Ejemplos de datos</th>
+                <th>Cómo los obtenemos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Datos de contacto</strong></td>
+                <td>Nombre, email, teléfono</td>
+                <td>Formularios de contacto, newsletter</td>
+              </tr>
+              <tr>
+                <td><strong>Datos de uso</strong></td>
+                <td>IP, navegador, páginas visitadas</td>
+                <td>Cookies (si aceptas), análisis web</td>
+              </tr>
+              <tr>
+                <td><strong>Datos de comunicación</strong></td>
+                <td>Contenido de emails, consultas</td>
+                <td>Correspondencia, soporte técnico</td>
+              </tr>
+              <tr>
+                <td><strong>Datos comerciales</strong></td>
+                <td>Historial de interacciones</td>
+                <td>Relación comercial existente</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <h2>Tus derechos</h2>
-      <p>
-        Puedes solicitar acceso, rectificación o eliminación de tus datos.
-        Escríbenos a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-      </p>
+        <h2>3. Finalidades del tratamiento</h2>
+        <p>Utilizamos tus datos para las siguientes finalidades:</p>
 
-      <h2>Seguridad</h2>
-      <p>
-        Aplicamos medidas técnicas y organizativas razonables para proteger tus
-        datos.
-      </p>
-    </div>
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Finalidad</th>
+                <th>Datos utilizados</th>
+                <th>Base legal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Responder consultas</strong></td>
+                <td>Nombre, email, mensaje</td>
+                <td>Consentimiento</td>
+              </tr>
+              <tr>
+                <td><strong>Enviar newsletter</strong></td>
+                <td>Email, preferencias</td>
+                <td>Consentimiento explícito</td>
+              </tr>
+              <tr>
+                <td><strong>Mejorar nuestros servicios</strong></td>
+                <td>Datos anónimos de uso</td>
+                <td>Interés legítimo</td>
+              </tr>
+              <tr>
+                <td><strong>Cumplir obligaciones legales</strong></td>
+                <td>Datos necesarios según ley</td>
+                <td>Obligación legal</td>
+              </tr>
+              <tr>
+                <td><strong>Gestión comercial</strong></td>
+                <td>Datos de contacto, historial</td>
+                <td>Ejecución de contrato</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>4. Bases legales del tratamiento</h2>
+        <p>
+          Tratamos tus datos basándonos en las siguientes bases legales conforme
+          al RGPD:
+        </p>
+
+        <div class="callout">
+          <h3 class="!mt-0">Resumen de bases legales</h3>
+          <ul>
+            <li>
+              <strong>Consentimiento:</strong> Cuando nos das permiso explícito (ej.
+              newsletter)
+            </li>
+            <li>
+              <strong>Ejecución de contrato:</strong> Para prestar servicios que solicitas
+            </li>
+            <li>
+              <strong>Interés legítimo:</strong> Para mejorar nuestros servicios (siempre
+              evaluando tu privacidad)
+            </li>
+            <li>
+              <strong>Obligación legal:</strong> Cuando la ley nos requiere conservar
+              datos
+            </li>
+          </ul>
+        </div>
+
+        <h2>5. Conservación de datos</h2>
+        <p>
+          Conservamos tus datos durante el tiempo necesario para cumplir las
+          finalidades descritas:
+        </p>
+
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Tipo de dato</th>
+                <th>Plazo de conservación</th>
+                <th>Notas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Datos de contacto (consultas)</td>
+                <td>2 años desde última interacción</td>
+                <td>O hasta que solicites eliminación</td>
+              </tr>
+              <tr>
+                <td>Newsletter</td>
+                <td>Mientras mantengas el consentimiento</td>
+                <td>Puedes darte de baja en cualquier momento</td>
+              </tr>
+              <tr>
+                <td>Datos para obligaciones legales</td>
+                <td>Plazos establecidos por ley</td>
+                <td>Ej. facturación: 5 años</td>
+              </tr>
+              <tr>
+                <td>Datos de uso anónimos</td>
+                <td>26 meses</td>
+                <td>Configuración estándar Google Analytics</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>6. Destinatarios y transferencias</h2>
+        <h3>Destinatarios</h3>
+        <p>
+          Compartimos datos solo con proveedores necesarios para nuestro
+          funcionamiento:
+        </p>
+        <ul>
+          <li>
+            <strong>Hosting y infraestructura:</strong> Proveedores de servicios técnicos
+          </li>
+          <li>
+            <strong>Email marketing:</strong> Solo si te suscribes a newsletter
+          </li>
+          <li>
+            <strong>Analítica web:</strong> Google Analytics (datos anónimos)
+          </li>
+          <li><strong>Soporte técnico:</strong> Proveedores de asistencia</li>
+        </ul>
+
+        <h3>Transferencias internacionales</h3>
+        <div class="callout">
+          <p>
+            <strong>Nota importante:</strong> Algunos proveedores como Google Analytics
+            pueden procesar datos fuera del Espacio Económico Europeo. En estos casos,
+            nos aseguramos de que existan garantías adecuadas como las
+            <strong>Cláusulas Contractuales Tipo</strong> de la UE.
+          </p>
+        </div>
+
+        <h2>7. Tus derechos de protección de datos</h2>
+        <p>
+          Bajo el RGPD, tienes los siguientes derechos sobre tus datos
+          personales:
+        </p>
+
+        <div class="privacy-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Derecho</th>
+                <th>¿Qué significa?</th>
+                <th>Cómo ejercerlo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Acceso</strong></td>
+                <td>Saber qué datos tenemos sobre ti</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Rectificación</strong></td>
+                <td>Corregir datos inexactos</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Supresión ("olvido")</strong></td>
+                <td>Eliminar tus datos</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Limitación</strong></td>
+                <td>Suspender tratamiento temporalmente</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Portabilidad</strong></td>
+                <td>Recibir tus datos en formato estructurado</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Oposición</strong></td>
+                <td>Oponerte a tratamiento por interés legítimo</td>
+                <td>Envía solicitud por email</td>
+              </tr>
+              <tr>
+                <td><strong>Retirar consentimiento</strong></td>
+                <td>Revocar consentimientos dados</td>
+                <td>Enlace "darse de baja" en emails</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="callout">
+          <strong>Para ejercer tus derechos:</strong> Escríbenos a
+          <a href={`mailto:${CONTACT_EMAIL}`}> {CONTACT_EMAIL}</a>
+          indicando tu solicitud. Responderemos en un plazo máximo de
+          <strong>30 días hábiles</strong>. Podremos pedirte identificación para
+          evitar accesos no autorizados.
+        </p>
+
+        <h2>8. Medidas de seguridad</h2>
+        <p>
+          Implementamos medidas técnicas y organizativas apropiadas para
+          proteger tus datos contra accesos no autorizados, pérdida o
+          alteración:
+        </p>
+        <ul>
+          <li>Encriptación de datos en tránsito (HTTPS/SSL)</li>
+          <li>Acceso restringido a datos personales</li>
+          <li>Copias de seguridad periódicas</li>
+          <li>Procedimientos para gestionar incidentes de seguridad</li>
+          <li>Formación en protección de datos para el equipo</li>
+        </ul>
+
+        <h2>9. Cookies y tecnologías similares</h2>
+        <p>
+          Utilizamos cookies para mejorar tu experiencia en nuestro sitio. Para
+          información detallada sobre qué cookies usamos y cómo gestionarlas,
+          consulta nuestra
+          <a href="/cookies"> Política de Cookies</a>.
+        </p>
+
+        <h2>10. Cambios en esta política</h2>
+        <p>
+          Podemos actualizar esta política periódicamente para reflejar cambios
+          en nuestras prácticas o en la legislación. Cuando lo hagamos:
+        </p>
+        <ul>
+          <li>Actualizaremos la fecha en la parte superior</li>
+          <li>Para cambios significativos, te notificaremos si es posible</li>
+          <li>
+            El uso continuado del sitio tras cambios implica aceptación de la
+            nueva política
+          </li>
+        </ul>
+
+        <h2>11. Autoridad de control</h2>
+        <p>
+          Si consideras que hemos vulnerado tus derechos de protección de datos,
+          tienes derecho a presentar una reclamación ante la autoridad de
+          control española:
+        </p>
+        <p>
+          <strong>Agencia Española de Protección de Datos (AEPD)</strong><br />
+          C/ Jorge Juan, 6, 28001 Madrid<br />
+          <a href="https://www.aepd.es" target="_blank" rel="noopener">
+            www.aepd.es
+          </a>
+        </p>
+
+        <h2>12. Contacto</h2>
+        <p>
+          Para cualquier pregunta sobre esta política o sobre el tratamiento de
+          tus datos personales, contáctanos:
+        </p>
+        <div class="callout">
+          <p class="!mb-2">
+            <strong>Email:</strong>
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </p>
+          <p class="!mt-2">
+            <strong>Tiempo de respuesta:</strong> Menos de 24 horas hábiles
+          </p>
+        </div>
+      </div>
+    </Section>
   </main>
 </BaseLayout>
+
+<style>
+  /* Estilos consistentes con la política de cookies */
+  .prose.prose-lg {
+    --tw-prose-body: var(--color-fg);
+    --tw-prose-headings: var(--color-fg);
+    --tw-prose-links: var(--color-primary);
+    --tw-prose-bold: var(--color-fg);
+    --tw-prose-counters: var(--color-fg-muted);
+    --tw-prose-bullets: var(--color-fg-muted);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-fg);
+    --tw-prose-quote-borders: var(--color-primary);
+    --tw-prose-captions: var(--color-fg-muted);
+    --tw-prose-code: var(--color-fg);
+    --tw-prose-pre-bg: var(--color-bg-elev);
+    --tw-prose-pre-border: var(--color-border);
+    line-height: 1.65;
+  }
+
+  .prose.prose-lg h2 {
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-5);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    scroll-margin-top: var(--space-8);
+  }
+
+  .prose.prose-lg h3 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg p {
+    margin-bottom: var(--space-5);
+  }
+
+  .prose.prose-lg ul,
+  .prose.prose-lg ol {
+    margin-bottom: var(--space-5);
+  }
+
+  .prose.prose-lg li {
+    margin-bottom: var(--space-2);
+  }
+
+  .prose.prose-lg li::marker {
+    color: var(--color-primary);
+  }
+
+  .prose.prose-lg a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose.prose-lg a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Tablas de privacidad */
+  .privacy-table {
+    overflow-x: auto;
+    margin: var(--space-8) 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .privacy-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .privacy-table thead {
+    background: var(--color-bg-elev);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .privacy-table th {
+    padding: var(--space-4) var(--space-5);
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-fg);
+    white-space: nowrap;
+  }
+
+  .privacy-table td {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid
+      color-mix(in oklch, var(--color-border) 40%, transparent);
+    vertical-align: top;
+  }
+
+  .privacy-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .privacy-table tbody tr:hover {
+    background: color-mix(in oklch, var(--color-primary) 6%, transparent);
+  }
+
+  .privacy-table td strong {
+    color: var(--color-primary);
+  }
+
+  /* Callout boxes */
+  .prose.prose-lg .callout {
+    background: color-mix(in oklch, var(--color-primary) 8%, var(--color-bg));
+    border-left: 3px solid var(--color-primary);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-lg);
+    margin: var(--space-8) 0;
+  }
+
+  .prose.prose-lg .callout h3 {
+    color: var(--color-primary);
+    margin-top: 0 !important;
+  }
+
+  /* Números de sección */
+  .prose.prose-lg h2::before {
+    content: counter(section) ". ";
+    counter-increment: section;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg {
+    counter-reset: section;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .privacy-table {
+      font-size: 0.85rem;
+      margin: var(--space-6) -1rem;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+
+    .privacy-table th,
+    .privacy-table td {
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .prose.prose-lg h2 {
+      margin-top: var(--space-10);
+      font-size: var(--text-lg);
+    }
+
+    .callout {
+      padding: var(--space-4) var(--space-5) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .privacy-table table {
+      display: block;
+    }
+
+    .privacy-table th,
+    .privacy-table td {
+      min-width: 140px;
+    }
+  }
+
+  /* Mejoras de legibilidad */
+  .prose.prose-lg strong {
+    color: var(--color-fg);
+    font-weight: 700;
+  }
+
+  .prose.prose-lg > *:first-child {
+    margin-top: 0;
+  }
+</style>
