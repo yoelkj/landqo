@@ -1,0 +1,79 @@
+name: Deploy Velcodi Web
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and deploy Astro
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Astro
+        run: pnpm run build
+
+      - name: Prepare SSH key
+        env:
+          NUBQO_SSH_KEY: ${{ secrets.NUBQO_SSH_KEY }}
+        run: |
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$NUBQO_SSH_KEY" > "$HOME/.ssh/nubqo_deploy_key"
+          chmod 600 "$HOME/.ssh/nubqo_deploy_key"
+
+      - name: Test SFTP login
+        env:
+          NUBQO_HOST: ${{ secrets.NUBQO_HOST }}
+          NUBQO_PORT: ${{ secrets.NUBQO_PORT }}
+          NUBQO_USER: ${{ secrets.NUBQO_USER }}
+        run: |
+          sftp \
+            -i "$HOME/.ssh/nubqo_deploy_key" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=15 \
+            -P "$NUBQO_PORT" \
+            "$NUBQO_USER@$NUBQO_HOST" <<EOF
+          pwd
+          ls
+          bye
+          EOF
+
+      - name: Upload dist to Nubqo via SFTP
+        env:
+          NUBQO_HOST: ${{ secrets.NUBQO_HOST }}
+          NUBQO_PORT: ${{ secrets.NUBQO_PORT }}
+          NUBQO_USER: ${{ secrets.NUBQO_USER }}
+        run: |
+          sftp \
+            -i "$HOME/.ssh/nubqo_deploy_key" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=15 \
+            -P "$NUBQO_PORT" \
+            "$NUBQO_USER@$NUBQO_HOST" <<EOF
+          cd web/landqo.velcodi.com/public_html
+          put -r dist/*
+          bye
+          EOF
